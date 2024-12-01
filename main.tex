@@ -1,0 +1,187 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{blindtext}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{silence}
+\usepackage{tabularray}
+\usepackage{makecell}
+\usepackage{ifthen}
+\usepackage{courier} %Set font for the entire document
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[yyyymmdd]{datetime}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[margin=2cm, includefoot]{geometry}
+\usepackage{transparent}
+\usepackage{csquotes}
+\usepackage[most]{tcolorbox}
+\usepackage[backend=biber,style=numeric,sorting=nty]{biblatex}
+
+\include{theme.tex}
+
+%Add and customize bibliography
+\addbibresource{bibliography.bib}
+\DeclareFieldFormat{title}{#1}
+\DeclareFieldFormat{url}{#1}
+\DeclareFieldFormat{labelnumber}{\footnotesize#1}
+\DeclareBibliographyDriver{source}{%Required comment for some reason
+  \footnotesize
+  \printfield{title} \texttransparent{0.6}{[dostęp: \printfield{year}]} \\
+  \texttransparent{0.6}{\printfield{url}}
+}
+
+%Change title styles
+\titleformat{\section}
+{\normalfont\LARGE\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}
+{\normalfont\Large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}
+{\normalfont\large\bfseries}{\thesubsubsection.}{0.5em}{}
+
+% Set font family for the entire document
+\renewcommand{\familydefault}{\ttdefault}
+
+%Set section depth for paragraphs
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+%Remove indent for new paragraphs
+\setlength{\parindent}{0pt}
+
+%Set title
+\title{Praca dyplomowa}
+\author{\Huge Szymon Kogut}
+\date{\today}
+
+%Set date separator
+\renewcommand{\dateseparator}{.}
+
+%Set header/footer style
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+
+% Remove footer if page number is less than 0
+\fancyfoot[C]{\ifthenelse{\value{page} < 1}{}{\small Strona~\thepage\hspace{1pt}~z~\pageref{LastPage}}}
+
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+
+%Set toc style
+\renewcommand{\contentsname}{Spis treści}
+\renewcommand{\cftdotsep}{1}
+\renewcommand{\cftdot}{\tiny\texttransparent{0.8}{.}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
+\def\two@digits#1{\ifnum#1<10  0\fi\number#1}
+\renewcommand\thesection{\two@digits{\value{section}}}
+\cftsetindents{section}{1em}{2.3em}
+\cftsetindents{subsection}{3.5em}{3.5em}
+\cftsetindents{subsubsection}{7em}{4.7em}
+\setlength{\cftbeforesecskip}{0.2em}
+\setlength{\cftbeforesubsecskip}{0.2em}
+\setlength{\cftbeforesubsubsecskip}{0.2em}
+
+%Fix text overflow
+\setlength{\emergencystretch}{3em} % Allows for additional line stretching
+\tolerance=1000 % Adjusts how much white space LaTeX can insert between words
+\hyphenpenalty=50 % Makes hyphenation more likely to prevent overflow
+
+%Silence warnings
+\WarningFilter{latex}{Overfull \hbox}
+\hbadness=10000
+\hfuzz=1000em
+
+%Code polish letters
+\lstset{
+  literate={ą}{{\k a}}1
+  		     {Ą}{{\k A}}1
+           {ż}{{\. z}}1
+           {Ż}{{\. Z}}1
+           {ź}{{\' z}}1
+           {Ź}{{\' Z}}1
+           {ć}{{\' c}}1
+           {Ć}{{\' C}}1
+           {ę}{{\k e}}1
+           {Ę}{{\k E}}1
+           {ó}{{\' o}}1
+           {Ó}{{\' O}}1
+           {ń}{{\' n}}1
+           {Ń}{{\' N}}1
+           {ś}{{\' s}}1
+           {Ś}{{\' S}}1
+           {ł}{{\l}}1
+           {Ł}{{\L}}1
+}
+
+\begin{document} % ------------------------------------------------------------------
+
+%Set default font size
+\normalsize
+
+\include{includes/0.0-tytulowa.tex}
+\newpage
+
+\include{includes/0.1-karta_projektu}
+\newpage
+
+\setcounter{page}{-1}
+\tocloftpagestyle{empty}
+\tableofcontents
+\newpage
+
+\include{includes/1-wstep}
+\newpage
+
+\include{includes/2-slownik_pojec}
+\newpage
+
+\include{includes/3-przedstawienie_problemu}
+\newpage
+
+\include{includes/4-faza_analizy}
+\newpage
+
+\include{includes/5-faza_projektowania}
+\newpage
+
+\include{includes/6-faza_implementacji}
+\newpage
+
+\include{includes/7-faza_testow}
+\newpage
+
+\include{includes/8-faza_utrzymania}
+\newpage
+
+\include{includes/9-prezentacja}
+\newpage
+
+\include{includes/10-podsumowanie}
+\newpage
+
+\include{includes/11-bibliografia}
+\newpage
+
+\include{includes/12-zalaczniki}
+\newpage
+
+\end{document}  % --------------------------------------------------------------------
