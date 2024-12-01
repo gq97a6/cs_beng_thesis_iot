@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.17)  1 DEC 2024 19:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.17)  1 DEC 2024 20:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1127,23 +1127,23 @@ Package biblatex Info: Reference segment=0 on input line 135.
 \openout2 = `includes/0.0-tytulowa.aux'.
 
  (includes/0.0-tytulowa.tex
-<./images/white/pjatk.png, id=40, 364.86313pt x 54.70438pt>
-File: ./images/white/pjatk.png Graphic file (type png)
-<use ./images/white/pjatk.png>
-Package pdftex.def Info: ./images/white/pjatk.png  used on input line 6.
+<./images/black/pjatk.png, id=40, 364.86313pt x 54.70438pt>
+File: ./images/black/pjatk.png Graphic file (type png)
+<use ./images/black/pjatk.png>
+Package pdftex.def Info: ./images/black/pjatk.png  used on input line 6.
 (pdftex.def)             Requested size: 364.86223pt x 54.70422pt.
 )
 
 [1
 
 
-{C:/Users/Me/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Me/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./images/white/pjatk.png>]
+{C:/Users/Me/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Me/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./images/black/pjatk.png>]
 \openout2 = `includes/0.1-karta_projektu.aux'.
 
  (includes/0.1-karta_projektu.tex
-File: ./images/white/pjatk.png Graphic file (type png)
-<use ./images/white/pjatk.png>
-Package pdftex.def Info: ./images/white/pjatk.png  used on input line 4.
+File: ./images/black/pjatk.png Graphic file (type png)
+<use ./images/black/pjatk.png>
+Package pdftex.def Info: ./images/black/pjatk.png  used on input line 4.
 (pdftex.def)             Requested size: 364.86223pt x 54.70422pt.
 
 Overfull \hbox (346.18932pt too wide) in paragraph at lines 46--46
@@ -1317,31 +1317,31 @@ Overfull \hbox (387.86298pt too wide) in paragraph at lines 189--189
 [4]
 
 [5]
-<./images/white/mqtt1.png, id=75, 484.81125pt x 80.3pt>
-File: ./images/white/mqtt1.png Graphic file (type png)
-<use ./images/white/mqtt1.png>
-Package pdftex.def Info: ./images/white/mqtt1.png  used on input line 52.
+<./images/black/mqtt1.png, id=75, 484.81125pt x 80.3pt>
+File: ./images/black/mqtt1.png Graphic file (type png)
+<use ./images/black/mqtt1.png>
+Package pdftex.def Info: ./images/black/mqtt1.png  used on input line 52.
 (pdftex.def)             Requested size: 487.23647pt x 80.70168pt.
-<./images/white/mqtt2.png, id=76, 484.81125pt x 80.3pt>
-File: ./images/white/mqtt2.png Graphic file (type png)
-<use ./images/white/mqtt2.png>
-Package pdftex.def Info: ./images/white/mqtt2.png  used on input line 55.
+<./images/black/mqtt2.png, id=76, 484.81125pt x 80.3pt>
+File: ./images/black/mqtt2.png Graphic file (type png)
+<use ./images/black/mqtt2.png>
+Package pdftex.def Info: ./images/black/mqtt2.png  used on input line 55.
 (pdftex.def)             Requested size: 487.23647pt x 80.70168pt.
-<./images/white/mqtt3.png, id=77, 484.81125pt x 80.3pt>
-File: ./images/white/mqtt3.png Graphic file (type png)
-<use ./images/white/mqtt3.png>
-Package pdftex.def Info: ./images/white/mqtt3.png  used on input line 58.
+<./images/black/mqtt3.png, id=77, 484.81125pt x 80.3pt>
+File: ./images/black/mqtt3.png Graphic file (type png)
+<use ./images/black/mqtt3.png>
+Package pdftex.def Info: ./images/black/mqtt3.png  used on input line 58.
 (pdftex.def)             Requested size: 487.23647pt x 80.70168pt.
-<./images/white/mqtt4.png, id=78, 484.81125pt x 80.3pt>
-File: ./images/white/mqtt4.png Graphic file (type png)
-<use ./images/white/mqtt4.png>
-Package pdftex.def Info: ./images/white/mqtt4.png  used on input line 61.
+<./images/black/mqtt4.png, id=78, 484.81125pt x 80.3pt>
+File: ./images/black/mqtt4.png Graphic file (type png)
+<use ./images/black/mqtt4.png>
+Package pdftex.def Info: ./images/black/mqtt4.png  used on input line 61.
 (pdftex.def)             Requested size: 487.23647pt x 80.70168pt.
 )
 
-[6 <./images/white/mqtt1.png> <./images/white/mqtt2.png> <./images/white/mqtt3.png>]
+[6 <./images/black/mqtt1.png> <./images/black/mqtt2.png> <./images/black/mqtt3.png>]
 
-[7 <./images/white/mqtt4.png>]
+[7 <./images/black/mqtt4.png>]
 \openout2 = `includes/4-faza_analizy.aux'.
 
  (includes/4-faza_analizy.tex
@@ -6307,7 +6307,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  93i,12n,99p,1272b,1929s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Me/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrb8a.pfb><C:/Users/Me/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Me/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb>
-Output written on main.pdf (74 pages, 315443 bytes).
+Output written on main.pdf (74 pages, 290990 bytes).
 PDF statistics:
  307 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
