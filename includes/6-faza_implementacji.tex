@@ -1,0 +1,1061 @@
+\section{Faza implementacji}
+W tym rozdziale opisano część implementacji aplikacji. Rozwiązania i koncepty dotyczą systemu operacyjnego Android. Fragmenty kodu zostały uproszczone na potrzeby tego rozdziału. Między innymi, dodano komentarze w języku polskim oraz pominięto część implementacji.
+
+\subsection{Architektura aplikacji}
+Architektura aplikacji została zaprojektowana w oparciu o model z jedną główną aktywnością która pełni rolę centralnego punktu zarządzania nawigacją oraz cyklem życia aplikacji. W aplikacji istnieje także aktywność dedykowana do obsługi płatności, co pozwala na oddzielenie logiki związanej z transakcjami od głównych funkcji aplikacji. Za poszczególne ekrany interfejsu użytkownika odpowiadają fragmenty.
+
+\subsection{Zarządzanie stanem aplikacji}
+Aplikacja implementuje klasę \tcbox{Application} z przeznaczeniem na przechowywanie stanu aplikacji oraz zarządzaniem procesem inicjalizacji po uruchomieniu. Jest to specjalna klasa której instancję system tworzy przed jakąkolwiek inną klasą w aplikacji. Klasa ta ma cykl życia niezależny od cyklu życia aktywności, trwający przez cały czas pracy aplikacji. Dzięki temu stan aplikacji jest niewrażliwy na wszelkie zmiany w konfiguracji które powodują ponowne uruchomienie aktywności.
+
+\subsection{Foreground service}
+\tcbox{Service} to komponent aplikacji, który potrafi wykonywać długotrwałe operacje w tle nawet po tym gdy użytkownik przejdzie do innej aplikacji. \tcbox{Foreground service} jest to specjalny rodzaj usługi działającej na pierwszym planie wykonującej operacje zauważalne dla użytkownika. Usługa tego typu ma obowiązek wyświetlać stałe powiadomienie aby informować użytkownika o procesie działającym w tle. W nowszych wersjach Androida powiadomienie to może być odrzucone przez użytkownika. Przykładem takiej usługi jest odtwarzacz multimedialny z interfejsem w formie powiadomienia wyświetlanego gdy jakaś aplikacja odtwarza w tle muzykę.\\
+
+Połączenie odpowiedniej konfiguracji z użyciem \tcbox{Foreground service} zmniejsza szanse na zabicie aplikacji przez system. Tym sposobem aplikacja może działać w tle po tym gdy użytkownik ją zamknie. Jest to kluczowa funkcjonalność z racji tego że MQTT jest protokołem komunikacyjnym w czasie rzeczywistym.\\
+
+Niestety praca w tle aplikacji jest obłożona szeregiem obostrzeń w imię wydłużenia czasu pracy na baterii. Dla przykładu jeżeli aplikacja obsługuje Android w wersji 14 wzwyż, deweloper jest zobowiązany do zadeklarowania typu \tcbox{Foreground service}. (dokumentacja - \cite{fgstyperequired}) Pula tych typów jest ograniczona, a każdych z nich ma swoje ściśle unormowane zastosowanie. Istnieje również typ zarezerwowany dla specjalnych przypadków których pozostałe typy nie pokrywają. Wybranie tego typu wiąże się z obowiązkiem podania szczegółowego wytłumaczenia, jak i również przygotowania nagrania tego w jaki sposób nasza aplikacja wykorzystuje usługę oznaczoną tym typem. Mimo spełnienia tych wymogów w dalszym ciągu możemy spotkać się z odmową przy próbie publikacji aplikacji na platformie Google Play.
+
+\subsection{Daemons}
+Aplikacja w początkowych założeniach miała obsługiwać więcej niż jeden protokół komunikacyjny. Rozwiązania wprowadzone na podstawie tego wymagania stanowią fundamentalną część implementacji. W związku z powyższym, mimo tego że wymaganie to zostało jednak na ten moment porzucone, dalej ma ono wpływ na obecną architekturę aplikacji.
+
+\subsubsection{Daemon}
+Demon (ang. daemon) to termin używany w informatyce, który odnosi się do programu działającego w tle, zazwyczaj bez interakcji z użytkownikiem. Może on wykonywać różne zadania, takie jak monitorowanie systemu, zarządzanie zasobami czy obsługa żądań sieciowych.\\
+
+W kontekście przedstawianej aplikacji jest to abstrakcyjna klasa nadrzędna po której dziedziczą wszystkie inne demony. Pełnią one rolę źródła informacji i zdarzeń. Każdy dashboard ma przypisany dedykowany demon danego rodzaju, zależnie od tego z wykorzystaniem jakiego protokołu się on komunikuje. Rolą tego konceptu jest odseparowanie części architektury odpowiedzialnej za komunikację.\\
+
+Poniżej opisano niektóre części klasy \tcbox{Daemon}.
+
+\begin{lstlisting}[language=Kotlin]
+//Czy demon został zwolniony z użytku
+//Demon zostaje zwolniony wtedy gdy nie jest już dłużej używany
+//Na przykład gdy dashboard do którego jest przypisany zostaje usunięty
+var isDischarged = false
+
+//Czy demon jest włączony/czy pracuje
+protected abstract val isEnabled: Boolean
+
+//Specjalne obserwowalne pole
+//Jej wartość zmienia się w momencie gdy zmienia się stan demona
+//Poszczególne części aplikacji mogą nasłuchiwać nowych wartości
+//na tym polu w związku z czym być powiadamiane o zmianie stanu demona
+abstract val statePing: MutableLiveData<String?>
+
+//Stan demona
+//Konkretna implementacja tego pola jest zależna od rodzaju demona
+abstract val state: Any
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=Kotlin]
+//Metoda uruchamiana w momencie gdy demon jest przydzielany do dashboardu
+open fun notifyAssigned() {
+  isDischarged = false
+}
+
+//Metoda uruchamiana w momencie gdy demon jest zwalniany z użytku
+open fun notifyDischarged() {
+  isDischarged = true
+}
+
+//Metoda uruchamiana w momencie zmiany konfiguracji demona
+open fun notifyConfigChanged() {}
+\end{lstlisting}
+
+\vspace{2em}
+
+Dodatkowo klasa \tcbox{Daemon} posiada \tcbox{companion object} definiujący \tcbox{invoke operator}.\\
+
+W Kotlinie \tcbox{companion object} jest to miejsce gdzie zdefiniowane są metody i właściwości które są dostępne bez tworzenia instancji klasy.\\
+Natomiast \tcbox{invoke operator} pozwala na wywołanie obiektu jako funkcji.\\
+
+\begin{lstlisting}[language=Kotlin]
+companion object {
+  operator fun invoke(context: Context, dashboard: Dashboard, type: Type) =
+    when (type) {
+      Type.MQTTD -> Mqttd::class
+      Type.BLUETOOTHD -> Bluetoothd::class
+    }.constructors.first().call(context, dashboard)
+}
+\end{lstlisting}
+
+Użycie w kodzie \tcbox{Daemon()} zamiast tworzyć instancję klasy \tcbox{Daemon} uruchamia funkcję \tcbox{invoke} która zwraca instancję klasy danego typu demona.
+
+\subsubsection{Daemonized}
+Interfejs który implementuje jedynie klasa \tcbox{Tile}. Powstał on w celu odseparowania tej części kafelki dla przejrzystości.\\
+
+Zawiera on już zaimplementowane metody \tcbox{send} oraz \tcbox{receive}. Metoda \tcbox{send} służy do wysyłania nowych wiadomości. Natomiast metoda \tcbox{receive} używana jest do przekazania przychodzącej wiadomości do kafelki.\\
+
+Dodatkowo istnieją metody \tcbox{onSend} oraz \tcbox{onReceive} wykorzystywane przez te wyżej wspomniane. Obie z przeznaczeniem bycia zaimplementowanym przez docelowy element.
+
+\newpage
+
+\subsubsection{Mqttd}
+Klasa pełniąca rolę demona dla dashboardów komunikujących się z wykorzystaniem protokołu MQTT. Zawiera następujące pola:
+
+\begin{lstlisting}[language=Kotlin]
+//Asynchroniczny klient MQTT
+private var client: Mqtt5AsyncClient? = null
+
+//Obecna konfiguracja
+private var currentConfig = MqttConfig()
+
+//Lista topic która obecnie subskrybuje client
+private var topics: MutableList<Pair<String, Int>> = mutableListOf()
+
+//Pola dziedziczone po klasie Deamon
+
+public override val isEnabled
+  get() = d.mqtt.isEnabled && !isDischarged
+
+private val isConnected
+  get() = client?.config?.state?.isConnected ?: false
+
+override val statePing: MutableLiveData<String?> = MutableLiveData(null)
+
+override val state: State
+  get() = if (manager.isWorking) State.ATTEMPTING
+  else try {
+    if (!isConnected) State.DISCONNECTED
+    else if (currentConfig.sslRequired && !currentConfig.sslTrustAll) {
+      State.CONNECTED_SSL
+    } else State.CONNECTED
+  } catch (e: Exception) {
+    Debug.recordException(e)
+    State.FAILED
+  }
+\end{lstlisting}
+
+\newpage
+
+\tcbox{Mqttd} korzysta z \tcbox{StatusManager}. Jego zasada działania opisana jest w dalszym rozdziale.
+
+\begin{lstlisting}[language=Kotlin]
+inner class Manager : StatusManager() {
+  override fun isStable(): Boolean {
+    return isConnected == isEnabled && (currentConfig == d.mqtt || !isEnabled)
+  }
+
+  override fun makeStable() {
+    if (isEnabled) {
+      if (isConnected) {
+        Debug.log("MQTT_DISCONNECT")
+        client?.disconnect()
+      } else {
+        if (currentConfig != d.mqtt || client == null) {
+          Debug.log("MQTT_BUILD_NEW_CLIENT")
+          buildClient(d.mqtt.copy())
+        }
+        Debug.log("MQTT_CONNECT")
+        client?.connect()
+      }
+    } else {
+      Debug.log("MQTT_CLOSE")
+      client?.disconnect()
+    }
+  }
+
+  override fun onJobDone() = statePing.postValue("")
+  override fun onJobStart() = statePing.postValue(null)
+  override fun onException(e: Exception) {
+    super.onException(e)
+    when (e) {
+      is IllegalArgumentException -> statePing.postValue(e.message)
+    }
+  }
+}
+\end{lstlisting}
+
+\newpage
+
+Kluczową częścią klasy \tcbox{Mqttd} jest funkcja \tcbox{buildClient}. Bierze ona \tcbox{MqttConfig} jako parametr i na jego podstawie buduje odpowiedniego klienta.
+
+\begin{lstlisting}[language=Kotlin]
+fun buildClient(config: MqttConfig) {
+  var client = Mqtt5Client.builder()
+    .identifier(config.clientId)
+    .serverHost(config.address)
+    .serverPort(config.port)
+    .addConnectedListener {
+      Debug.log("MQTT_ON_CONNECTED")
+      topicCheck()
+      statePing.postValue("")
+    }
+    .addDisconnectedListener {
+      Debug.log("MQTT_ON_DISCONNECTED")
+      topics = mutableListOf()
+      manager.dispatch(reason = "connection")
+
+      if (it.cause !is ConnectionFailedException) statePing.postValue("")
+      else statePing.postValue(it.cause.cause?.message)
+  }
+
+  //W razie potrzeby konfiguruje autoryzację
+  if (config.includeCred) client = client.simpleAuth()
+    .username(config.username)
+    .password(config.pass.toByteArray())
+    .applySimpleAuth()
+
+  //W razie potrzeby konfiguruje użycie protokołu WebSocket
+  if (config.protocol == Protocol.WS || config.protocol == Protocol.WSS) {
+    client = client
+      .webSocketConfig()
+      .queryString(config.queryString)
+      .serverPath(config.serverPath)
+      .applyWebSocketConfig()
+  }
+
+  //W razie potrzeby konfiguruje szyfrowanie
+  //Metoda setupSSL jest opisana niżej
+  if (config.sslRequired) client = client.setupSSL(config)
+
+  //Buduje klienta i aktualizuje obecny config
+  this.client = client.buildAsync()
+  currentConfig = config
+}
+\end{lstlisting}
+
+\newpage
+
+Poniżej znajduje się metoda odpowiedzialna za konfigurację:
+\begin{itemize}[leftmargin=*]
+  \item szyfrowania połaczenia
+  \item użycia certyfikatów i kluczy klienta
+  \item związaną z wykorzystaniem niestandardowego urzędu certyfikacji (CA)
+  \item związaną z opcją pominięcia weryfikacji certyfikatu serwera 
+\end{itemize}
+
+\begin{lstlisting}[language=Kotlin]
+private fun Mqtt5ClientBuilder.setupSSL(config: MqttConfig): Mqtt5ClientBuilder {
+  //---------------------------------------------------------------------------
+  //Tworzy magazyn kluczy z certyfikatem i kluczem klienta
+  val kmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
+  val kmfKeyPassword = UUID.randomUUID().toString().toCharArray()
+  kmfStore.load(null, null)
+  kmfStore.setCertificateEntry("cc", config.clientCert)
+  config.clientKey?.let {
+    kmfStore.setKeyEntry(
+      "k",
+      it.private,
+      kmfKeyPassword,
+      arrayOf<Certificate?>(config.clientCert)
+    )
+  }
+  //---------------------------------------------------------------------------
+  //Tworzy magazyn kluczy używany do weryfikacji serwera
+  //Opcjonalne dodawany jest certyfikat niestandardowego urzędu certyfikacji
+  //Ma to na celu dodanie wsparcia dla self-signed certyfikatów serwera
+  //zachowując jednocześnie bezpieczeństwo przed atakami typu MITM
+  var tmfStore: KeyStore? = null
+  if (config.caCert != null) {
+    tmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
+    tmfStore.load(null, null)
+    tmfStore.setCertificateEntry("c", config.caCert)
+  }
+  
+  //KeyManager decyduje które dane uwierzytelniające
+  //powinny zostać wysłane do hosta zdalnego
+  val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
+  kmf.init(kmfStore, kmfKeyPassword)
+
+  val alg = TrustManagerFactory.getDefaultAlgorithm()
+
+  //TrustManager określa czy zdalne połączenie powinno być uznawane za zaufane
+  val tmf = if (!config.sslTrustAll) TrustManagerFactory.getInstance(alg)
+  else TrustAllTrustManagerFactory()
+
+  if (!config.sslTrustAll) tmf.init(tmfStore)
+
+  return this.sslConfig()
+    .keyManagerFactory(kmf)
+    .trustManagerFactory(tmf)
+    .applySslConfig()
+}
+\end{lstlisting}
+
+\newpage
+
+Metody związane z wiadomościami:
+
+\begin{lstlisting}[language=Kotlin]
+//Metoda używana do wysyłania wiadomości
+fun publish(topic: String, msg: String, qos: Int = 0, retain: Boolean = false)
+
+//Metody służące do zarządzania subskrypcjami
+private fun subscribe(topic: String, qos: Int)
+private fun unsubscribe(topic: String, qos: Int)
+
+//Buduje listę topic które powinny być subskrybowane
+//Porównuje tą listę z obecnie subskrybowanymi topic
+//W przypadku różnic korzysta z metod subscribe i/lub unsubscribe
+private fun topicCheck()
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{MqttConfig}
+Klasa zawierająca konfigurację dashboardu dla \tcbox{Mqttd}.\\
+Zawiera następujące pola:
+
+\begin{lstlisting}[language=Kotlin]
+var isEnabled: Boolean
+var sslTrustAll: Boolean
+@JsonIgnore
+var caCert: X509Certificate?
+var caFileName: String
+@JsonIgnore
+var clientCert: X509Certificate?
+var clientFileName: String
+@JsonIgnore
+var clientKey: KeyPair?
+var keyFileName: String
+var address: String
+var protocol: Mqttd.Protocol
+var port: Int
+var keepAlive: Int
+var includeCred: Boolean
+var queryString: String
+var serverPath: String
+var username: String
+var pass: String
+var clientId: String
+
+//Pole z getterem
+//Wartość jest generowana na podstawie pola protocol
+val sslRequired: Boolean
+
+//Pola z setterem
+//Przypisanie wartości powoduje wygenerowanie certyfikatów 
+var caCertStr: String?
+var clientCertStr: String?
+var clientKeyStr: String?
+\end{lstlisting}
+
+Wartość części pól jest generowana na postawie wartości innego pola. Na przykład wartość pola \tcbox{caCert} jest generowana na podstawie wartości pola \tcbox{caCertStr}. Z tego powodu część pól jest oznaczona anotacją \tcbox{@JsonIgnore}.\\
+Ma ona za zadanie wyłączyć te pola z procesu serializacji.
+
+\newpage
+
+\subsubsection{MqttDaemonizedConfig}
+Klasa zawierająca konfigurację danej kafelki dla \tcbox{Mqttd}.\\
+Zawiera następujące pola:
+
+\begin{lstlisting}[language=Kotlin]
+var isEnabled: Boolean
+var lastReceive: Date?
+
+//Mapa topic używanych przez kafelkę
+//Kluczami są funkcje w obrębie kafelki
+//Większość kafelek posiada jedną funkcję (np. button) więc i jedną parę topic
+//Część jest bardziej skomplikowana (np. lights) i posiada wiecej takich par
+val subs: MutableMap<String, String>
+val pubs: MutableMap<String, String>
+
+//Kafelki posiadają możliwość parsowania payload jako json
+//To pole zawiera mapę ścieżek json dla każdej funkcji w obrębie kafelki
+val jsonPaths: MutableMap<String, String>
+
+//Pole zawierające payload jaki ma być wysłany w zależności od funkcji kafelki
+var payloads: MutableMap<String, String>
+var qos: Int
+
+//Część kafelek ma możliwość dynamicznego ustawienia payload przed wysłaniem
+//To pole zawiera informację czy payload jest statyczny
+var payloadIsVar: Boolean
+
+//Czy payload ma być parsowany jako json
+var payloadIsJson: Boolean
+
+//Czy wyświetlić komunikat z prośbą o potwierdzenie przed wysłaniem
+var doConfirmPub: Boolean
+
+var doRetain: Boolean
+var doLog: Boolean
+var doNotify: Boolean
+var silentNotify: Boolean
+var notifyTitle: String
+var notifyPayload: String
+\end{lstlisting}
+
+\newpage
+
+\subsection{Klasy}
+\subsubsection{Dashboard}
+Kluczowa klasa całej implementacji. Jak nazwa wskazuje ma reprezentować dashboard. Dziedziczy po klasie \tcbox{RecyclerViewItem}. Dla uproszczenia dziedziczone pola i metody zostały wyłączone z opisu poniżej.\\
+Więcej na ten temat znajduje się w dziale \textbf{Recycler View}.\\
+
+\begin{lstlisting}[language=Kotlin]
+var name: String = ""
+
+//Typ dashboardu
+var type: Daemon.Type = Daemon.Type.MQTTD
+
+//Klucz ikony dashboardu
+var iconKey = "il_interface_plus_circle"
+
+//Ikona dashboardu
+//Wartość tego pola jest generowana przy każdym użyciu na podstawie pola iconKey
+val iconRes: Int
+
+//Kolor ikony dashboardu
+var hsv: FloatArray
+
+//Paleta kolorów ikony dashboardu
+//Wartość tego pola jest generowana przy każdym użyciu na podstawie pola hsv
+//Więcej na ten temat znajduje się w dziale Theme
+val pallet: Theme.ColorPallet
+
+//Dziennik logów dashboardu
+var log = Log()
+
+//Konfiguracja dla Mqttd
+var mqtt = MqttConfig()
+
+@JsonIgnore
+//Demon przypisany do tego dashboardu
+//Proces przypisywania demonów opisany jest w działach DaemonsManager oraz Setup
+var daemon: Daemon? = null
+
+//Lista kafelek jakie posiada dashboard
+var tiles: MutableList<Tile>
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Tile}
+Bazowa klasa nadrzędna dla wszystkich kafelek. Po tej klasie dziedziczą pozostałe klasy reprezentujące już konkretny rodzaj kafelki (np. \tcbox{ButtonTile}). Podobnie jak dashboard dziedziczy ona po klasie \tcbox{RecyclerViewItem} oraz oczywiście implementuje interfejs \tcbox{Daemonized}.
+Dla uproszczenia dziedziczone pola i metody zostały wyłączone z opisu poniżej.\\
+
+Klasa \tcbox{Tile} zawiera następujące metody i pola:
+\begin{lstlisting}[language=Kotlin]
+@JsonIgnore
+//Pole określające ile slotów ma zajmować kafelka
+//Przeznaczone jest ono do ewentualnego nadpisania
+//Przykładem kafelki która to robi jest kafelka thermostat
+open var height = 1f
+
+//Opcjonalny tag/nazwa kafelki
+//Wyświetla się w interfejsie kafelki na ekranie dashboardu
+var tag = ""
+
+//Typ kafelki
+//Pole przeznaczone do nadpisana przez klasy dziedziczące
+//override var typeTag = "button"
+abstract var typeTag: String
+
+//Pola związane z kolorem i ikoną kafelki
+//Tożsame pola opisane są w klasie Dashboard
+abstract var iconKey: String
+val iconRes: Int
+var hsv: FloatArray
+val pallet: Theme.ColorPallet
+
+//Metoda uruchamiana w momencie tworzenia kafelki
+//Dokładnie wtedy gdy dodawana jest ona jako nowa do dashboardu
+open fun onCreateTile() {}
+
+//Metoda uruchamiana cyklicznie dla każdej kafelki co sekundę
+//Aktualizuje ona informację kiedy ostatnio kafelka odebrała wiadomość
+//Informacja ta wyświetla się w interfejsie kafelki na ekranie dashboardu
+//Przykład: 10 sekund temu
+fun updateTimer()
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Settings}
+Prosta klasa z przeznaczeniem do przechowywania ustawień aplikacji.\\
+Zawiera następujące pola:
+
+\begin{lstlisting}[language=Kotlin]
+//Obecna wersja aplikacji
+var version = BuildConfig.VERSION_CODE
+//Czy wysyłane powiadomienia mają być układanie w stos
+var notifyStack = true
+//Czy ukryć przyciski nawigacyjne
+var hideNav = false
+//ID ostatnio odwiedzonego dashboardu
+var lastDashboardId = 0L
+//Format czasu wpisów w logach dashboardów
+var militaryTime = true
+//Czy przechodzić od razu do ostatniego dashboardu przy starcie
+var startFromLast = true
+//W jakim stanie użytkownik zostawił sekcję komunikacja we właściwościach kafelek
+//Przechowuje informację czy sekcja ma być rozwinięta
+var mqttTabShow = true
+//Czy animować kafelki przy przyjściu nowej wiadomości
+var animateUpdate = true
+//Czy aplikacja oczekuje na jakąś płatność opóźnioną
+var pendingPurchase = false
+//Czy dozwolono na pracę w tle po zamknięciu aplikacji
+var fgEnabled = false
+\end{lstlisting}
+
+\subsubsection{Log}
+Klasa pełniąca rolę dziennika logów. Pole jej typu posiada klasa \tcbox{Dashboard}.\\
+Zawiera następujące pola i metody:
+
+\begin{lstlisting}[language=Kotlin]
+//Lista wpisów w dzienniku
+val list: MutableList<LogEntry>
+
+//Metoda dodająca nowy wpis
+fun newEntry(text: String)
+
+//Metoda czyszcząca dziennik
+fun flush()
+\end{lstlisting}
+
+Wpisy w dzienniku są typu \tcbox{LogEntry}. Klasa ta dziedziczy po \tcbox{RecyclerViewItem}.
+Poza dziedziczonymi metodami i polami zawiera następujące pola:
+
+\begin{lstlisting}[language=Kotlin]
+//Wartość wpisu
+var text: String
+
+//Czas dodania wpisu w formie tekstowej
+val time: String
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{App}
+Klasa dziedzicząca po klasie \tcbox{Application}. Jest to specjalna klasa której instancję system tworzy przed jakąkolwiek inną klasą w aplikacji. Klasa ta ma cykl życia niezależny od cyklu życia aktywności, trwający przez cały czas pracy aplikacji. Dzięki temu stan aplikacji jest niewrażliwy na wszelkie zmiany w konfiguracji które powodują ponowne uruchomienie aktywności.
+
+\begin{lstlisting}[language=Kotlin]
+class AtomApp : Application() {
+  companion object {
+    //Globalny stan aplikacji
+    //Więcej na ten temat w kolejnym dziale
+    val aps = AtomAppState()
+
+    //Globalne odniesienie do aplikacji
+    lateinit var app: AtomApp
+  }
+
+  //Metoda uruchamiana w momencie startu aplikacji
+  override fun onCreate() {
+    super.onCreate()
+    app = this
+    //Uruchomienie procesu inicjalizacji aplikacji
+    Setup.initialize()
+  }
+}
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{AppState}
+Klasa zawierająca stan aplikacji. Zawiera następujące pola i metody:
+
+\begin{lstlisting}[language=Kotlin]
+//Czy aplikacja jest licencjonowana
+//Czy użytkownik wykupił wersję profesjonalną
+var isLicensed = false
+
+//Czy aplikacja przeszła już proces inicjalizacji
+var isInitialized = MutableLiveData(false)
+
+//Obiekty związane ze stanem aplikacji
+var settings = Settings()
+var theme = Theme()
+var dashboards = mutableListOf<Dashboard>()
+
+//Obecnie wybrane obiekty
+//Dashboard i kafelka w którym obecnie jest użytkownik
+//Te wartości mają między innymi związek z ekranami właściwości tych elementów
+lateinit var dashboard: Dashboard
+lateinit var tile: Tile
+var dashboardIndex = -2
+
+//Ścieżka do głównego folderu aplikacji
+//Jest to folder dedykowany dla danej aplikacji
+//Inne aplikacje nie mają do niego dostępu
+//Wartość przypisywana jest w procesie inicjalizacji aplikacji
+var rootFolder: String = ""
+
+//Ścieżki do plików serializowanych obiektów
+//Wartość przypisywana jest w procesie inicjalizacji aplikacji
+//Więcej na temat serializacji znajduje się w dziale Storage
+var path: Map<KClass<out Any>, String> = mapOf()
+
+//Metody zmieniająca obecnie wybrany dashboard
+fun setCurrentDashboard(index: Int): Boolean
+fun setCurrentDashboard(id: Long): Boolean
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Theme}
+Klasa odpowiedzialna za dynamiczny motyw aplikacji wszędzie gdzie wykorzystany jest XML do tworzenia interfejsu użytkownika. Zawiera wewnętrzną klasę \tcbox{Artist} generującą monochromatyczną paletę kolorów na podstawie koloru wybranego przez użytkownika.\\
+
+Wygenerowana paleta składa się z następujących kolorów:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{color}: kolor bazowy
+  \item \textbf{background}: kolor tła
+  \item \textbf{a, b, c, d}: kolejne kolory akcentowe zbliżające się do koloru tła
+\end{itemize}
+
+\vspace{1em}
+
+Klasa \tcbox{Artist} zawiera następujące metody i pola:
+
+\begin{lstlisting}[language=Kotlin]
+//Czy włączony jest tryb ciemny
+//Zmiana wartości pola powoduje ponowne wygenerowanie palety
+var isDark: Boolean
+
+//Wybrany przez użytkownika kolor
+//Zmiana wartości pola powoduje ponowne wygenerowanie palety
+var hsv: FloatArray
+
+@JsonIgnore
+//Wygenerowana paleta
+var pallet: ColorPallet
+
+//Metoda generującą paletę
+fun getColorPallet(
+  hsv: FloatArray,
+  isAltCon: Boolean = false,
+  isRaw: Boolean = false
+): ColorPallet
+\end{lstlisting}
+
+\newpage
+
+Proces generowania palety przebiega w kilku krokach:
+
+\begin{enumerate}[leftmargin=*]
+  \item Generowany jest kolor tła. Nie jest on zależny od koloru źródłowego.\\ Ma on oddzielną wartość dla trybu ciemnego i dla trybu jasnego.
+  \item Na podstawie koloru źródłowego generowany jest kolor bazowy. Jeżeli paleta \tcbox{isRaw} to kolor bazowy jest równy kolorowi źródłowemu.\\
+  W innym przypadku jest to kolor źródłowy ograniczony w jak najmniejszym stopniu, ale na tyle aby spełniał wymóg kontrastu.
+  \item Generowane są kolory akcentowe poprzez mieszanie ich z kolorem tła. Stosunek mieszania jest taki sam dla każdego koloru. Ma on oddzielną wartość dla trybu ciemnego i oddzielną wartość dla trybu jasnego:
+  \begin{itemize}[leftmargin=*]
+    \item \textbf{a}: kolor bazowy z kolorem tła
+    \item \textbf{b}: kolor \textbf{a} z kolorem tła
+    \item \textbf{c}: kolor \textbf{b} z kolorem tła
+    \item \textbf{d}: kolor \textbf{c} z kolorem tła
+  \end{itemize}
+\end{enumerate}
+
+\newpage
+
+Klasa \tcbox{Theme} zawiera następujące metody i pola:
+\begin{lstlisting}[language=Kotlin]
+val artist = Artist()
+
+companion object {
+  //Wartość tych pól pobierana jest z obiektu artist
+  val colors: ComposeColorPallet
+  val isDark: Boolean
+}
+
+//Metoda mająca za zadanie ustawić motyw aplikacji dla danej grupy widoków
+//Uruchamiana jest rekurencyjnie tak aby zadziałała dla każdego widoku w drzewie
+private fun ViewGroup.applyTheme(p: ColorPallet) {
+  for (i in 0 until this.childCount) {
+    this.getChildAt(i).let {
+      if (it is ViewGroup) it.applyTheme(p)
+      it.defineType(p)
+    }
+  }
+
+  this.defineType(p)
+}
+
+//Uruchamiaja docelową metodę odpowiedzialną za stylizację danego elementu
+private fun View.defineType(p: ColorPallet) {
+  when (this) {
+      is RadioButton -> this.applyTheme(p)
+      is Chip -> this.applyTheme(p)
+      is RecyclerView -> this.applyTheme(p)
+      is CircularSeekBar -> this.applyTheme(p)
+      //itp.
+  }
+}
+
+//Docelowe metody stylizujące
+//Operują na wartości tag danego widoku aby odróżnić różne wersje stylistyczne
+//Tag to dowolna wartość przypisana do widoku przez programistę
+private fun FrameLayout.applyTheme(p: ColorPallet)
+private fun ConstraintLayout.applyTheme(p: ColorPallet)
+private fun LinearLayout.applyTheme(p: ColorPallet)
+//itp.
+
+\end{lstlisting}
+
+\newpage
+
+\subsection{Obiekty pomocnicze}
+W Kotlinie \tcbox{object} to specjalny typ, który pozwala na tworzenie singletonów, czyli klas, które mają tylko jedną instancję. Umożliwia to łatwe tworzenie obiektów, które nie wymagają jawnego tworzenia instancji za pomocą konstruktora.\\
+
+Ten dział jest poświęcony obiektom pomocniczym wykorzystanym w implementacji. Mają one na celu ustrukturyzowanie oraz uproszczenie pewnych funkcjonalności w kodzie.
+
+\subsubsection{Debug}
+Obiekt odpowiedzialny za centralizację wykorzystania narzędzi używanych do śledzenia błędów w aplikacji.
+
+\begin{lstlisting}[language=Kotlin]
+object Debug {
+  //Dodaje dodatkowe niestandardowe informacje do raportu
+  fun log(payload: String) {
+    Sentry.addBreadcrumb(payload)
+  }
+
+  //Przesyła raport w przypadku wystąpienia błedu
+  fun recordException(exception: Exception) {
+    Sentry.captureException(exception)
+  }
+}
+\end{lstlisting}
+
+\subsubsection{DialogBuilder}
+Obiekt ułatwiający tworzenie okien dialogowych dla interfejsu używającego XML.
+
+\begin{lstlisting}[language=Kotlin]
+object DialogBuilder {
+  //Wyświetla dialog z pytaniem o potwierdzenie zadanej akcji
+  inline fun Context.buildConfirm(
+    message: String,
+    label: String,
+    textSize: Float = 20f,
+    textAlign: Int = TEXT_ALIGNMENT_CENTER,
+    crossinline onDeny: () -> Unit = {},
+    crossinline onConfirm: () -> Unit
+  )
+
+  //Dostosowuje interfejs to wyświetlania dialogu
+  //Między innymi przyciemnia to co wyświetla się za dialogiem
+  fun Dialog.dialogSetup()
+}
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Pro}
+Obiekt służący do zarządzania licencjonowaniem aplikacji. Licencja służy jako weryfikacja, że użytkownik wykupił wersję płatną, bez ponownego korzystania z usług Google Play. Licencjonowanie polega na utworzenie pustego pliku w folderze aplikacji. Pomimo tego, że w teorii użytkownik nie ma dostępu do tego folderu, nie jest to duże utrudnienie. Zdeterminowany użytkownik ominie również te bardziej zaawansowane. Dlatego to wprowadzone ma jedynie w prosty sposób podstawowo przeciwdziałać omijaniu zabezpieczeń, nie uprzykrzając doświadczenia pozostałym.
+
+\begin{lstlisting}[language=Kotlin]
+object Pro {
+  //Sprawdza czy plik licencji istnieje
+  fun getLicenceStatus(): Boolean
+
+  //Tworzy plik licenji
+  fun createLocalLicence()
+
+  //Usuwa plik licencji
+  fun removeLocalLicence()
+}
+\end{lstlisting}
+
+\subsubsection{Icons}
+Obiekt grupujący ikony wykorzystywane w aplikacji.\\
+Posiada pole \tcbox{cats} będące listą dostępnych kategorii ikon oraz pole \tcbox{icons} będące listą obiektów typu \tcbox{Icon}.
+
+\begin{lstlisting}[language=Kotlin]
+data class Icon(
+  val res: Int = 0, //ID zasobu
+  val type: String = "", //Typ ikony
+  val cat: String = "" //Kategoria ikony
+)
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Storage}
+Obiekt odpowiedzialny za serializację obiektów. Wykorzystuje mapę \tcbox{path} zawierającą informację gdzie zapisywać obiekty danych klas.
+
+\begin{lstlisting}[language=Kotlin]
+aps.path = mapOf(
+  Theme::class to "${aps.rootFolder}/theme",
+  Settings::class to "${aps.rootFolder}/settings",
+  Dashboard::class to "${aps.rootFolder}/dashboards"
+)
+\end{lstlisting}
+
+\vspace{1em}
+
+Jego działanie opiera się wykorzystanie uniwersalnych generycznych metod umożliwiających serializację i deserializację dowolnych obiektów lub kolekcji tych obiektów. Jedynym warunkiem jest istnienie odpowiedniego wpisu w mapie \tcbox{path}.\\
+
+\vspace{1em}
+
+Metody pomocnicze i mapper wykorzystywany w obiekcie.
+
+\begin{lstlisting}[language=Kotlin]
+//Mapper dostarczany przez bibliotekę Jackson
+val mapper: ObjectMapper
+
+//Metoda serializująca obiekt dowolnej klasy do String
+fun Any.prepareSave(): String = mapper.writeValueAsString(this)
+
+//Metoda zwracająca zapisany obiekt danej klasy z pliku
+inline fun <reified T> getSave() = try {
+    FileReader(aps.path[T::class]).readText()
+} catch (_: Exception) {
+    ""
+}
+\end{lstlisting}
+
+\vspace{1em}
+
+Metody służące serializacji obiektów.
+
+\begin{lstlisting}[language=Kotlin]
+//Metoda zapisująca obiekt dowolnej klasy do pliku
+fun Any.saveToFile(save: String = this.prepareSave()) {
+  try {
+    val path = aps.path[this::class]
+    File(path!!).writeText(save)
+  } catch (_: Exception) {
+  }
+}
+
+//Metoda zapisująca kolekcję obiektów dowolnej klasy do pliku
+inline fun <reified T> Collection<T>.saveToFile(save: String = this.prepareSave()) {
+  try {
+      val path = aps.path[T::class]
+      File(path!!).writeText(save)
+  } catch (_: Exception) {
+  }
+}
+\end{lstlisting}
+
+\newpage
+
+Metody służące deserializacji obiektów.
+
+\begin{lstlisting}[language=Kotlin]
+//Metoda deserializująca obiekt dowolnej klasy z pliku
+inline fun <reified T> parseSave(save: String = getSave<T>()): T? =
+  try {
+      mapper.readValue(save, T::class.java)
+  } catch (_: Exception) {
+      null
+  }
+
+//Metoda deserializująca kolekcję obiektów dowolnej klasy z pliku
+inline fun <reified T> parseListSave(save: String = getSave<T>()): MutableList<T> =
+  try {
+      mapper.readerForListOf(T::class.java).readValue(save)
+  } catch (_: Exception) {
+      mutableListOf()
+  }
+\end{lstlisting}
+
+\vspace{1em}
+
+W praktyce wykorzystanie powyższych metod wygląda następująco.
+
+\begin{lstlisting}[language=Kotlin]
+//Proces serializacji obiektu typu dashboard
+val dashboard = Dashboard()
+dashboard.saveToFile()
+
+//Proces deserializacji obiektu typu dashboard
+//Jeżeli typ pola jest określony metoda sama "domyśli się"
+//jaki ma być zwrócony typ bez dodatkowych oznaczeń
+dashboard = Storage.parseSave() ?: Dashboard()
+
+//Alternatywnie
+val theme = Storage.parseSave<Theme>() ?: Theme()
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Setup}
+Obiekt zawierający metody odpowiedzialne za kolejne etapy procesu inicjalizacji aplikacji.
+
+\begin{lstlisting}[language=Kotlin]
+object Setup {
+  //Główna metoda rozpoczynająca inicjalizację
+  fun initialize() {
+    Debug.log("INIT")
+    setFilesPaths()
+    initializeBasicGlobals()
+
+    CoroutineScope(Dispatchers.Default).launch {
+      updateProStatus()
+      checkBilling()
+      checkBatteryStatus()
+      configureForegroundService()
+      initializeOtherGlobals()
+      assignDaemons()
+      finish()
+    }
+  }
+
+  //Konfiguruje zmienne aps.rootFolder oraz aps.path
+  private fun setFilesPaths()
+  //Inicjalizuje zmienne globalne takie jak
+  //aps.dashboard; aps.tile; aps.theme; aps.settings
+  private fun initializeBasicGlobals()
+  //Aktualizuje status licencji
+  private fun updateProStatus()
+  //Sprawdza czy nie ma przeprocesowanych płatności opóźnionych
+  private fun checkBilling()
+
+  //Sprawdza czy włączona jest optymalizacja baterii
+  //Jeżeli tak to wyłącza pracę w tle
+  private fun checkBatteryStatus()
+\end{lstlisting}
+
+\textit{Kontynuacja na drugiej stronie}
+
+\newpage
+
+\begin{lstlisting}[language=Kotlin]
+  //Konfiguruje użycie foreground service
+  //Zatrzymuje ją jeśli nie jest potrzebna
+  //W innym przypadku uruchamia ją
+  private suspend fun configureForegroundService() {
+    //Usługa nie włączona ale działa
+    if (!aps.settings.fgEnabled && service?.isStarted == true) {
+      DaemonsManager.dischargeAll()
+      ForegroundService.stop(app)
+    }
+
+    //Usługa jest włączona ale nie uruchomiona
+    else if (aps.settings.fgEnabled && service?.isStarted != true) {
+      //Zwalnia demony na wypadek jeżeli któryś pracuje
+      DaemonsManager.dischargeAll()
+
+      //Uruchamia usługę i czeka na jej start
+      ForegroundService.start(app)
+      ForegroundService.haltForService()
+    }
+  }
+
+  //Konfiguruje pozostałe zmienne globalne
+  private fun initializeOtherGlobals()
+
+  //W zależności czy praca w tle jest włączona
+  //Uruchamia demony z kontekstem aplikacji lub usługi
+  private fun assignDaemons() {
+    val context: Context = if (!aps.settings.fgEnabled) app
+    else service!!
+
+    DaemonsManager.assignAll(context)
+  }
+
+  private fun finish() = aps.isInitialized.postValue(true)
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Managers}
+Za wyjątkiem \tcbox{DaemonsManager} (object) są to klasy dedykowane do zarządzania określonymi zasobami oraz procesami. Ich użycie ma na celu centralizację logiki oraz zmniejszenie redundancji w kodzie.
+
+\subsubsection{BillingManager}
+Klasa służąca do procesowania zakupów oraz płatności wewnątrz aplikacji z wykorzystaniem Google Play. Do zarządzania połączeniem używa \tcbox{StatusManager}. Każda z kluczowych metod jest nieblokująca za sprawą wykorzystania \tcbox{suspendCoroutine}.\\
+
+Klasa \tcbox{BillingManager} zawiera następujące metody i pola:
+
+\begin{lstlisting}[language=Kotlin]
+val context: Context
+
+//Czy jest jest włączony/czy pracuje
+internal var isEnabled = false
+
+//Klient dostarczany przez bibliotekę płatności
+internal lateinit var client: BillingClient
+
+private val manager = Manager()
+
+companion object {
+  //ID produktów
+  var PRO = "atom_dashboard_pro"
+  var DON1 = "atom_dashboard_don1"
+  var DON5 = "atom_dashboard_don5"
+  var DON25 = "atom_dashboard_don25"
+}
+
+fun enable() {
+  isEnabled = true
+  manager.dispatch(reason = "enable")
+}
+
+fun disable() {
+  isEnabled = false
+  manager.dispatch(reason = "disable")
+}
+
+//Buduje klienta płatności
+internal fun createClient()
+
+//Metody pomocnicze
+private fun Purchase.acknowledge()
+private fun Purchase.consume()
+
+//Obsługuje potwierdzenie zakupu
+//Przydziela zakupione produkty
+fun onPurchased(purchase: Purchase)
+
+//Wyświetla komunikaty związane z końcem procesu zakupu lub
+//powiadamia o płatnościach opóźnionych
+fun onPurchaseProcessed(purchase: Purchase)
+
+//Pobiera informacje na temat produktów 
+private suspend fun getProductDetails(id: String): MutableList<ProductDetails>?
+
+//Pobiera listę zakupionych produktów
+suspend fun getPurchases(timeout: Long = 2000): MutableList<Purchase>?
+
+//Pobiera ceny produktów
+suspend fun getPriceTags(ids: List<String>): Map<String, String>?
+
+//Uruchamia proces zakupu
+suspend fun lunchPurchaseFlow(id: String)
+
+//Pobiera listę zakupionych produktów według filtru
+//Czas wykonywania wynosi minimum wartości eta
+suspend inline fun checkPurchases(
+  eta: Long = 10000,
+  filter: (Purchase) -> Boolean = { !it.isAcknowledged },
+  onDone: (List<Purchase>?) -> Unit = {}
+)
+
+inner class Manager : StatusManager(100) {
+  override fun isStable(): Boolean = when (client.connectionState) {
+    CONNECTED -> isEnabled
+    CONNECTING -> false
+    DISCONNECTED, CLOSED -> !isEnabled
+    else -> true
+  }
+
+  override fun makeStable() {
+    if (client.connectionState == CLOSED) createClient()
+    else if (!isEnabled) client.endConnection()
+    else if (client.connectionState != CONNECTING) {
+      client.startConnection(object : BillingClientStateListener {
+        override fun onBillingSetupFinished(billingResult: BillingResult) {}
+        override fun onBillingServiceDisconnected() {}
+      })
+    }
+  }
+
+  //Wstrzymuje pracę do momentu ustabilizowania połączenia
+  suspend fun awaitDone(timeout: Long = 5000): Boolean = 
+    withTimeoutOrNull(timeout) {
+      while (!isStable()) delay(100)
+      return@withTimeoutOrNull client.isReady
+    } ?: false
+}
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{FragmentManager}
+\subsubsection{StatusManager}
+\subsubsection{DaemonsManager}
+\subsubsection{ToolbarManager}
+
+\subsection{Interfejs użytkownika}
+\subsubsection{XML}
+\subsubsection{Jetpack Compose}
+\subsubsection{Fragmenty}
+\subsubsection{Recycler View}
+\subsubsection{Wykrywanie gestów}
+
+\subsection{Integracja z protokołem MQTT}
+
+\begin{lstlisting}[language=Kotlin]
+\end{lstlisting}

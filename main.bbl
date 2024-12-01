@@ -1,0 +1,363 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{mqttadoptionishigh}{source}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{2022 Survey Shows MQTT Adoption is High for Industry 4.0}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.hivemq.com/blog/2022-survey-shows-mqtt-adoption-is-high-for-industry
+      \endverb
+      \verb{url}
+      \verb https://www.hivemq.com/blog/2022-survey-shows-mqtt-adoption-is-high-for-industry
+      \endverb
+    \endentry
+    \entry{agilemanifesto}{source}{}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{title}{Agile Manifesto}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://agilemanifesto.org
+      \endverb
+      \verb{url}
+      \verb https://agilemanifesto.org
+      \endverb
+    \endentry
+    \entry{androidstudio}{source}{}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Studio}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://developer.android.com/develop
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/develop
+      \endverb
+    \endentry
+    \entry{amazonoutage}{source}{}{}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labeltitlesource}{title}
+      \field{title}{BBC - AWS: Amazon web outage breaks vacuums and doorbells}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.bbc.com/news/technology-55087054
+      \endverb
+      \verb{url}
+      \verb https://www.bbc.com/news/technology-55087054
+      \endverb
+    \endentry
+    \entry{fasterxmldocs}{source}{}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labeltitlesource}{title}
+      \field{title}{FasterXML Jackson Module Kotlin - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://github.com/FasterXML/jackson-module-kotlin
+      \endverb
+      \verb{url}
+      \verb https://github.com/FasterXML/jackson-module-kotlin
+      \endverb
+    \endentry
+    \entry{fgstyperequired}{source}{}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labeltitlesource}{title}
+      \field{title}{Foreground service types are required}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://developer.android.com/about/versions/14/changes/fgs-types-required
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/about/versions/14/changes/fgs-types-required
+      \endverb
+    \endentry
+    \entry{getstartedfirebase}{source}{}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{title}{Get started with Firebase Crashlytics}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://firebase.google.com/docs/crashlytics/get-started?platform=android
+      \endverb
+      \verb{url}
+      \verb https://firebase.google.com/docs/crashlytics/get-started?platform=android
+      \endverb
+    \endentry
+    \entry{gitdocs}{source}{}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{title}{Git - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://git-scm.com/docs
+      \endverb
+      \verb{url}
+      \verb https://git-scm.com/docs
+      \endverb
+    \endentry
+    \entry{googleplay}{source}{}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Play - developer content policy}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://play.google/developer-content-policy
+      \endverb
+      \verb{url}
+      \verb https://play.google/developer-content-policy
+      \endverb
+    \endentry
+    \entry{gradledocs}{source}{}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{title}{Gradle - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://docs.gradle.org/current/userguide/userguide.html
+      \endverb
+      \verb{url}
+      \verb https://docs.gradle.org/current/userguide/userguide.html
+      \endverb
+    \endentry
+    \entry{hivemqdocs}{source}{}{}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeltitlesource}{title}
+      \field{title}{HiveMQ MQTT Client - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://hivemq.github.io/hivemq-mqtt-client
+      \endverb
+      \verb{url}
+      \verb https://hivemq.github.io/hivemq-mqtt-client
+      \endverb
+    \endentry
+    \entry{mqtt5part1}{source}{}{}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labeltitlesource}{title}
+      \field{title}{Introduction to MQTT 5 Protocol - MQTT 5 Essentials Part 1}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.hivemq.com/blog/mqtt5-essentials-part1-introduction-to-mqtt-5/
+      \endverb
+      \verb{url}
+      \verb https://www.hivemq.com/blog/mqtt5-essentials-part1-introduction-to-mqtt-5/
+      \endverb
+    \endentry
+    \entry{jetpackdocs}{source}{}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labeltitlesource}{title}
+      \field{title}{Jetpack Compose - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://developer.android.com/develop/ui/compose/documentation
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/develop/ui/compose/documentation
+      \endverb
+    \endentry
+    \entry{kotlindocs}{source}{}{}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labeltitlesource}{title}
+      \field{title}{Kotlin - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://kotlinlang.org/docs/home.html
+      \endverb
+      \verb{url}
+      \verb https://kotlinlang.org/docs/home.html
+      \endverb
+    \endentry
+    \entry{mqttincreasedadoption}{source}{}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labeltitlesource}{title}
+      \field{title}{Latest Research Shows MQTT is Seeing Increased Adoption in IoT}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.hivemq.com/blog/latest-research-shows-mqtt-seeing-increased-adoption-iot-iiot
+      \endverb
+      \verb{url}
+      \verb https://www.hivemq.com/blog/latest-research-shows-mqtt-seeing-increased-adoption-iot-iiot
+      \endverb
+    \endentry
+    \entry{materialdesign2}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{Material Design 2}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://m2.material.io/
+      \endverb
+      \verb{url}
+      \verb https://m2.material.io/
+      \endverb
+    \endentry
+    \entry{materialdesign3}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{Material Design 3}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://m3.material.io/
+      \endverb
+      \verb{url}
+      \verb https://m3.material.io/
+      \endverb
+    \endentry
+    \entry{mosquittodocs}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{Mosquitto - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://mosquitto.org/documentation
+      \endverb
+      \verb{url}
+      \verb https://mosquitto.org/documentation
+      \endverb
+    \endentry
+    \entry{mqtt3spec}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{MQTT 3.1.1 Specification}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.pdf
+      \endverb
+      \verb{url}
+      \verb http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.pdf
+      \endverb
+    \endentry
+    \entry{mqtt5spec}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{MQTT 5 Specification}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.pdf
+      \endverb
+      \verb{url}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.pdf
+      \endverb
+    \endentry
+    \entry{mqtt5part2}{source}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{MQTT 5 Vs. MQTT 3 – MQTT 5 Essentials Part 2}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.hivemq.com/blog/mqtt5-essentials-part2-foundational-changes-in-the-protocol/
+      \endverb
+      \verb{url}
+      \verb https://www.hivemq.com/blog/mqtt5-essentials-part2-foundational-changes-in-the-protocol/
+      \endverb
+    \endentry
+    \entry{statistaconnecteddevices}{source}{}{}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labeltitlesource}{title}
+      \field{title}{Number of IoT connected devices worldwide from 2019 to 2033}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.statista.com/statistics/1194682/iot-connected-devices-vertically
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/statistics/1194682/iot-connected-devices-vertically
+      \endverb
+    \endentry
+    \entry{iotstatistasmarthome}{source}{}{}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labeltitlesource}{title}
+      \field{title}{Number of users of smart homes worldwide from 2019 to 2028}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.statista.com/forecasts/887613
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/forecasts/887613
+      \endverb
+    \endentry
+    \entry{sentrydocs}{source}{}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labeltitlesource}{title}
+      \field{title}{Sentry Android - dokumentacja}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://docs.sentry.io/platforms/android
+      \endverb
+      \verb{url}
+      \verb https://docs.sentry.io/platforms/android
+      \endverb
+    \endentry
+    \entry{gnumanifesto}{source}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{The GNU Manifesto - Why All Computer Users Will Benefit}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://www.gnu.org/gnu/manifesto.en.html\#benefit
+      \endverb
+      \verb{url}
+      \verb https://www.gnu.org/gnu/manifesto.en.html%5C#benefit
+      \endverb
+    \endentry
+    \entry{waterfall}{source}{}{}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labeltitlesource}{title}
+      \field{title}{Waterfall Methodology: A Complete Guide}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://business.adobe.com/blog/basics/waterfall
+      \endverb
+      \verb{url}
+      \verb https://business.adobe.com/blog/basics/waterfall
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

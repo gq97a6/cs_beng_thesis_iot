@@ -1,0 +1,1160 @@
+\newcommand{\wymaganie}[8]{
+    \begin{center}
+        \scriptsize
+        \begin{tabularx}{1\textwidth} {
+                | >{\hsize=0.15\hsize}X
+                | >{\hsize=0.85\hsize}X |}
+            \Xhline{0.5em}
+
+            \multicolumn{2}{|l|}{
+                \parbox[c][1.5em][c]{0.5\textwidth}{
+                    KARTA WYMAGANIA
+                }
+            }
+            \\
+            \hline
+
+            \parbox[c][2em][c]{\textwidth}{
+                \textbf{Identyfikator}
+            } &
+            \parbox[c][2em][c]{\textwidth}{
+                #1
+            }
+            \\
+            \hline
+
+            \parbox[c][2em][c]{\textwidth}{
+                \textbf{Priorytet}
+            } &
+            \parbox[c][2em][c]{\textwidth}{
+                #2
+            }
+            \\
+            \hline
+
+            \parbox[c][2em][c]{\textwidth}{
+                \textbf{Nazwa}
+            } &
+            \parbox[c][2em][c]{\textwidth}{
+                #3
+            }
+            \\
+            \hline
+
+            %-------------------------------------
+            \ifthenelse{\equal{#4}{}}{}{
+                \parbox[c][2em][c]{\textwidth}{
+                    \textbf{Powiązane}
+            } &
+                \parbox[c][2em][c]{\textwidth}{
+                    #4
+                }
+            \\
+                \hline
+            }
+            %-------------------------------------
+            \parbox[c][#5][c]{\textwidth}{
+                \textbf{Opis}
+            } &
+            \parbox[c][#5][c]{\textwidth}{
+                #6
+            }
+            \\
+            \hline
+            %-------------------------------------
+            \parbox[c][#7][c]{\textwidth}{
+                \textbf{Kryteria}
+            } &
+            \parbox[c][#7][c]{\textwidth}{
+                #8
+            }
+            \\
+            \hline
+            %-------------------------------------
+        \end{tabularx}
+    \end{center}
+}
+
+\section{Faza projektowania}
+
+\subsection{Wymagania jakościowe}
+
+\subsubsection{Estetyka}
+
+\begin{itemize}[leftmargin=*]
+    \item atrakcyjny i nowoczesny design który przyciąga uwagę
+    \item możliwość personalizacji interfejsu graficznego
+    \item minimalistyczny i przejrzysty styl graficzny
+\end{itemize}
+
+\subsubsection{Przejrzystość}
+
+\begin{itemize}[leftmargin=*]
+    \item łatwy w nawigowaniu interfejs użytkownika
+    \item krótkie oraz klarowne komunikaty dla użytkownika
+    \item spójny układ i styl zapewniające jednolite doświadczenia
+\end{itemize}
+
+\subsubsection{Użyteczność}
+
+\begin{itemize}[leftmargin=*]
+    \item płynne oraz proste animacje
+    \item łatwo dostępne i intuicyjne funkcjonalności
+    \item powtarzalne rezultaty tych samych czynności
+\end{itemize}
+
+\newpage
+
+\subsection{Wymagania niefunkcjonalne}
+
+\wymaganie{NF3322}{MUST}{Kompatybilność z systemem Andrioid}{}
+{2em}{
+    Aplikacja jest możliwa do zainstalowania na urządzeniach z systemem Android
+}
+{2em}{
+    Aplikacja wspiera system Android w wersji 8.0 wzwyż
+}
+
+\wymaganie{NF8047}{MUST}{Kompatybilność z platformą Google Play \cite{googleplay}}{}
+{2em}{
+    Aplikacja kwalifikuje się do publikacji na platformie Google Play
+}
+{2em}{
+    Aplikacja spełnia wymagania stawiane przez platformę Google Play
+}
+
+\wymaganie{NF2026}{MUST}{Wsparcie dla różnych ekranów}{}
+{4em}{
+    Aplikacja wspiera ekrany większości popularnych konsumenckich\\
+    urządzeń mobilnych w orientacji pionowej oraz poziomej
+}
+{7em}{
+    Aplikacja wspiera ekrany:\\
+    - w orientacji pionowej i poziomej\\
+    - o niskiej i wysokiej rozdzielczości\\
+    - o różnej proporcji
+}
+
+\wymaganie{NF7945}{MUST}{Zarządzanie błędami}{}
+{2em}{
+    Aplikacja skutecznie zarządza błędami i wyjątkami
+}
+{4em}{
+    • Aplikacja zawiera mechanizmy logowania błędów\\
+    • Aplikacja informuje użytkowników o błędach w sposób zrozumiały
+}
+
+\wymaganie{NF2946}{MUST}{System kontroli wersji}{}
+{2em}{
+    Historia zmian w kodzie projektu jest śledzona z wykorzystaniem systemu Git
+}
+{2em}{
+    Projekt wykorzystuje system GitHub
+}
+
+\wymaganie{NF9356}{MUST}{Jetpack Compose}{}
+{4em}{
+    Projekt wykorzystuje framework\\
+    Jetpack Compose do tworzenia interfejsu graficznego
+}
+{2em}{
+    Ograniczone do minimum użycie XML w projekcie
+}
+
+\wymaganie{NF5543}{MUST}{Kotlin}{}
+{2em}{
+    Aplikacja jest napisana w języku kotlin
+}
+{2em}{-}
+
+\wymaganie{NF6042}{MUST}{Architektura Single-Activity}{}
+{2em}{
+    Aplikacja jest oparta o architekturę Single-Activty
+}
+{4em}{
+    • Minimalna ilość Activity w projekcie\\
+    • Interfejs użytkownika jest podzielony na fragmenty
+}
+
+\wymaganie{NF5154}{MUST}{Obiektowość}{}
+{2em}{
+    Aplikacja jest napisana zgodnie z paradygmatem programowania obiektowego
+}
+{7em}{
+    • Wszystkie główne komponenty aplikacji są reprezentowane jako klasy\\
+    • Klasy są odpowiednio zorganizowane w pakiety zgodnie z ich funkcjonalnością\\
+    • Wykorzystanie dziedziczenia oraz polimorfizmu tam gdzie jest to odpowiednie\\
+    • Kod jest modularny i łatwy do rozszerzenia oraz utrzymania
+}
+
+\wymaganie{NF9657}{MUST}{Asynchroniczność}{}
+{5em}{
+    Aplikacja wykorzystuje Kotlin Coroutines do zarządzania\\
+    operacjami asynchronicznymi aby zapewnić efektywne wykonywanie zadań\\
+    bez blokowania głównego wątku
+}
+{2em}{
+    Długotrwałe operacje wykonywane są z użyciem Kotlin Coroutines
+}
+
+\wymaganie{NF7396}{MUST}{Model oparty na zdarzeniach}{}
+{4em}{
+    Aplikacja jest zaprojektowana w sposób oparty na zdarzeniach\\
+    aby reagować na różne akcje użytkownika oraz zmiany stanu aplikacji
+}
+{4em}{
+    • Wykorzystanie rozwiązań wspierających programowanie zdarzeniowe\\
+    • Użycie wzorca obserwatora do reagowania na zmiany w aplikacji
+}
+
+\wymaganie{NF4361}{MUST}{Ekrany ładowania}{}
+{4em}{
+    Aplikacja używa ekranów ładowania gdzie jest ryzyko\\
+    długotrwałego oczekiwania przez użytkownika
+}
+{2em}{-}
+
+\wymaganie{NF5400}{MUST}{Monitorowanie}{}
+{4em}{
+    Projekt wykorzystuje zewnętrzne platformy do śledzenia\\
+    stanu aplikacji po opublikowaniu
+}
+{5em}{
+    Projekt używa minimum jednej z poniższych platform:\\
+    - Sentry\\
+    - Firebase
+}
+
+\wymaganie{NF6368}{MUST}{Material Design \cite{materialdesign2}}{}
+{2em}{
+    Projekt implementuje system projektowania Material Design
+}
+{2em}{-}
+
+\wymaganie{NF7440}{SHOULD}{Krótki czas uruchamienia}{}
+{2em}{
+    Aplikacja uruchamia się w krótkim czasie
+}
+{2em}{
+    Aplikacja uruchamia się poniżej 1 sekundy na flagowych urządzeniach
+}
+
+\wymaganie{NF3608}{COULD}{Material Design 3 \cite{materialdesign3}}{}
+{2em}{
+    Projekt implementuje system projektowania Material Design 3
+}
+{2em}{
+    Ograniczone do minimum użycie Material Design 2 w projekcie
+}
+
+\wymaganie{NF7108}{COULD}{Wielojęzyczność}{}
+{2em}{
+    Aplikacja wspiera wiele języków
+}
+{4em}{
+    • Aplikacja jest dostępna w co najmniej trzech językach\\
+    • Aplikacja umożliwia łatwe dodawanie kolejnych języków
+}
+
+\wymaganie{NF2166}{COULD}{Kompatybilność z systemem iOS}{}
+{2em}{
+    Aplikacja jest możliwa do zainstalowania na urządzeniach z systemem iOS
+}
+{2em}{
+    Aplikacja wspiera system iOS w wersji 15 wzwyż
+}
+
+\wymaganie{NF2343}{COULD}{Kompatybilność z platformą App Store}{}
+{2em}{
+    Aplikacja spełnia wymagania stawiane przez platformę App Store
+}
+{2em}{
+    Aplikacja kwalifikuje się do publikacji na platformie App Store
+}
+
+\newpage
+
+\subsection{Wymagania funkcjonalne}{}
+
+\wymaganie{F1733}{MUST}{Ekran główny}{F2678 | F6487 | F3297 | F8612}
+{2em}{
+    Aplikacja posiada ekran główny
+}
+{2em}{-}
+
+\wymaganie{F5502}{MUST}{Ekran ustawień}{F4998 | F4785 | F3357 | F9885 | F5157 | F6742 | F1655 | F9898 | F3461 | F9203}
+{2em}{
+    Aplikacja posiada ekran ustawień
+}
+{2em}{-}
+
+\wymaganie{F2496}{MUST}{Ekran dashboardu}{F3412 | F9152 | F8766 | F8323 | F1891 | F9703 | F1463}
+{2em}{
+    Aplikacja posiada ekran wyświetlający dany dashboard
+}
+{2em}{-}
+
+\wymaganie{F5060}{MUST}{Ekran konfiguracji kafelek}{F3412 | F7166 | F9215 | F4666 | F3321 | F9132 | F4100 | F1124 | F1612}
+{2em}{
+    Aplikacja posiada ekran konfiguracji danej kafelki
+}
+{2em}{-}
+
+\wymaganie{F1685}{MUST}{Ekran konfiguracji dashboardów}{F3412 | F8156 | F5780 | F6612 | F9272 | F3936}
+{2em}{
+    Aplikacja posiada ekran konfiguracji danego dashboardu
+}
+{2em}{-}
+
+\wymaganie{F3044}{MUST}{Ekran wsparcia}{F3109 | F7429 | F8159}
+{2em}{
+    Aplikacja posiada ekran wsparcia
+}
+{2em}{-}
+
+\wymaganie{F4884}{MUST}{Protokół MQTT}{F5780 | F6612 | F9272 | F3936}
+{2em}{
+    Aplikacja komunikuje się z wykorzystaniem protokołu MQTT
+}
+{2em}{
+    Każdy dashboard jest oddzielnym klientem protokołu MQTT
+}
+
+\wymaganie{F4734}{MUST}{Kafelki}{F7166 | F9215 | F4666 | F9132 | F4100 | F1124 | F1612 | F5163 |  F8766}
+{2em}{
+    Aplikacja umożliwia dodawanie kafelek różnego typu do dashboardów
+}
+{2em}{-}
+
+\wymaganie{F3750}{MUST}{Dashboardy}{F8612 | F8156 | F1146 | F4884 | F9152}
+{2em}{
+    Aplikacja umożliwia dodanie wielu dashboardów
+}
+{2em}{-}
+
+\wymaganie{F3412}{MUST}{Szybka nawigacja}{F6395}
+{4em}{
+    Aplikacja przewiduje możliwość szybkiej nawigacji\\
+    wykorzystując gesty lub przyciski nawigacyjne
+}
+{10em}{
+    • Szybka nawigacja umożliwia przełączanie się pomiędzy ekranami:\\
+    - dashboardów\\
+    - konfiguracji dashboardów\\
+    - konfiguracji kafelek tego samego dashboaru\\
+
+    • Strzałki nawigacyjne są schowane w przypadku\\
+    \hspace*{0.5em} pojedynczego dashboardu lub pojedynczej kafelki
+}
+
+\wymaganie{F6395}{MUST}{Konfiguracja strzałek nawigacyjnych}{F3412}
+{2em}{
+    Istnieje możliwość ukrycia strzałek nawigacyjnych
+}
+{2em}{-}
+
+\wymaganie{F7166}{MUST}{Powiadomienia kafelek}{F9203}
+{4em}{
+    Kafelki posiadają możliwość włączenia funkcji\\
+    wysłania powiadomienia w przypadku otrzymania nowej wartości
+}
+{7em}{
+    Konfiguracja powiadomień kafelek obejmuje\\
+    - wyłączenie dźwięku powiadomienia\\
+    - ustawienie payloadu powiadomienia\\
+    - ustawienie tytułu powiadomienia
+    %- opcję użycia zmiennych określając tytuł oraz payload powiadomienia
+}
+
+\wymaganie{F1612}{MUST}{Animacje kafelek}{F9898}
+{2em}{
+    Kafelki posiadają animację aktualizacji
+}
+{4em}{
+    • Animacja jest uruchamiana przy każdej nowej wiadomości\\
+    • Animowany jest rozmiar kafelek poprzez zmniejszenie ich na krótką chwilę
+}
+
+\wymaganie{F3357}{MUST}{Personalizacja}{F9885}
+{2em}{
+    Aplikacja daje możliwość personalizacji poprzez ustawienie koloru wiodącego
+}
+{10em}{
+    • Użytkownik wybiera kolor używając interfejsu w formacie HSV\\
+    • Aplikacja generuje paletę kolorów na podstawie wybranego koloru\\
+    • Wygenerowana paleta wpływa na cały interfejs aplikacji\\
+    • Interfejs zachowuje wysoki kontrast niezależnie od wybranego koloru\\
+    • Dozwolona jest implementacja monochromatycznej palety\\
+    • Paleta kolorów jest dynamicznie generowana\\
+    \hspace*{0.5em} zależnie od tego czy włączony jest tryb ciemny
+}
+
+\wymaganie{F9885}{MUST}{Tryb ciemny}{F9885}
+{2em}{
+    Aplikacja daje możliwość włączenia trybu ciemnego
+}
+{2em}{
+    Tryb ciemny jest domyślnie włączony
+}
+
+\wymaganie{F9898}{MUST}{Konfiguracja animacji kafelek}{F1612}
+{2em}{
+    Istnieje możliwość wyłączenia animacji aktualizacji kafelek
+}
+{2em}{-}
+
+\wymaganie{F9203}{MUST}{Nadpisywanie powiadomień}{F7166}
+{4em}{
+    Istnieje możliwość włączenia funkcji\\
+    nadpisywania poprzednich powiadomień przez nowe
+}
+{2em}{-}
+
+\wymaganie{F9152}{MUST}{Stan dashboardu}{F4884}
+{5em}{
+    Aplikacja wyświetla aktualny stan dashboardu\\
+    na ekranie wyświetlającym dany dashboard\\
+    oraz na ekranie konfiguracji dashboardu
+}
+{7em}{
+    Możliwe stany dashboardu:\\
+    - DISCONNECTED\\
+    - FAILED TO CONNECT\\
+    - ATTEMPTING\\
+    - CONNECTED
+}
+
+\wymaganie{F1463}{MUST}{Dziennik dashboardu}{F9215 | F3461}
+{2em}{
+    Każdy dashboard posiada swój własny dziennik logów
+}
+{6em}{
+    • Dziennik jest dostępny do wyświetlenia poprzez przeciągnięcie\\
+    \hspace*{0.5em} górnej części ekranu dashboardu\\
+
+    • Przeciągnięcie do końca ekranu powoduje wyczyszczenie wpisów dziennika
+}
+
+\wymaganie{F1891}{MUST}{Tryb edycji ekranu dashboardu}{F4821}
+{2em}{
+    Ekran dashboardu posiada tryb edycji
+}
+{7em}{
+    W tym trybie wyświetlany jest pasek narzędzi dających możliwość:\\
+    - dodania nowych kafelek\\
+    - usunięcia kafelek\\
+    - zmiany układu wyświetlania kafelek\\
+    - przejścia do konfiguracji danej kafelki
+}
+
+\wymaganie{F2678}{MUST}{Tryb edycji ekranu głównego}{F5151}
+{2em}{
+    Ekran główny aplikacji posiada tryb edycji
+}
+{8em}{
+    W tym trybie wyświetlany jest pasek narzędzi dających możliwość:\\
+    - dodania nowych dashboardów\\
+    - usunięcia dashboardów\\
+    - zmiany kolejności wyświetlania kart dashboardów\\
+    - przejścia do konfiguracji danego dashboardu
+}
+
+\wymaganie{F5151}{MUST}{Usuwanie dashboardów}{}
+{4em}{
+    Tryb edycji ekranu głównego daje\\
+    dostęp do narzędzia umożliwiającego usuwanie dashboardów
+}
+{6em}{
+    • Narzędzie daje możliwość zaznaczenia kilku kart dashboardów\\
+    • Ikona narzędzia pulsuje gdy zaznaczona jest przynajmniej jedna karta\\
+    • Ponowne naciśnięcie ikony narzędzia wyświetla monit z prośbą o potwierdzenie\\
+    \hspace*{0.5em} usunięcia zaznaczonych dashboardów
+}
+
+\wymaganie{F4821}{MUST}{Usuwanie kafelek}{}
+{4em}{
+    Tryb edycji ekranu dashboardu daje\\
+    dostęp do narzędzia umożliwiającego usuwanie kafelek
+}
+{6em}{
+    • Narzędzie daje możliwość zaznaczenia kilku kafelek\\
+    • Ikona narzędzia pulsuje gdy zaznaczona jest przynajmniej jedna kafelka\\
+    • Ponowne naciśnięcie ikony narzędzia wyświetla monit z prośbą o potwierdzenie\\
+    \hspace*{0.5em} usunięcia zaznaczonych kafelek
+}
+
+\wymaganie{F3109}{MUST}{Dotacje}{F7429}
+{2em}{
+    Aplikacja umożliwia dotację jako formę wsparcia
+}
+{2em}{-}
+
+\wymaganie{F8159}{MUST}{Wersja profesjonalna}{F7429}
+{2em}{
+    Aplikacja umożliwia zakup wersji profesjonalnej pozbawionej ograniczeń
+}
+{2em}{-}
+
+\wymaganie{F8612}{MUST}{Wersja darmowa}{}
+{2em}{
+    Aplikacja w wersji darmowej jest ograniczona
+}
+{2em}{
+    Ilość dashboardów jest ograniczona do dwóch
+}
+
+\wymaganie{F7429}{MUST}{Płatności opóźnione}{}
+{2em}{
+    Aplikacja obsługuje płatności opóźnione
+}
+{2em}{-}
+
+\wymaganie{F9215}{MUST}{Logowanie wartości kafelek}{}
+{4em}{
+    Kafelki posiadają możliwość włączenia funkcji logowania\\
+    nowych wartości do dziennika dashboardu
+}
+{2em}{-}
+
+\wymaganie{F8156}{MUST}{Personalizacja dashboardów}{}
+{2em}{
+    Istnieje możliwość ustawienia nazwy, koloru oraz ikony dla dashboardów
+}
+{2em}{-}
+
+\wymaganie{F5780}{MUST}{Protokół transportowy dla MQTT}{}
+{2em}{
+    Istnieje możliwość wyboru wykorzystywanego protokołu transportowego dla MQTT
+}
+{2em}{
+    Dostępne protokoły transportowe to: TCP, SSL, WS, WSS
+}
+
+\wymaganie{F6612}{MUST}{Podstawowa konfiguracja klienta MQTT}{}
+{2em}{
+    Istnieje możliwość podstawowej konfiguracji klienta protokołu MQTT
+}
+{17em}{
+    • Login i hasło są zakrywane po wpisaniu\\
+
+    • Konfiguracja połączenia z serwerem MQTT zawiera:\\
+    - adres serwera\\
+    - protokół transportowy\\
+    - port serwera\\
+    - unikalny identyfikator klienta\\
+    - keep alive interval\\
+    - opcjonalne login oraz hasło\\
+
+    • W przypadku pozostawienia pustego pola:\\
+    - id klienta jest losowane\\
+    - keep alive interval jest ustawiane na 60
+}
+
+\wymaganie{F9272}{MUST}{Konfigruacja protokołu transportowego WebSocket dla MQTT}{}
+{4em}{
+    Istnieje możliwość dodatkowej konfiguracji\\
+    przy wykorzystaniu protokołu WebSocket
+}
+{2em}{
+    Zawiera możliwość zdefiniowania query string oraz server path
+}
+
+\wymaganie{F3936}{MUST}{Konfigruacja połączenia szyfrowanego dla MQTT}{}
+{4em}{
+    Istnieje możliwość dodatkowej konfiguracji przy wykorzystaniu\\
+    protokołów szyfrowanych takich jak SSL lub WSS
+}
+{6em}{
+    Zawiera możliwość:\\
+    - zaufania serwerom z certyfikatem selfsigned\\
+    - ustawienia niestandardowego certyfikatu CA\\
+    - ustawienia certyfikatu klienta z opcjonalnie szyfrowanym kluczem
+}
+
+\wymaganie{F8766}{MUST}{Karty kafelek}{}
+{2em}{ 
+    Aplikacja wyświetla kafelki na ekranie dashboardu
+}
+{6em}{
+    • Przytrzymanie powoduje przejście do konfiguracji danej kafelki\\
+    • Wyświetlane są na siatce złożonej z:\\
+    - dwóch kolumn dla orientacji pionowej\\
+    - czterech kolumn dla orientacji poziomej
+}
+
+\wymaganie{F3297}{MUST}{Karty dashboardów}{}
+{2em}{
+    Aplikacja wyświetla karty dashboardów na ekranie głównym
+}
+{6em}{
+    • Zawierają ikonę dashboardu oraz jego nazwę\\
+    • Są w kolorze przypisanym do danego dashboardu\\
+    • Przytrzymanie powoduje przejście do konfiguracji danego dashboardu\\
+    • Naciśnięcie powoduje przejscie do danego dashboardu
+}
+
+\wymaganie{F4666}{MUST}{Payload jako JSON}{}
+{4em}{
+    Kafelki posiadają możliwość włączenia funkcji\\
+    parsowania odbieranych wiadomości jako JSON
+}
+{2em}{
+    Funkcja jest konfigurowalna oddzielnie dla każdego topic jakiego używa kafelka
+}
+
+\wymaganie{F9132}{MUST}{Flaga retain kafelek}{}
+{2em}{
+    Kafelki posiadają możliwość ustawienia flagi retain dla wysyłanych wiadomości
+}
+{2em}{
+    Flaga jest konfigurowalna oddzielnie dla każdego topic jakiego używa kafelka
+}
+
+\wymaganie{F4100}{MUST}{QoS kafelek}{}
+{4em}{
+    Kafelki posiadają możliwość ustawienia\\
+    QoS dla wysyłanych wiadomości i subskrypcji
+}
+{2em}{-}
+
+\wymaganie{F5163}{MUST}{Wibracja kafelek}{}
+{2em}{
+    Naciskanie kafelek powoduje uruchomienie wibracji symulującej fizyczny przycisk
+}
+{2em}{-}
+
+\wymaganie{F1124}{MUST}{Personalizacja kafelek}{}
+{2em}{
+    Kafelki posiadają możliwość personalizacji przez ustawienie ikony, koloru oraz tagu
+}
+{2em}{-}
+
+\wymaganie{F3461}{MUST}{Format czasu logów}{}
+{4em}{
+    Istnieje możliwość wyboru 12h lub 24h\\
+    formatu czasu wpisów logów dashboardów
+}
+{2em}{
+    Zmiana formatu wpływa jedynie na nowe wpisy
+}
+
+\wymaganie{F5157}{MUST}{Praca w tle}{}
+{2em}{
+    Aplikacja umożliwia konfigurację pracy ciągłej w tle
+}
+{6em}{
+    • Tryb pracy w tle umożliwia ciągłą pracę aplikacji po jej zamknięciu\\
+    • Aby włączyć tryb pracy w tle wymagane jest wyłaczenie optymalizacji baterii\\
+    • Aplikacja uruchamia się bez trybu pracy w tle w przypadku\\
+    \hspace*{0.5em} gdy włączona jest optymalizacja baterii
+}
+
+\wymaganie{F6742}{MUST}{Wersja aplikacji}{}
+{2em}{
+    Użytkownika ma możliwość sprawdzenia wersji aplikacji
+}
+{11em}{
+    • Wyświetlana wersja aplikacji zawiera:\\
+    - informację czy jest to wersja profesjonalna\\
+    - numer wersji\\
+    - informację czy jest to wersja stabilna\\
+
+    • Przykłady:\\
+    - pro | 3.4.0 | stable\\
+    - free | 3.0.0 | beta
+}
+
+\wymaganie{F1146}{MUST}{Klonowanie konfiguracji dashboardu}{}
+{4em}{
+    Aplikacja umożliwia odtworzenie już istniejącej\\
+    konfiguracji innego dashbordu poprzez kopiowanie
+}
+{2em}{-}
+
+\wymaganie{F3321}{MUST}{Potwierdzenie wysłania}{}
+{4em}{
+    Kafelki posiadają możliwość włączenia funkcji\\
+    potwierdzenia przed wysłaniem nowej wartości
+}
+{2em}{-}
+
+\wymaganie{F9703}{MUST}{Poradnik ekranu dashboardu}{}
+{2em}{
+    Ekran dashboardu wyświetla poradnik tekstowy w przypadku braku kafelek
+}
+{10em}{
+    • Jest formie pytań i odpowiedzi\\
+    • Uczy użytkownika jak:\\
+    - dodawać i usuwać kafelki\\
+    - zmieniać układ kafelek\\
+    - przechodzić do konfiguracji kafelek\\
+    - gdzie znajduje się dziennik dashboardu\\
+    - jak używać szybkiej nawigacji
+}
+
+\wymaganie{F6487}{MUST}{Poradnik ekranu głównego}{}
+{2em}{
+    Ekran główny wyświetla poradnik tekstowy w przypadku braku dashboardów
+}
+{10em}{
+    • Jest formie pytań i odpowiedzi\\
+    • Uczy użytkownika jak:\\
+    - dodawać i usuwać dashboardy\\
+    - zmieniać kolejność wyświetlania dashboardów\\
+    - przechodzić do konfiguracji dashboardów\\
+    - włączyć funkcję pracy w tle oraz zmienić kolor wiodący\\
+    - jak zmienić kolor wiodący aplikacji
+}
+
+\wymaganie{F8323}{MUST}{Wyświetlanie nazwy dashboardu}{}
+{2em}{
+    Aplikacja wyświetla nazwę dashboardu na ekranie wyświetlającym dany dashboard
+}
+{2em}{
+    Nazwa dashboardu jest zawsze wyświetlana dużymi literami
+}
+
+\wymaganie{F1655}{MUST}{Ostatni dashboard}{}
+{4em}{
+    Istnieje możliwość włączenia funkcji automatycznego przejścia do ostatniego\\
+    dashboardu zamiast ekranu głównego przy starcie aplikacji
+}
+{2em}{-}
+
+\wymaganie{F4998}{MUST}{Import konfiguracji}{}
+{2em}{
+    Aplikacja przewiduje możliwość importu konfiguracji z pliku
+}
+{5em}{
+    • Istnieje możliwość wgrania pliku z pamięci urządzenia\\
+    • Po przeprowadzeniu procesu importowania konfiguracji\\
+    \hspace*{0.5em} aplikacja sprawdza czy potrzebne są nowe permisje
+}
+
+\wymaganie{F4785}{MUST}{Export konfiguracji}{F8612}
+{2em}{
+    Aplikacja przewiduje możliwość eksportu konfiguracji do pliku
+}
+{4em}{
+    • Istnieje możliwość zapisu pliku do pamięci urządzenia\\
+    • Export zawiera cały trwały stan aplikacji
+}
+
+\wymaganie{F7856}{MUST}{Kafelka button}{F4734}
+{2em}{
+    Jedna z dostępnych kafelek to button
+}
+{12em}{
+    • Po naciśnięciu wysyła wiadomość\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki jeżeli nie jest on pusty\\
+
+    • Posiada możliwość konfiguracji:\\
+    - payloadu\\
+    - publish topic
+}
+
+\wymaganie{F3557}{MUST}{Kafelka slider}{F4734 | F8814}
+{2em}{
+    Jedna z dostępnych kafelek to slider
+}
+{22em}{
+    • Umożliwia wysłanie wiadomości z konkretną liczbą z zakresu\\
+    • Zmienia obecną wartość w przypadku wiadomości będącej liczbą\\
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki lub trzy znaki zapytania jeżeli jest on pusty\\
+    - czas upłynięty od otrzymania ostatniej wiadomości\\
+    - obecną wartość kafelki\\
+
+    • Posiada możliwość konfiguracji:\\
+    - zakresu liczbowego slidera\\
+    - kroku slidera\\
+    - publish/subscribe topic\\
+    - payloadu z dostępem do flagi \textbf{@value} zawierającej obecną wartość kafelki\\
+    - funkcjonalności umożliwiającej szybkie wysłanie wiadomości\\
+    \hspace*{0.5em} poprzez przeciągnięcie kafelki zamiast używania interfejsu pełnoekranowego
+}
+
+\wymaganie{F8814}{MUST}{Kafelka slider - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka slider posiada interfejs pełnoekranowy}
+{5em}{
+    • Wyświetla suwak oraz obecnie ustawioną liczbę\\
+    • Umożliwia zmianę obecnego nastawu poprzez przeciągnięcie\\
+    • Po puszczeniu wysyła wybraną liczbę
+}
+
+\wymaganie{F7786}{MUST}{Kafelka switch}{F4734}
+{2em}{
+    Jedna z dostępnych kafelek to switch
+}
+{16em}{
+    • Umożliwia wysyłanie wiadomości w zależności od jednego z dwóch stanów (on/off)\\
+    • Pełni rolę przełącznika\\
+    • Zmienia stan w zależności od odebranej wiadomości\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki zależną od jej obecnego stanu\\
+    - tag kafelki jeżeli nie jest on pusty\\
+
+    • Posiada możliwość konfiguracji:\\
+    - off/on payload\\
+    - publish/subscribe topic\\
+    - ikony oraz koloru karty kafelki zależenie od stanu
+}
+
+\wymaganie{F4450}{MUST}{Kafelka text}{F4734 | F3254}
+{2em}{
+    Jedna z dostępnych kafelek to text
+}
+{20em}{
+    • Umożliwia wysyłanie wiadomości tekstowych\\
+    • Zmienia obecną wartość w przypadku wiadomości\\
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki lub trzy znaki zapytania jeżeli jest on pusty\\
+    - czas upłynięty od otrzymania ostatniej wiadomości\\
+    - obecną wartość kafelki\\
+
+    • Posiada możliwość konfiguracji:\\
+    - publish/subscribe topic\\
+    - trybu pracy (stały payload lub ustalany przy wysłaniu)\\
+    - payloadu w przypadku trybu pracy ze stałym payloadem\\
+    - opcji aby kafelka zajmowała wszystkie kolumny dashboardu
+}
+
+\wymaganie{F3254}{MUST}{Kafelka text - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka text posiada interfejs pełnoekranowy}
+{5em}{
+    • Zawiera pole tekstowe zawierające ustawiony payload wiadomości\\
+    • Wyświetla przycisk potwierdzenia oraz anulowania\\
+    • Zawiera informację o docelowym topic
+}
+
+\wymaganie{F4400}{MUST}{Kafelka select}{F4734}
+{2em}{
+    Jedna z dostępnych kafelek to select
+}
+{15em}{
+    • Umożliwia wysłanie z listy jednej z predefiniowanych wiadomości tekstowych\\
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki jeżeli nie jest on pusty\\
+
+    • Posiada możliwość konfiguracji:\\
+    - publish topic\\
+    - listy par wartości alias-payload\\
+    - opcji wyświetlania również payloadu na liście opcji w interfejsie użytkownika
+}
+
+\wymaganie{F7673}{MUST}{Kafelka terminal}{F4734 | F9894}
+{2em}{
+    Jedna z dostępnych kafelek to terminal
+}
+{20em}{
+    • Umożliwia wysyłanie wiadomości tekstowych\\
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+    • Karta kafelki zajmuje dwa rzędy oraz wszystkie kolumny dashboardu\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki lub trzy znaki zapytania jeżeli jest on pusty\\
+    - czas upłynięty od otrzymania ostatniej wiadomości\\
+    - historię odebranych wiadomości\\
+
+    • Posiada możliwość konfiguracji:\\
+    - publish/subscribe topic\\
+    - trybu pracy (stały payload lub ustalany przy wysłaniu)\\
+    - payloadu w przypadku trybu pracy ze stałym payloadem\\
+    - opcji aby kafelka zajmowała wszystkie kolumny dashboardu
+}
+
+\wymaganie{F9894}{MUST}{Kafelka terminal - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka terminal posiada interfejs pełnoekranowy}
+{5em}{
+    • Zawiera pole tekstowe zawierające ustawiony payload wiadomości\\
+    • Wyświetla przycisk potwierdzenia oraz anulowania\\
+    • Zawiera informację o docelowym topic
+}
+
+\wymaganie{F6252}{MUST}{Kafelka color picker}{F4734}
+{2em}{
+    Jedna z dostępnych kafelek to color picker
+}
+{17em}{
+    • Umożliwia wysłanie koloru korzystając z próbnika\\
+    • Zmienia obecną wartość jeżeli zawiera ona poprawnie sformatowany payload\\    
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki jeżeli nie jest on pusty\\
+
+    • Posiada możliwość konfiguracji:\\
+    - publish/subscribe topic\\
+    - payloadu z dostępem do flag zależnych od formatu koloru\\
+    - formatu koloru (HSV, HEX, RGB)\\
+    - opcji kolorowania karty kafelki zależnie od obecnego stanu\\
+    - opcji kolorowania karty kafelki z ignorowaniem kontrastu
+}
+
+\wymaganie{F7285}{MUST}{Kafelka thermostat}{F4734 | F7772}
+{2em}{
+    Jedna z dostępnych kafelek to thermostat
+}
+{34em}{
+    • Umożliwia kontrolowanie termostatu:\\
+    - zadanie temperatury\\
+    - opcjonalnie zadanie wilgotności\\
+    - zadanie trybu pracy termostatu\\
+
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki lub trzy znaki zapytania jeżeli jest on pusty\\
+    - czas upłynięty od otrzymania ostatniej wiadomości\\
+    - obecne wartości kafelki:\\
+    \hspace*{0.5em} - w formie tekstowej temperaturę i wilgotność\\
+    \hspace*{0.5em} - w formie wykresu kołowego temperaturę i wilgotność\\
+    \hspace*{0.5em} - w formie wykresu kołowego wartości zadane temperatury i wilgotności\\
+    
+    • Posiada możliwość konfiguracji:\\
+    - subscribe topic temperatury\\
+    - subscribe topic wilgotności\\
+    - publish/subscribe topic nastawu temperatury\\
+    - opcjonalnie publish/subscribe topic nastawu wilgotności\\
+    - publish/subscribe topic trybu pracy\\
+    - opcji kontroli nastawu wilgotności\\
+    - kroku slidera nastawu temperatury\\
+    - zakresu liczbowego slidera nastawu temperatury\\
+    - opcjonalnie kroku slidera nastawu wilgotności\\
+    - listy par wartości alias-payload dla trybu pracy termostatu
+}
+
+\wymaganie{F7772}{MUST}{Kafelka thermostat - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka thermostat posiada interfejs pełnoekranowy}
+{10em}{
+    • Wyświetla przycisk potwierdzenia oraz anulowania\\
+    • Zawiera przycisk wyboru trybu pracy\\
+    • Wyświetla obecną wilgotność oraz temperaturę\\
+    • Wyświetla temperaturę docelową\\
+    • Wyświetla kołowy suwak nastawu temperatury docelowej\\
+    • W zależności od ustawień wyświetla wilgotność docelową\\
+    • W zależności od ustawień wyświetla kołowy suwak nastawu wilgotności docelowej
+}
+
+\wymaganie{F8673}{MUST}{Kafelka time}{F4734 | F3635}
+{2em}{
+    Jedna z dostępnych kafelek to time
+}
+{17em}{
+    • Umożliwia wysyłanie wiadomości z godziną lub datą\\
+    • Zmienia obecną wartość jeżeli zawiera ona poprawnie sformatowany payload\\
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki\\
+    - tag kafelki lub trzy znaki zapytania jeżeli jest on pusty\\
+    - czas upłynięty od otrzymania ostatniej wiadomości\\
+    - obecną wartość kafelki\\
+
+    • Posiada możliwość konfiguracji:
+    - publish/subscribe topic\\
+    - typu payloadu (czas/data)\\
+    - payloadu z dostępem do flag \textbf{@hour} i \textbf{@minute} lub \textbf{@day} oraz \textbf{@month} i \textbf{@year}
+}
+
+\wymaganie{F3635}{MUST}{Kafelka time - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka time posiada interfejs pełnoekranowy
+}
+{5em}{
+    • Wyświetla przycisk potwierdzenia oraz anulowania\\
+    • Wyświetla obecnie ustawioną godzinę lub datę\\
+    • Interfejs wyboru godziny lub daty
+}
+
+\wymaganie{F6385}{MUST}{Kafelka lights}{F4734 | F4287}
+{2em}{
+    Jedna z dostępnych kafelek to lights
+}
+{32em}{
+    • Umożliwia kontrolowanie oświetlenia\\
+    - włączanie/wyłączanie oświetlenia\\
+    - ustawienie jasności oświetlenia\\
+    - opcjonalne zadanie koloru oświetlenia\\
+    - zadanie trybu pracy oświetlenia\\
+
+    • Po naciśnięciu otwiera pełnoekranowy interfejs użytkownika (patrz powiązane)\\
+
+    • Karta kafelki wyświetla:\\
+    - ikonę kafelki zależną od jej obecnego stanu\\
+    - tag kafelki jeżeli nie jest on pusty\\
+
+    • Posiada możliwość konfiguracji:\\
+    - off/on payload\\
+    - ikony oraz koloru karty kafelki zależenie od stanu\\
+    - state publish/subscribe topic\\
+    - brightness publish/subscribe topic\\
+    - color publish/subscribe topic\\
+    - mode publish/subscribe topic\\
+    - listy par wartości alias-payload dla trybu pracy oświetlenia\\
+    - opcji kontrolowania koloru oświetlenia\\
+    - opcjonalnie payloadu koloru z dostępem do flag zależnych od formatu koloru\\
+    - opcjonalnie formatu koloru (HSV, HEX, RGB)\\
+    - opcjonalnie opcji kolorowania karty kafelki zależnie od obecnego stanu\\
+    - opcjonalnie opcji kolorowania karty kafelki z ignorowaniem kontrastu
+}
+
+\wymaganie{F4287}{MUST}{Kafelka lights - interfejs pełnoekranowy}{}
+{2em}{
+    Kafelka lights posiada interfejs pełnoekranowy}
+{8em}{
+    • Wyświetla przycisk potwierdzenia oraz anulowania\\
+    • Zawiera przycisk przełączający stanu włączenia\\
+    • Zawiera przycisk wyboru trybu pracy\\
+    • Wyświetla kołowy suwak nastawu jasności oraz jego wartość\\
+    • W zależności od ustawień wyświetla interfejs wyboru koloru
+}
+
+\newpage
+
+\subsection{Wykorzystane technologie}
+
+\begin{center}
+    \begin{tabularx}{1\textwidth} {
+            | >{\hsize=0.35\hsize}X
+            | >{\hsize=0.65\hsize}X |}
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            \textbf{Technologia}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            \textbf{Zastosowanie}
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Kotlin \cite{kotlindocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Język programowania
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Jetpack Compose \cite{jetpackdocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Interfejs graficzny
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Gradle \cite{gradledocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Narzędzie automatyzacji kompilacji projektu
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Git \cite{gitdocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Śledzenie zmian w projekcie
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Sentry \cite{sentrydocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Monitorowanie aplikacji
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Firebase crashlytics \cite{getstartedfirebase}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Monitorowanie aplikacji
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            HiveMQ MQTT Client \cite{hivemqdocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Klient MQTT
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Android Studio \cite{androidstudio}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Środowisko programistyczne
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            FasterXML Jackson \cite{fasterxmldocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            Biblioteka serializacji
+        }
+        \\
+        \hline
+
+        \parbox[c][1em][c]{\textwidth}{
+            Eclipse Mosquitto \cite{mosquittodocs}
+        } &
+        \parbox[c][2.5em][c]{\textwidth}{
+            MQTT broker
+        }
+        \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\newpage
+
+\subsection{Metodyka pracy}
+
+Prezentowana aplikacja powstawała na przestrzeni kilku lat.\\
+
+Głównym celem jaki mi przyświecał była nauka programowania aplikacji mobilnych ale również stworzenie konkurencyjnego rozwiązania umożliwiającego sterowanie urządzeniami IoT z wykorzystaniem protokołu MQTT.\\
+
+Z założenia precyzyjne wymagania dotyczące projektu miały być ustalone wraz z postępem pracy.
+W związku z tym zdecydowałem się na stopniowe wdrażanie kolejnych funkcjonalności oraz testowanie ich integracji z całą aplikacją na koniec każdego etapu.\\
+
+W profesjonalnym środowisku jasno postawione wymagania jakie ma spełniać końcowy produkt oraz twardo określony schemat pracy są kluczem do powtarzalnych sukcesów. Wymaga to nie tylko doświadczenia ze strony zespołu programistów ale również trzymania się szeregu ścisłych norm. Z jednej strony pomaga ustrukturyzować to pracę czy podejmowanie kluczowych decyzji, co jest szczególnie potrzebne przy dużych projektach lub gdzie w projekt zaangażowane jest wiele osób. Z drugiej strony każda kolejna norma czy wytyczna ogranicza nam możliwość adaptacji czy wprowadzania zmian.\\
+
+Ten kompromis pomiędzy dowolnością a strukturą dającą twarde wytyczne ma miejsce niezależnie od wybranej metodyki. Jedyną różnicą jest stosunek pomiędzy tymi dwoma aspektami. Dla przykładu metodyka waterfall (artykuł Adobe - \cite{waterfall}) daje nam niską elastyczność w zamian za prostolinijność na etapie implementacji. Gdzie metodyka agile (Agile Manifesto - \cite{agilemanifesto}) stawia na luźniejsze podejście do norm ułatwiając wprowadzanie zmian.\\
+
+Dodatkowo samo wprowadzanie i trzymanie się danej metodyki pracy jest kosztem samy w sobie, często wymagającym zatrudnienia dodatkowego pracownika którego czas poświęcony jest jedynie temu.\\
+
+Biorąc pod uwagę założone cele oraz fakt, że była to praca jednoosobowa, musiałbym zmierzyć się z minimalnymi benefitami i wysokimi kosztami w innym przypadku. Brak narzuconej metodyki pracy dawał mi pełną swobodę w wprowadzaniu zmian, co umożliwiało eksperymentowanie oraz bezproblemowe wycofywanie się z błędnych decyzji.
