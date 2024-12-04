@@ -75,6 +75,29 @@
     \end{center}
 }
 
+\newcommand{\tabeladwiekolumnywiersz}[2]{
+    \parbox[c][1em][c]{\textwidth}{
+        #1
+    } &
+    \parbox[c][2.5em][c]{\textwidth}{
+        #2
+    }
+    \\
+    \hline
+}
+
+\newcommand{\tabeladwiekolumny}[3]{
+    \begin{center}
+        \begin{tabularx}{1\textwidth} {
+                | >{\hsize=#1\hsize}X
+                | >{\hsize=#2\hsize}X |}
+            \hline
+
+            #3
+        \end{tabularx}
+    \end{center}
+}
+
 \section{Faza projektowania}
 
 \subsection{Wymagania jakościowe}
@@ -572,7 +595,7 @@
 }
 
 \wymaganie{F8766}{MUST}{Karty kafelek}{}
-{2em}{ 
+{2em}{
     Aplikacja wyświetla kafelki na ekranie dashboardu
 }
 {6em}{
@@ -894,7 +917,7 @@
 }
 {17em}{
     • Umożliwia wysłanie koloru korzystając z próbnika\\
-    • Zmienia obecną wartość jeżeli zawiera ona poprawnie sformatowany payload\\    
+    • Zmienia obecną wartość jeżeli zawiera ona poprawnie sformatowany payload\\
 
     • Karta kafelki wyświetla:\\
     - ikonę kafelki\\
@@ -928,7 +951,7 @@
     \hspace*{0.5em} - w formie tekstowej temperaturę i wilgotność\\
     \hspace*{0.5em} - w formie wykresu kołowego temperaturę i wilgotność\\
     \hspace*{0.5em} - w formie wykresu kołowego wartości zadane temperatury i wilgotności\\
-    
+
     • Posiada możliwość konfiguracji:\\
     - subscribe topic temperatury\\
     - subscribe topic wilgotności\\
@@ -1033,112 +1056,52 @@
 
 \subsection{Wykorzystane technologie}
 
-\begin{center}
-    \begin{tabularx}{1\textwidth} {
-            | >{\hsize=0.35\hsize}X
-            | >{\hsize=0.65\hsize}X |}
-        \hline
+\tabeladwiekolumny{0.35}{0.65} {
+    \tabeladwiekolumnywiersz
+    {\textbf{Technologia}}
+    {\textbf{Zastosowanie}}
 
-        \parbox[c][1em][c]{\textwidth}{
-            \textbf{Technologia}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            \textbf{Zastosowanie}
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Kotlin \cite{kotlindocs}}
+    {Język programowania}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Kotlin \cite{kotlindocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Język programowania
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Jetpack Compose \cite{jetpackdocs}}
+    {Interfejs graficzny}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Jetpack Compose \cite{jetpackdocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Interfejs graficzny
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Gradle \cite{gradledocs}}
+    {Narzędzie automatyzacji kompilacji projektu}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Gradle \cite{gradledocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Narzędzie automatyzacji kompilacji projektu
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Git \cite{gitdocs}}
+    {Śledzenie zmian w projekcie}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Git \cite{gitdocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Śledzenie zmian w projekcie
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Sentry \cite{sentrydocs}}
+    {Monitorowanie aplikacji}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Sentry \cite{sentrydocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Monitorowanie aplikacji
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Firebase crashlytics \cite{getstartedfirebase}}
+    {Monitorowanie aplikacji}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Firebase crashlytics \cite{getstartedfirebase}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Monitorowanie aplikacji
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {HiveMQ MQTT Client \cite{hivemqdocs}}
+    {Klient MQTT}
 
-        \parbox[c][1em][c]{\textwidth}{
-            HiveMQ MQTT Client \cite{hivemqdocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Klient MQTT
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Android Studio \cite{androidstudio}}
+    {Środowisko programistyczne}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Android Studio \cite{androidstudio}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Środowisko programistyczne
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {FasterXML Jackson \cite{fasterxmldocs}}
+    {Biblioteka serializacji}
 
-        \parbox[c][1em][c]{\textwidth}{
-            FasterXML Jackson \cite{fasterxmldocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            Biblioteka serializacji
-        }
-        \\
-        \hline
+    \tabeladwiekolumnywiersz
+    {Eclipse Mosquitto \cite{mosquittodocs}}
+    {MQTT broker}
 
-        \parbox[c][1em][c]{\textwidth}{
-            Eclipse Mosquitto \cite{mosquittodocs}
-        } &
-        \parbox[c][2.5em][c]{\textwidth}{
-            MQTT broker
-        }
-        \\
-        \hline
-    \end{tabularx}
-\end{center}
+}
 
 \newpage
 
