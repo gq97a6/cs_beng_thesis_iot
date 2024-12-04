@@ -49,19 +49,19 @@ abstract val state: Any
 \begin{lstlisting}[language=Kotlin]
 //Metoda uruchamiana w momencie gdy demon jest przydzielany do dashboardu
 open fun notifyAssigned() {
-  isDischarged = false
+    isDischarged = false
 }
 
 //Metoda uruchamiana w momencie gdy demon jest zwalniany z użytku
 open fun notifyDischarged() {
-  isDischarged = true
+    isDischarged = true
 }
 
 //Metoda uruchamiana w momencie zmiany konfiguracji demona
 open fun notifyConfigChanged() {}
 \end{lstlisting}
 
-\vspace{2em}
+\vspace{1em}
 
 Dodatkowo klasa \tcbox{Daemon} posiada \tcbox{companion object} definiujący \tcbox{invoke operator}.\\
 
@@ -70,10 +70,10 @@ Natomiast \tcbox{invoke operator} pozwala na wywołanie obiektu jako funkcji.\\
 
 \begin{lstlisting}[language=Kotlin]
 companion object {
-  operator fun invoke(context: Context, dashboard: Dashboard, type: Type) =
+    operator fun invoke(context: Context, dashboard: Dashboard, type: Type) =
     when (type) {
-      Type.MQTTD -> Mqttd::class
-      Type.BLUETOOTHD -> Bluetoothd::class
+        Type.MQTTD -> Mqttd::class
+        Type.BLUETOOTHD -> Bluetoothd::class
     }.constructors.first().call(context, dashboard)
 }
 \end{lstlisting}
@@ -105,24 +105,24 @@ private var topics: MutableList<Pair<String, Int>> = mutableListOf()
 //Pola dziedziczone po klasie Deamon
 
 public override val isEnabled
-  get() = d.mqtt.isEnabled && !isDischarged
+    get() = d.mqtt.isEnabled && !isDischarged
 
 private val isConnected
-  get() = client?.config?.state?.isConnected ?: false
+    get() = client?.config?.state?.isConnected ?: false
 
 override val statePing: MutableLiveData<String?> = MutableLiveData(null)
 
 override val state: State
-  get() = if (manager.isWorking) State.ATTEMPTING
-  else try {
-    if (!isConnected) State.DISCONNECTED
-    else if (currentConfig.sslRequired && !currentConfig.sslTrustAll) {
-      State.CONNECTED_SSL
-    } else State.CONNECTED
-  } catch (e: Exception) {
-    Debug.recordException(e)
-    State.FAILED
-  }
+    get() = if (manager.isWorking) State.ATTEMPTING
+    else try {
+        if (!isConnected) State.DISCONNECTED
+        else if (currentConfig.sslRequired && !currentConfig.sslTrustAll) {
+            State.CONNECTED_SSL
+        } else State.CONNECTED
+    } catch (e: Exception) {
+        Debug.recordException(e)
+        State.FAILED
+    }
 \end{lstlisting}
 
 \newpage
@@ -131,37 +131,37 @@ override val state: State
 
 \begin{lstlisting}[language=Kotlin]
 inner class Manager : StatusManager() {
-  override fun isStable(): Boolean {
-    return isConnected == isEnabled && (currentConfig == d.mqtt || !isEnabled)
-  }
+    override fun isStable(): Boolean {
+        return isConnected == isEnabled && (currentConfig == d.mqtt || !isEnabled)
+    }
 
-  override fun makeStable() {
-    if (isEnabled) {
-      if (isConnected) {
-        Debug.log("MQTT_DISCONNECT")
-        client?.disconnect()
-      } else {
-        if (currentConfig != d.mqtt || client == null) {
-          Debug.log("MQTT_BUILD_NEW_CLIENT")
-          buildClient(d.mqtt.copy())
+    override fun makeStable() {
+        if (isEnabled) {
+            if (isConnected) {
+                Debug.log("MQTT_DISCONNECT")
+                client?.disconnect()
+            } else {
+                if (currentConfig != d.mqtt || client == null) {
+                    Debug.log("MQTT_BUILD_NEW_CLIENT")
+                    buildClient(d.mqtt.copy())
+                }
+                Debug.log("MQTT_CONNECT")
+                client?.connect()
+            }
+        } else {
+            Debug.log("MQTT_CLOSE")
+            client?.disconnect()
         }
-        Debug.log("MQTT_CONNECT")
-        client?.connect()
-      }
-    } else {
-      Debug.log("MQTT_CLOSE")
-      client?.disconnect()
     }
-  }
 
-  override fun onJobDone() = statePing.postValue("")
-  override fun onJobStart() = statePing.postValue(null)
-  override fun onException(e: Exception) {
-    super.onException(e)
-    when (e) {
-      is IllegalArgumentException -> statePing.postValue(e.message)
+    override fun onJobDone() = statePing.postValue("")
+    override fun onJobStart() = statePing.postValue(null)
+    override fun onException(e: Exception) {
+        super.onException(e)
+        when (e) {
+            is IllegalArgumentException -> statePing.postValue(e.message)
+        }
     }
-  }
 }
 \end{lstlisting}
 
@@ -171,46 +171,46 @@ Kluczową częścią klasy \tcbox{Mqttd} jest funkcja \tcbox{buildClient}. Bierz
 
 \begin{lstlisting}[language=Kotlin]
 fun buildClient(config: MqttConfig) {
-  var client = Mqtt5Client.builder()
-    .identifier(config.clientId)
-    .serverHost(config.address)
-    .serverPort(config.port)
-    .addConnectedListener {
-      Debug.log("MQTT_ON_CONNECTED")
-      topicCheck()
-      statePing.postValue("")
-    }
-    .addDisconnectedListener {
-      Debug.log("MQTT_ON_DISCONNECTED")
-      topics = mutableListOf()
-      manager.dispatch(reason = "connection")
+    var client = Mqtt5Client.builder()
+        .identifier(config.clientId)
+        .serverHost(config.address)
+        .serverPort(config.port)
+        .addConnectedListener {
+            Debug.log("MQTT_ON_CONNECTED")
+            topicCheck()
+            statePing.postValue("")
+        }
+        .addDisconnectedListener {
+            Debug.log("MQTT_ON_DISCONNECTED")
+            topics = mutableListOf()
+            manager.dispatch(reason = "connection")
 
-      if (it.cause !is ConnectionFailedException) statePing.postValue("")
-      else statePing.postValue(it.cause.cause?.message)
-  }
+            if (it.cause !is ConnectionFailedException) statePing.postValue("")
+            else statePing.postValue(it.cause.cause?.message)
+        }
 
-  //W razie potrzeby konfiguruje autoryzację
-  if (config.includeCred) client = client.simpleAuth()
-    .username(config.username)
-    .password(config.pass.toByteArray())
-    .applySimpleAuth()
+    //W razie potrzeby konfiguruje autoryzację
+    if (config.includeCred) client = client.simpleAuth()
+        .username(config.username)
+        .password(config.pass.toByteArray())
+        .applySimpleAuth()
 
-  //W razie potrzeby konfiguruje użycie protokołu WebSocket
-  if (config.protocol == Protocol.WS || config.protocol == Protocol.WSS) {
-    client = client
-      .webSocketConfig()
-      .queryString(config.queryString)
-      .serverPath(config.serverPath)
-      .applyWebSocketConfig()
-  }
+        //W razie potrzeby konfiguruje użycie protokołu WebSocket
+        if (config.protocol == Protocol.WS || config.protocol == Protocol.WSS) {
+            client = client
+                .webSocketConfig()
+                .queryString(config.queryString)
+                .serverPath(config.serverPath)
+                .applyWebSocketConfig()
+        }
 
-  //W razie potrzeby konfiguruje szyfrowanie
-  //Metoda setupSSL jest opisana niżej
-  if (config.sslRequired) client = client.setupSSL(config)
+    //W razie potrzeby konfiguruje szyfrowanie
+    //Metoda setupSSL jest opisana niżej
+    if (config.sslRequired) client = client.setupSSL(config)
 
-  //Buduje klienta i aktualizuje obecny config
-  this.client = client.buildAsync()
-  currentConfig = config
+    //Buduje klienta i aktualizuje obecny config
+    this.client = client.buildAsync()
+    currentConfig = config
 }
 \end{lstlisting}
 
@@ -218,57 +218,57 @@ fun buildClient(config: MqttConfig) {
 
 Poniżej znajduje się metoda odpowiedzialna za konfigurację:
 \begin{itemize}[leftmargin=*]
-  \item szyfrowania połaczenia
-  \item użycia certyfikatów i kluczy klienta
-  \item związaną z wykorzystaniem niestandardowego urzędu certyfikacji (CA)
-  \item związaną z opcją pominięcia weryfikacji certyfikatu serwera 
+    \item szyfrowania połaczenia
+    \item użycia certyfikatów i kluczy klienta
+    \item związaną z wykorzystaniem niestandardowego urzędu certyfikacji (CA)
+    \item związaną z opcją pominięcia weryfikacji certyfikatu serwera
 \end{itemize}
 
 \begin{lstlisting}[language=Kotlin]
 private fun Mqtt5ClientBuilder.setupSSL(config: MqttConfig): Mqtt5ClientBuilder {
-  //---------------------------------------------------------------------------
-  //Tworzy magazyn kluczy z certyfikatem i kluczem klienta
-  val kmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
-  val kmfKeyPassword = UUID.randomUUID().toString().toCharArray()
-  kmfStore.load(null, null)
-  kmfStore.setCertificateEntry("cc", config.clientCert)
-  config.clientKey?.let {
-    kmfStore.setKeyEntry(
-      "k",
-      it.private,
-      kmfKeyPassword,
-      arrayOf<Certificate?>(config.clientCert)
-    )
-  }
-  //---------------------------------------------------------------------------
-  //Tworzy magazyn kluczy używany do weryfikacji serwera
-  //Opcjonalne dodawany jest certyfikat niestandardowego urzędu certyfikacji
-  //Ma to na celu dodanie wsparcia dla self-signed certyfikatów serwera
-  //zachowując jednocześnie bezpieczeństwo przed atakami typu MITM
-  var tmfStore: KeyStore? = null
-  if (config.caCert != null) {
-    tmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
-    tmfStore.load(null, null)
-    tmfStore.setCertificateEntry("c", config.caCert)
-  }
-  
-  //KeyManager decyduje które dane uwierzytelniające
-  //powinny zostać wysłane do hosta zdalnego
-  val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
-  kmf.init(kmfStore, kmfKeyPassword)
+    //---------------------------------------------------------------------------
+    //Tworzy magazyn kluczy z certyfikatem i kluczem klienta
+    val kmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
+    val kmfKeyPassword = UUID.randomUUID().toString().toCharArray()
+    kmfStore.load(null, null)
+    kmfStore.setCertificateEntry("cc", config.clientCert)
+    config.clientKey?.let {
+        kmfStore.setKeyEntry(
+            "k",
+            it.private,
+            kmfKeyPassword,
+            arrayOf<Certificate?>(config.clientCert)
+        )
+    }
+    //---------------------------------------------------------------------------
+    //Tworzy magazyn kluczy używany do weryfikacji serwera
+    //Opcjonalne dodawany jest certyfikat niestandardowego urzędu certyfikacji
+    //Ma to na celu dodanie wsparcia dla self-signed certyfikatów serwera
+    //zachowując jednocześnie bezpieczeństwo przed atakami typu MITM
+    var tmfStore: KeyStore? = null
+    if (config.caCert != null) {
+        tmfStore = KeyStore.getInstance(KeyStore.getDefaultType())
+        tmfStore.load(null, null)
+        tmfStore.setCertificateEntry("c", config.caCert)
+    }
 
-  val alg = TrustManagerFactory.getDefaultAlgorithm()
+    //KeyManager decyduje które dane uwierzytelniające
+    //powinny zostać wysłane do hosta zdalnego
+    val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
+    kmf.init(kmfStore, kmfKeyPassword)
 
-  //TrustManager określa czy zdalne połączenie powinno być uznawane za zaufane
-  val tmf = if (!config.sslTrustAll) TrustManagerFactory.getInstance(alg)
-  else TrustAllTrustManagerFactory()
+    val alg = TrustManagerFactory.getDefaultAlgorithm()
 
-  if (!config.sslTrustAll) tmf.init(tmfStore)
+    //TrustManager określa czy zdalne połączenie powinno być uznawane za zaufane
+    val tmf = if (!config.sslTrustAll) TrustManagerFactory.getInstance(alg)
+    else TrustAllTrustManagerFactory()
 
-  return this.sslConfig()
-    .keyManagerFactory(kmf)
-    .trustManagerFactory(tmf)
-    .applySslConfig()
+    if (!config.sslTrustAll) tmf.init(tmfStore)
+
+    return this.sslConfig()
+        .keyManagerFactory(kmf)
+        .trustManagerFactory(tmf)
+        .applySslConfig()
 }
 \end{lstlisting}
 
@@ -523,22 +523,22 @@ Klasa dziedzicząca po klasie \tcbox{Application}. Jest to specjalna klasa któr
 
 \begin{lstlisting}[language=Kotlin]
 class AtomApp : Application() {
-  companion object {
-    //Globalny stan aplikacji
-    //Więcej na ten temat w kolejnym dziale
-    val aps = AtomAppState()
+    companion object {
+        //Globalny stan aplikacji
+        //Więcej na ten temat w kolejnym dziale
+        val aps = AtomAppState()
 
-    //Globalne odniesienie do aplikacji
-    lateinit var app: AtomApp
-  }
+        //Globalne odniesienie do aplikacji
+        lateinit var app: AtomApp
+    }
 
-  //Metoda uruchamiana w momencie startu aplikacji
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    //Uruchomienie procesu inicjalizacji aplikacji
-    Setup.initialize()
-  }
+    //Metoda uruchamiana w momencie startu aplikacji
+    override fun onCreate() {
+        super.onCreate()
+        app = this
+        //Uruchomienie procesu inicjalizacji aplikacji
+        Setup.initialize()
+    }
 }
 \end{lstlisting}
 
@@ -590,9 +590,9 @@ Klasa odpowiedzialna za dynamiczny motyw aplikacji wszędzie gdzie wykorzystany 
 
 Wygenerowana paleta składa się z następujących kolorów:
 \begin{itemize}[leftmargin=*]
-  \item \textbf{color}: kolor bazowy
-  \item \textbf{background}: kolor tła
-  \item \textbf{a, b, c, d}: kolejne kolory akcentowe zbliżające się do koloru tła
+    \item \textbf{color}: kolor bazowy
+    \item \textbf{background}: kolor tła
+    \item \textbf{a, b, c, d}: kolejne kolory akcentowe zbliżające się do koloru tła
 \end{itemize}
 
 \vspace{1em}
@@ -614,9 +614,9 @@ var pallet: ColorPallet
 
 //Metoda generującą paletę
 fun getColorPallet(
-  hsv: FloatArray,
-  isAltCon: Boolean = false,
-  isRaw: Boolean = false
+    hsv: FloatArray,
+    isAltCon: Boolean = false,
+    isRaw: Boolean = false
 ): ColorPallet
 \end{lstlisting}
 
@@ -625,16 +625,16 @@ fun getColorPallet(
 Proces generowania palety przebiega w kilku krokach:
 
 \begin{enumerate}[leftmargin=*]
-  \item Generowany jest kolor tła. Nie jest on zależny od koloru źródłowego.\\ Ma on oddzielną wartość dla trybu ciemnego i dla trybu jasnego.
-  \item Na podstawie koloru źródłowego generowany jest kolor bazowy. Jeżeli paleta \tcbox{isRaw} to kolor bazowy jest równy kolorowi źródłowemu.\\
-  W innym przypadku jest to kolor źródłowy ograniczony w jak najmniejszym stopniu, ale na tyle aby spełniał wymóg kontrastu.
-  \item Generowane są kolory akcentowe poprzez mieszanie ich z kolorem tła. Stosunek mieszania jest taki sam dla każdego koloru. Ma on oddzielną wartość dla trybu ciemnego i oddzielną wartość dla trybu jasnego:
-  \begin{itemize}[leftmargin=*]
-    \item \textbf{a}: kolor bazowy z kolorem tła
-    \item \textbf{b}: kolor \textbf{a} z kolorem tła
-    \item \textbf{c}: kolor \textbf{b} z kolorem tła
-    \item \textbf{d}: kolor \textbf{c} z kolorem tła
-  \end{itemize}
+    \item Generowany jest kolor tła. Nie jest on zależny od koloru źródłowego.\\ Ma on oddzielną wartość dla trybu ciemnego i dla trybu jasnego.
+    \item Na podstawie koloru źródłowego generowany jest kolor bazowy. Jeżeli paleta \tcbox{isRaw} to kolor bazowy jest równy kolorowi źródłowemu.\\
+    W innym przypadku jest to kolor źródłowy ograniczony w jak najmniejszym stopniu, ale na tyle aby spełniał wymóg kontrastu.
+    \item Generowane są kolory akcentowe poprzez mieszanie ich z kolorem tła. Stosunek mieszania jest taki sam dla każdego koloru. Ma on oddzielną wartość dla trybu ciemnego i oddzielną wartość dla trybu jasnego:
+    \begin{itemize}[leftmargin=*]
+        \item \textbf{a}: kolor bazowy z kolorem tła
+        \item \textbf{b}: kolor \textbf{a} z kolorem tła
+        \item \textbf{c}: kolor \textbf{b} z kolorem tła
+        \item \textbf{d}: kolor \textbf{c} z kolorem tła
+    \end{itemize}
 \end{enumerate}
 
 \newpage
@@ -652,25 +652,25 @@ companion object {
 //Metoda mająca za zadanie ustawić motyw aplikacji dla danej grupy widoków
 //Uruchamiana jest rekurencyjnie tak aby zadziałała dla każdego widoku w drzewie
 private fun ViewGroup.applyTheme(p: ColorPallet) {
-  for (i in 0 until this.childCount) {
-    this.getChildAt(i).let {
-      if (it is ViewGroup) it.applyTheme(p)
-      it.defineType(p)
+    for (i in 0 until this.childCount) {
+        this.getChildAt(i).let {
+            if (it is ViewGroup) it.applyTheme(p)
+            it.defineType(p)
+        }
     }
-  }
 
-  this.defineType(p)
+    this.defineType(p)
 }
 
 //Uruchamiaja docelową metodę odpowiedzialną za stylizację danego elementu
 private fun View.defineType(p: ColorPallet) {
-  when (this) {
-      is RadioButton -> this.applyTheme(p)
-      is Chip -> this.applyTheme(p)
-      is RecyclerView -> this.applyTheme(p)
-      is CircularSeekBar -> this.applyTheme(p)
-      //itp.
-  }
+    when (this) {
+        is RadioButton -> this.applyTheme(p)
+        is Chip -> this.applyTheme(p)
+        is RecyclerView -> this.applyTheme(p)
+        is CircularSeekBar -> this.applyTheme(p)
+        //itp.
+    }
 }
 
 //Docelowe metody stylizujące
@@ -695,15 +695,15 @@ Obiekt odpowiedzialny za centralizację wykorzystania narzędzi używanych do ś
 
 \begin{lstlisting}[language=Kotlin]
 object Debug {
-  //Dodaje dodatkowe niestandardowe informacje do raportu
-  fun log(payload: String) {
-    Sentry.addBreadcrumb(payload)
-  }
+    //Dodaje dodatkowe niestandardowe informacje do raportu
+    fun log(payload: String) {
+        Sentry.addBreadcrumb(payload)
+    }
 
-  //Przesyła raport w przypadku wystąpienia błedu
-  fun recordException(exception: Exception) {
-    Sentry.captureException(exception)
-  }
+    //Przesyła raport w przypadku wystąpienia błedu
+    fun recordException(exception: Exception) {
+        Sentry.captureException(exception)
+    }
 }
 \end{lstlisting}
 
@@ -712,19 +712,19 @@ Obiekt ułatwiający tworzenie okien dialogowych dla interfejsu używającego XM
 
 \begin{lstlisting}[language=Kotlin]
 object DialogBuilder {
-  //Wyświetla dialog z pytaniem o potwierdzenie zadanej akcji
-  inline fun Context.buildConfirm(
-    message: String,
-    label: String,
-    textSize: Float = 20f,
-    textAlign: Int = TEXT_ALIGNMENT_CENTER,
-    crossinline onDeny: () -> Unit = {},
-    crossinline onConfirm: () -> Unit
-  )
+    //Wyświetla dialog z pytaniem o potwierdzenie zadanej akcji
+    inline fun Context.buildConfirm(
+        message: String,
+        label: String,
+        textSize: Float = 20f,
+        textAlign: Int = TEXT_ALIGNMENT_CENTER,
+        crossinline onDeny: () -> Unit = {},
+        crossinline onConfirm: () -> Unit
+    )
 
-  //Dostosowuje interfejs to wyświetlania dialogu
-  //Między innymi przyciemnia to co wyświetla się za dialogiem
-  fun Dialog.dialogSetup()
+    //Dostosowuje interfejs to wyświetlania dialogu
+    //Między innymi przyciemnia to co wyświetla się za dialogiem
+    fun Dialog.dialogSetup()
 }
 \end{lstlisting}
 
@@ -735,14 +735,14 @@ Obiekt służący do zarządzania licencjonowaniem aplikacji. Licencja służy j
 
 \begin{lstlisting}[language=Kotlin]
 object Pro {
-  //Sprawdza czy plik licencji istnieje
-  fun getLicenceStatus(): Boolean
+    //Sprawdza czy plik licencji istnieje
+    fun getLicenceStatus(): Boolean
 
-  //Tworzy plik licenji
-  fun createLocalLicence()
+    //Tworzy plik licenji
+    fun createLocalLicence()
 
-  //Usuwa plik licencji
-  fun removeLocalLicence()
+    //Usuwa plik licencji
+    fun removeLocalLicence()
 }
 \end{lstlisting}
 
@@ -752,9 +752,9 @@ Posiada pole \tcbox{cats} będące listą dostępnych kategorii ikon oraz pole \
 
 \begin{lstlisting}[language=Kotlin]
 data class Icon(
-  val res: Int = 0, //ID zasobu
-  val type: String = "", //Typ ikony
-  val cat: String = "" //Kategoria ikony
+    val res: Int = 0, //ID zasobu
+    val type: String = "", //Typ ikony
+    val cat: String = "" //Kategoria ikony
 )
 \end{lstlisting}
 
@@ -765,9 +765,9 @@ Obiekt odpowiedzialny za serializację obiektów. Wykorzystuje mapę \tcbox{path
 
 \begin{lstlisting}[language=Kotlin]
 aps.path = mapOf(
-  Theme::class to "${aps.rootFolder}/theme",
-  Settings::class to "${aps.rootFolder}/settings",
-  Dashboard::class to "${aps.rootFolder}/dashboards"
+    Theme::class to "${aps.rootFolder}/theme",
+    Settings::class to "${aps.rootFolder}/settings",
+    Dashboard::class to "${aps.rootFolder}/dashboards"
 )
 \end{lstlisting}
 
@@ -801,20 +801,20 @@ Metody służące serializacji obiektów.
 \begin{lstlisting}[language=Kotlin]
 //Metoda zapisująca obiekt dowolnej klasy do pliku
 fun Any.saveToFile(save: String = this.prepareSave()) {
-  try {
-    val path = aps.path[this::class]
-    File(path!!).writeText(save)
-  } catch (_: Exception) {
-  }
+    try {
+        val path = aps.path[this::class]
+        File(path!!).writeText(save)
+    } catch (_: Exception) {
+    }
 }
 
 //Metoda zapisująca kolekcję obiektów dowolnej klasy do pliku
 inline fun <reified T> Collection<T>.saveToFile(save: String = this.prepareSave()) {
-  try {
-      val path = aps.path[T::class]
-      File(path!!).writeText(save)
-  } catch (_: Exception) {
-  }
+    try {
+        val path = aps.path[T::class]
+        File(path!!).writeText(save)
+    } catch (_: Exception) {
+    }
 }
 \end{lstlisting}
 
@@ -825,19 +825,19 @@ Metody służące deserializacji obiektów.
 \begin{lstlisting}[language=Kotlin]
 //Metoda deserializująca obiekt dowolnej klasy z pliku
 inline fun <reified T> parseSave(save: String = getSave<T>()): T? =
-  try {
-      mapper.readValue(save, T::class.java)
-  } catch (_: Exception) {
-      null
-  }
+    try {
+        mapper.readValue(save, T::class.java)
+    } catch (_: Exception) {
+        null
+    }
 
 //Metoda deserializująca kolekcję obiektów dowolnej klasy z pliku
 inline fun <reified T> parseListSave(save: String = getSave<T>()): MutableList<T> =
-  try {
-      mapper.readerForListOf(T::class.java).readValue(save)
-  } catch (_: Exception) {
-      mutableListOf()
-  }
+    try {
+        mapper.readerForListOf(T::class.java).readValue(save)
+    } catch (_: Exception) {
+        mutableListOf()
+    }
 \end{lstlisting}
 
 \vspace{1em}
@@ -865,22 +865,22 @@ Obiekt zawierający metody odpowiedzialne za kolejne etapy procesu inicjalizacji
 
 \begin{lstlisting}[language=Kotlin]
 object Setup {
-  //Główna metoda rozpoczynająca inicjalizację
-  fun initialize() {
-    Debug.log("INIT")
-    setFilesPaths()
-    initializeBasicGlobals()
+    //Główna metoda rozpoczynająca inicjalizację
+    fun initialize() {
+        Debug.log("INIT")
+        setFilesPaths()
+        initializeBasicGlobals()
 
-    CoroutineScope(Dispatchers.Default).launch {
-      updateProStatus()
-      checkBilling()
-      checkBatteryStatus()
-      configureForegroundService()
-      initializeOtherGlobals()
-      assignDaemons()
-      finish()
+        CoroutineScope(Dispatchers.Default).launch {
+            updateProStatus()
+            checkBilling()
+            checkBatteryStatus()
+            configureForegroundService()
+            initializeOtherGlobals()
+            assignDaemons()
+            finish()
+        }
     }
-  }
 
   //Konfiguruje zmienne aps.rootFolder oraz aps.path
   private fun setFilesPaths()
@@ -902,40 +902,40 @@ object Setup {
 \newpage
 
 \begin{lstlisting}[language=Kotlin]
-  //Konfiguruje użycie foreground service
-  //Zatrzymuje ją jeśli nie jest potrzebna
-  //W innym przypadku uruchamia ją
-  private suspend fun configureForegroundService() {
-    //Usługa nie włączona ale działa
-    if (!aps.settings.fgEnabled && service?.isStarted == true) {
-      DaemonsManager.dischargeAll()
-      ForegroundService.stop(app)
+    //Konfiguruje użycie foreground service
+    //Zatrzymuje ją jeśli nie jest potrzebna
+    //W innym przypadku uruchamia ją
+    private suspend fun configureForegroundService() {
+        //Usługa nie włączona ale działa
+        if (!aps.settings.fgEnabled && service?.isStarted == true) {
+            DaemonsManager.dischargeAll()
+            ForegroundService.stop(app)
+        }
+
+        //Usługa jest włączona ale nie uruchomiona
+        else if (aps.settings.fgEnabled && service?.isStarted != true) {
+            //Zwalnia demony na wypadek jeżeli któryś pracuje
+            DaemonsManager.dischargeAll()
+
+            //Uruchamia usługę i czeka na jej start
+            ForegroundService.start(app)
+            ForegroundService.haltForService()
+        }
     }
 
-    //Usługa jest włączona ale nie uruchomiona
-    else if (aps.settings.fgEnabled && service?.isStarted != true) {
-      //Zwalnia demony na wypadek jeżeli któryś pracuje
-      DaemonsManager.dischargeAll()
+    //Konfiguruje pozostałe zmienne globalne
+    private fun initializeOtherGlobals()
 
-      //Uruchamia usługę i czeka na jej start
-      ForegroundService.start(app)
-      ForegroundService.haltForService()
+    //W zależności czy praca w tle jest włączona
+    //Uruchamia demony z kontekstem aplikacji lub usługi
+    private fun assignDaemons() {
+        val context: Context = if (!aps.settings.fgEnabled) app
+        else service!!
+
+        DaemonsManager.assignAll(context)
     }
-  }
 
-  //Konfiguruje pozostałe zmienne globalne
-  private fun initializeOtherGlobals()
-
-  //W zależności czy praca w tle jest włączona
-  //Uruchamia demony z kontekstem aplikacji lub usługi
-  private fun assignDaemons() {
-    val context: Context = if (!aps.settings.fgEnabled) app
-    else service!!
-
-    DaemonsManager.assignAll(context)
-  }
-
-  private fun finish() = aps.isInitialized.postValue(true)
+    private fun finish() = aps.isInitialized.postValue(true)
 }
 \end{lstlisting}
 
@@ -961,21 +961,21 @@ internal lateinit var client: BillingClient
 private val manager = Manager()
 
 companion object {
-  //ID produktów
-  var PRO = "atom_dashboard_pro"
-  var DON1 = "atom_dashboard_don1"
-  var DON5 = "atom_dashboard_don5"
-  var DON25 = "atom_dashboard_don25"
+    //ID produktów
+    var PRO = "atom_dashboard_pro"
+    var DON1 = "atom_dashboard_don1"
+    var DON5 = "atom_dashboard_don5"
+    var DON25 = "atom_dashboard_don25"
 }
 
 fun enable() {
-  isEnabled = true
-  manager.dispatch(reason = "enable")
+    isEnabled = true
+    manager.dispatch(reason = "enable")
 }
 
 fun disable() {
-  isEnabled = false
-  manager.dispatch(reason = "disable")
+    isEnabled = false
+    manager.dispatch(reason = "disable")
 }
 
 //Buduje klienta płatności
@@ -1008,54 +1008,386 @@ suspend fun lunchPurchaseFlow(id: String)
 //Pobiera listę zakupionych produktów według filtru
 //Czas wykonywania wynosi minimum wartości eta
 suspend inline fun checkPurchases(
-  eta: Long = 10000,
-  filter: (Purchase) -> Boolean = { !it.isAcknowledged },
-  onDone: (List<Purchase>?) -> Unit = {}
+    eta: Long = 10000,
+    filter: (Purchase) -> Boolean = { !it.isAcknowledged },
+    onDone: (List<Purchase>?) -> Unit = {}
 )
 
 inner class Manager : StatusManager(100) {
-  override fun isStable(): Boolean = when (client.connectionState) {
-    CONNECTED -> isEnabled
-    CONNECTING -> false
-    DISCONNECTED, CLOSED -> !isEnabled
-    else -> true
-  }
-
-  override fun makeStable() {
-    if (client.connectionState == CLOSED) createClient()
-    else if (!isEnabled) client.endConnection()
-    else if (client.connectionState != CONNECTING) {
-      client.startConnection(object : BillingClientStateListener {
-        override fun onBillingSetupFinished(billingResult: BillingResult) {}
-        override fun onBillingServiceDisconnected() {}
-      })
+    override fun isStable(): Boolean = when (client.connectionState) {
+        CONNECTED -> isEnabled
+        CONNECTING -> false
+        DISCONNECTED, CLOSED -> !isEnabled
+        else -> true
     }
-  }
 
-  //Wstrzymuje pracę do momentu ustabilizowania połączenia
-  suspend fun awaitDone(timeout: Long = 5000): Boolean = 
-    withTimeoutOrNull(timeout) {
-      while (!isStable()) delay(100)
-      return@withTimeoutOrNull client.isReady
-    } ?: false
+    override fun makeStable() {
+        if (client.connectionState == CLOSED) createClient()
+        else if (!isEnabled) client.endConnection()
+        else if (client.connectionState != CONNECTING) {
+            client.startConnection(object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {}
+                override fun onBillingServiceDisconnected() {}
+            })
+        }
+    }
+
+    //Wstrzymuje pracę do momentu ustabilizowania połączenia
+    suspend fun awaitDone(timeout: Long = 5000): Boolean = 
+        withTimeoutOrNull(timeout) {
+            while (!isStable()) delay(100)
+            return@withTimeoutOrNull client.isReady
+        } ?: false
 }
 \end{lstlisting}
 
 \newpage
 
 \subsubsection{FragmentManager}
+Klasa zarządzająca nawigacją w aplikacji. Posiada następujące pola oraz metody:
+
+\begin{lstlisting}[language=Kotlin]
+//Stos fragmentów
+var backstack = mutableListOf<Fragment>(MainScreenFragment())
+
+//Obecnie wyświetlany fragment
+private var currentFragment: Fragment = MainScreenFragment()
+
+//Jeżeli zwraca prawdę to użycie systemowego przycisku/gestu cofania
+//nie powoduje cofnięcia do poprzedniego fragmentu
+var doOverrideOnBackPress: () -> Boolean = { false }
+
+//Animacje tranzycji pomiędzy fragmentami
+object Animations {
+    val swap: (FragmentTransaction) -> Unit
+    val fade: (FragmentTransaction) -> Unit
+    val slideLeft: (FragmentTransaction) -> Unit
+    val slideRight: (FragmentTransaction) -> Unit
+    val fadeLong: (FragmentTransaction) -> Unit
+}
+
+//Zmienia obecnie wyświetlany fragment
+fun replaceWith(
+    fragment: Fragment,
+    stack: Boolean = true,
+    animation: ((FragmentTransaction) -> Unit?)? = swap
+)
+
+//Cofa do poprzedniego fragmentu
+//Zwraca fałsz jeżeli stos fragmentów jest pusty
+fun popBackstack(
+    stack: Boolean = false,
+    animation: ((FragmentTransaction) -> Unit?)? = swap
+): Boolean
+\end{lstlisting}
+
+\newpage
+
 \subsubsection{StatusManager}
+Abstrakcyjna klasa mająca za zadanie periodyczne uruchamianie metody \tcbox{makeStable} od momentu wywołania metody \tcbox{dispatch} do momentu gdy metoda \tcbox{isStable} zwróci prawdę.\\
+
+Zawiera następujące pola:
+\begin{lstlisting}[language=Kotlin]
+//Częstotliwość wywołania metody makeStable
+private val interval: Long = if (BuildConfig.DEBUG) 1500 else 300
+
+//Czy jest w trybie debugowania
+private val debug: Boolean = false
+
+private var job: Job? = null
+var isWorking = false
+\end{lstlisting}
+
+\vspace{1em}
+
+Metody wykonywane w kluczowych momentach:
+
+\begin{lstlisting}[language=Kotlin]
+open fun onJobStart() {}
+open fun onJobDone() {}
+open fun onException(e: Exception) {}
+\end{lstlisting}
+
+\vspace{1em}
+
+Metody abstrakcyjne:
+
+\begin{lstlisting}[language=Kotlin]
+abstract fun isStable(): Boolean
+abstract fun makeStable()
+\end{lstlisting}
+
+\newpage
+
+Główna metoda \tcbox{dispatch}. Jej ponowne wywoływanie nie ma wpływu na pracę. Umożliwia opcjonalny restart obecnie uruchomionej pracy.
+\begin{lstlisting}[language=Kotlin]
+fun dispatch(cancel: Boolean = false, reason: String = "") {
+    if (debug) Debug.log("SM_DISPATCH [$reason]")
+
+    if (cancel) {
+        if (debug) Debug.log("SM_CANCEL_JOB")
+        job?.cancel()
+    }
+
+    if (job != null && job?.isActive == true) return
+
+        job = GlobalScope.launch(Dispatchers.IO) {
+        if (debug) Debug.log("SM_JOB_LAUNCH")
+        try {
+            //Pierwsza iteracja
+            if (!isStable()) {
+                isWorking = true
+                onJobStart()
+                makeStable()
+                delay(interval)
+            }
+
+            //Pozostałe iteracje
+            while (!isStable()) {
+                makeStable()
+                delay(interval)
+            }
+
+            isWorking = false
+            onJobDone()
+            if (debug) Debug.log("SM_SETTLE")
+        } catch (e: Exception) {
+            onException(e)
+            delay(interval)
+            dispatch(true)
+        }
+    }
+}
+\end{lstlisting}
+
+\newpage
+
 \subsubsection{DaemonsManager}
+Obiekt odpowiedzialny za przydzielanie oraz zwalnianie demonów. Posiada następujące metody:
+\begin{lstlisting}[language=Kotlin]
+fun assignAll(context: Context) = aps.dashboards.forEach { assign(it, context) }
+
+fun dischargeAll() {
+    Debug.log("DM_DISCHARGE_ALL")
+    aps.dashboards.forEach { discharge(it) }
+}
+
+fun assign(dashboard: Dashboard, context: Context) = try {
+    Debug.log("DM_ASSIGN")
+
+    dashboard.apply {
+        daemon = Daemon(context, this, type)
+        daemon?.notifyAssigned()
+    }
+} catch (e: Exception) {
+    Debug.recordException(e)
+}
+
+fun discharge(dashboard: Dashboard) = try {
+    Debug.log("DM_DISCHARGE")
+    dashboard.daemon?.notifyDischarged()
+} catch (e: Exception) {
+    Debug.recordException(e)
+}
+\end{lstlisting}
+
 \subsubsection{ToolbarManager}
+Klasa definiująca działanie paska narzędzi dostępnego z poziomu interfejsu dashboardu. Pełni rolę warstwy abstrakcji, tak aby uprościć implementację fragmentu odpowiedzialnego za tą część interfejsu użytkownika.
+
+\newpage
 
 \subsection{Interfejs użytkownika}
 \subsubsection{XML}
-\subsubsection{Jetpack Compose}
-\subsubsection{Fragmenty}
-\subsubsection{Recycler View}
-\subsubsection{Wykrywanie gestów}
+Znacząca część interfejsu użytkownika została zaimplementowana z wykorzystaniem Jetpack Compose. Nie całość, ponieważ niestety pewne funkcjonalności ekranów używających \tcbox{RecyclerView} byłyby trudne do odtworzenia wykorzystując tą technologię zamiast XML.\\
 
-\subsection{Integracja z protokołem MQTT}
+\tcbox{RecyclerView} jest to narzędzie dostępne jedynie z XML. Umożliwia ono tworzenie dynamicznych list które procesują jedynie elementy obecnie wyświetlane na ekranie.\\
+
+Posiada ono również stosunkowo łatwą do implementacji możliwość obsługi gestu zmiany kolejności wyświetlanych elementów (ang. drag and drop) wraz z towarzyszącym temu animacjami.\\
+
+Samodzielna implementacja takiej funkcjonalności przy listach jednowymiarowych nie stanowi problemu. Jednak sprawa znacząco się komplikuje w przypadku list dwuwymiarowych, gdzie elementy mają różne rozmiary, tak jak to jest w tym przypadku.\\
+
+Z tego powodu, ekran główny wyświetlający listę dashboardów oraz ekran wyświetlający sam dashboard z dwuwymiarową listą kafelek wykorzystują XML, a co za tym idzie również interfejsy samych kafelek oraz dialogi wyświetlane na tych ekranach.
+
+\newpage
+
+\subsubsection{Fragmenty}
+Za każdy ekran aplikacji jest odpowiedzialny odrębny fragment:
+
+\tabeladwiekolumny{0.4}{0.6} {
+    \tabeladwiekolumnywiersz
+    {\textbf{DashboardFragment}}
+    {ekran dashboardu}
+
+    %\tabeladwiekolumnywiersz
+    %{\textbf{DashboardNewFragment}}
+    %{ekran dodawania nowego dashboardu}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{DashboardPropertiesFragment}}
+    {ekran właściwości dashboardu}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{LoadingFragment}}
+    {ekran ładowania}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{MainScreenFragment}}
+    {ekran główny z listą dashboardów}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{SettingsFragment}}
+    {ekran ustawień}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{ThemeFragment}}
+    {ekran konfiguracji motywu}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{TileIconFragment}}
+    {ekran konfiguracji ikony kafelki}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{TileNewFragment}}
+    {ekran dodawania nowej kafelki}
+
+    \tabeladwiekolumnywiersz
+    {\textbf{TilePropertiesFragment}}
+    {ekran konfiguracji kafel}
+}
+
+\subsubsection{RecyclerView}
+Jest to narzędzie dostępne jedynie z XML. Umożliwia ono tworzenie dynamicznych list które procesują jedynie elementy obecnie wyświetlane na ekranie. Posiada ono również stosunkowo łatwą do implementacji możliwość obsługi gestu zmiany kolejności wyświetlanych elementów (ang. drag and drop) wraz z towarzyszącym temu animacjami. W przedstawianej aplikacji \tcbox{RecyclerView} jest wykorzystywany między innymi do wyświetlania listy dashboardów na ekranie głównym oraz do wyświetlania siatki kafelek na ekranie dashboardu. W skład implementacji \tcbox{RecyclerView} wchodzą trzy klasy opisane w kolejnych rozdziałach.
+
+\newpage
+
+\subsubsection{RecyclerViewAdapter}
+Generyczna klasa dziedzicząca po \tcbox{ListAdapter}. Rolą adaptera jest zarządzanie wyświetlaną listą.\\
+
+Poza metodami dziedziczonymi \tcbox{RecyclerViewAdapter} został rozszerzony o:\\
+
+\textbf{1. Użytkowe funkcje lambda wywoływane w kluczowych momentach}
 
 \begin{lstlisting}[language=Kotlin]
+var onBindViewHolder: (item, ViewHolder, Int) -> Unit = { _, _, _ -> }
+var onItemClick: (item) -> Unit = {}
+var onItemLongClick: (item) -> Unit = {}
+var onItemRemoved: (item) -> Unit = {}
+var onItemMarkedRemove: (Int, Boolean) -> Unit = { _, _ -> }
+var onItemEdit: (item) -> Unit = {}
 \end{lstlisting}
+
+\vspace{1em}
+
+\textbf{2. Metody pomocnicze}
+
+\begin{lstlisting}[language=Kotlin]
+//Oznacza element jako ten do usunięcia
+//Zmienia go wizualnie sygnalizując to użytkownikowi
+fun markItemRemove(position: Int)
+
+//Usuwa oznaczone przez użytkownika elementy listy
+fun removeMarkedItems()
+
+//Usuwa element z określonej pozycji listy
+fun removeItemAt(pos: Int, notify: Boolean = true)
+\end{lstlisting}
+
+\vspace{1em}
+
+\textbf{3. Rozszerzoną obsługę trybu edycji}
+
+\begin{lstlisting}[language=Kotlin]
+var editMode = Modes()
+open inner class Modes {
+    //Obecny tryb
+    private var mode = -1
+
+    //Funkcja lambda wywoływana w momencie zmiany trybu
+    var onSet: (Modes) -> Unit = {}
+
+    //Czy znajduje się w danym trybie
+    val isNone: Boolean
+    val isSwap: Boolean
+    val isRemove: Boolean
+    val isEdit: Boolean
+
+    //Metody ustawiające określony tryb edycji
+    fun setNone()
+    fun setSwap()
+    fun setRemove()
+    fun setEdit()
+}
+\end{lstlisting}
+
+\subsubsection{RecyclerViewItem}
+Abstrakcyjna klasa po której dziedziczy każda klasa która jednocześnie reprezentuje elementy danej listy w aplikacji. Jedną z takich klas jest klasa \tcbox{Tile}.\\
+
+W skład tej klasy wchodzą następujące metody i pola:
+\begin{lstlisting}[language=Kotlin]
+//Unikatowy identyfikator elementu
+var id:Long
+
+//Identyfikator zasobu XML będącego interfejsem graficznym elementu
+abstract val layout: Int
+
+//Odniesienie do ViewHolder danego elementu
+@JsonIgnore
+var holder: RecyclerViewAdapter.ViewHolder? = null
+
+//Adapter do którego jest przypisany element
+@JsonIgnore
+var adapter: RecyclerViewAdapter<*>? = null
+
+//Metody związane z RecyclerView
+
+open fun onCreateViewHolder(
+    parent: ViewGroup,
+    viewType: Int
+): RecyclerViewAdapter.ViewHolder
+
+open fun onViewAttachedToWindow(holder: RecyclerViewAdapter.ViewHolder)
+
+open fun onBindViewHolder(
+    holder: RecyclerViewAdapter.ViewHolder,
+    position: Int
+)
+
+//Metoda odpowiedzialna za stylizację elementu
+open fun onSetTheme(holder: RecyclerViewAdapter.ViewHolder)
+
+//Metody reagujące na zdarzenia związane z elementem
+open fun onTouch(v: View, e: MotionEvent)
+open fun onClick(v: View, e: MotionEvent)
+open fun onEdit(isEdit: Boolean)
+\end{lstlisting}
+
+\newpage
+
+Dodatkowo klasa \tcbox{RecyclerViewItem} posiada system flag określający w jakim stanie znajduje się element.
+
+\begin{lstlisting}[language=Kotlin]
+@JsonIgnore
+var flag = Flags()
+
+inner class Flags {
+    //Obecna flaga
+    private var flag = -1
+
+    //Czy dana flaga jest ustawiona
+    val isNone
+    val isRemove
+
+    //Ustawia daną flagę
+    fun setNone() = setFlag(-1)
+    fun setRemove() = setFlag(1)
+
+    //Aktualizuje wizualnie element w zależności od flagi
+    private fun show()
+}
+\end{lstlisting}
+
+\subsubsection{ItemTouchCallback}
+Ostatnia klasa wchodząca w skład implementacji \tcbox{RecyclerView}. Odpowiada ona za gesty, animacje oraz zmiany kolejności elementów listy.
+
+\subsubsection{Wykrywanie gestów}
+Wykrywanie globalnych gestów w aplikacji opiera się o własną implementację \tcbox{ConstraintLayout} oraz \tcbox{LinearLayout}, tak aby uzyskać dostęp do metody \tcbox{onInterceptTouchEvent} umożliwiającej przechwycenie zdarzeń związanych z dotykiem. Wykorzystanie tych klas jako \tcbox{root layout} interfejsu użytkownika pozwoliło na implementację dowolnych gestów w aplikacji.
