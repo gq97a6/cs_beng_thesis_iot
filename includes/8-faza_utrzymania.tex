@@ -2,4 +2,50 @@
 
 \subsection{Napotkane trudności}
 
+\subsubsection{Praca w tle}
+Jedną z większych napotkanych trudności było przystosowanie aplikacji do pracy w tle. Powiązane to jest z skomplikowaną naturą zasad na podstawie których Android zarządza cyklem życia aplikacji i jak to na nią dokładnie wpływa. Obecnie jest duży nacisk na wydłużanie czasu pracy na baterii urządzeń mobilnych, stąd z nieprzychylnością patrzy się na aplikacje długo pracujące w tle. Obecnie, aplikacja przy włączaniu tej funkcji wymaga od użytkownika wykluczenia jej z procesu optymalizacji czasu pracy na baterii. W teorii ma to przeciwdziałać sytuacji gdzie system zabija aplikację, jednak nie jest to gwarantowane rozwiązanie. 
+
+\subsubsection{Foreground Service}
+W sierpniu 2024 Google wprowadziło wymaganie dotyczące określenia typu usługi działającej na pierwszym planie dla aplikacji kierowanych na system Android w wersji 14 wzwyż. Same typy są ściśle unormowane, część z wymaga zadeklarowania użycia specyficznych uprawnień. Konkretny wybór musi być poparty argumentami, a błąd w tej materii może zaowocować zablokowaniem naszej aplikacji na platformie Google Play. Niestety, żadne z tych dostępnych nie pasowały w tym przypadku, jedyną alternatywą pozostało użycie typu \tcbox{specialUse}. To z kolei wymaga załączenia dokładnego wytłumaczenia tej decyzji w manifeście aplikacji wraz z nagraniem filmu, przesyłanego w momencie publikacji na platformie, w jaki sposób aplikacja wykorzystuje usługę pierwszoplanową. 
+
+\subsubsection{Klient MQTT}
+Pierwszym wykorzystywanym klientem był ten dostarczany przez Eclipse Paho. Niestety nie jest ona już aktywnie wspierana przez twórców od czterech lat. W związku z tym nie obsługuje już ona MQTT w wersji 5 oraz co gorsze, jest niekompatybilna z nowszymi wersjami Androida. Pierwszym rozwiązaniem było naprawianie błędów powodujących tą niekompatybilność. Było to jednak rozwiązanie krótkoterminowe i na ten moment aplikacja została przepisana tak aby wykorzystywać asynchronicznego klienta dostarczanego przez HiveMQ.
+
+\newpage
+
+\subsubsection{Rzadkie błędy}
+Dużą trudnością są błędy w aplikacji które występują rzadko, w warunkach ciężkich do odtworzenia lub po długotrwałym używaniu aplikacji. Jednym z rozwiązań żeby zapobiegać występowaniu takich błędów jest użycie systemów zdalnego raportowania takich jak Firebase Crashlytics lub Sentry. Obecnie aplikacja używa obu takich systemów równolegle. Sentry jako ten charakteryzujący się lepszą telemetryką używany jest do śledzenia błędów i innych zdarzeń kluczowych a Firebase jest wykorzystywany z kolei do celów statystycznych.
+
+\subsubsection{Serializacja}
+Serializacja danych w aplikacji wielokrotnie powodowała nawracające błędy:\\
+
+\textbf{1. Problem z serializacją klas polimorficznych (np. lista kafelek)}\\
+Rozwiązań tego problemu jest wiele, często są one skomplikowane. Obecnie jest on rozwiązany prostym oznaczeniem klasy \tcbox{Tile} odpowiednią anotacją mającą za zadanie automatyczne dodanie odpowiedniego pola zawierającej typ klasy przy serializacji.\\
+
+\textbf{2. Problem z deserializacją wynikający z braku odpowiedniego konstruktora}\\
+Jest to problem wynikający ze sposobu w jaki dane są deserializowane. W bazowej konfiguracji, na początku tego procesu tworzona jest instancja danej klasy. Z tego powodu musi być dostępny konstruktor klasy bez parametrów.\\
+
+\textbf{3. Problemy z deserializacją przy zmianach w projekcie}\\
+Jest to kluczowy aspekt wpływający na działanie aplikacji. W wyniku zmian w kodzie aplikacji, zmiany nazw pól lub zmiany pakietu, w jakim znajduje się dana klasa, mogą wystąpić problemy z deserializacją danych z poprzednich wersji aplikacji. Z oczywistych względów jest to poważny problem mający duży wpływ na użytkownika końcowego.
+
+\subsubsection{Weryfikacja konta Google Play Console}
+W roku 2023 Google ogłosiło nadchodzącą wymaganą weryfikację kont deweloperów na platformie Google Play Console. Dla kont personalnych wiąże się to z udostępnieniem wrażliwych danych takich jak: miejsce zamieszkania, imię, nazwisko, prywatne dane kontaktowe. Podawane informacje są weryfikowane przez przesłanie państwowych dokumentów, rachunków lub umów wynajmu. Niespełnienie tych wymagań wiąże się z blokadą konta.
+
+\newpage
+
 \subsection{Plany ulepszenia}
+
+\subsubsection{Jetpack Compose}
+Wykorzystanie przestarzałego już XML do tworzenia interfejsu użytkownika wiąże się z dużymi ograniczeniami. Konwersja w pełni na Jetpack Compose przyniosła by wiele uproszeń, z tego powodu jest to jedno z ważniejszych celów w planach na ulepszenie projektu.
+
+\subsubsection{Protokoły}
+Aplikacja została napisana z myślą o przyszłe rozszerzenie o inne protokoły. Dla przykład, użycie Bluetooth umożliwiło by bezpośrednią komunikację z sterowanymi urządzeniami. Na ten moment ma to jednak niski priorytet z racji skomplikowania.
+
+\subsubsection{Testy automatyczne}
+Dodanie automatycznych testów wykluczających błędy na skutek wprowadzonych zmian lub aktualizacji dependencji aplikacji. Takie testy usprawniłyby i ustandaryzowały proces testowania przy publikacji nowej wersji aplikacji.
+
+\subsubsection{Dokumentacja}
+Stworzenie dokładnej dokumentacji jak korzystać z aplikacji jest jednym z kluczowych celów na ten moment.
+
+\subsubsection{Wersja na system iOS}
+Planowane jest stworzenie wersji aplikacji na urządzenia z systemem iOS.
