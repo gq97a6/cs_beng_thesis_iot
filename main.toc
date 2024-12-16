@@ -10,82 +10,83 @@
 \contentsline {subsubsection}{\numberline {03.3.3}Retained message}{7}{subsubsection.3.3.3}%
 \contentsline {subsubsection}{\numberline {03.3.4}Message payload}{7}{subsubsection.3.3.4}%
 \contentsline {subsubsection}{\numberline {03.3.5}Przykład wykorzystania}{8}{subsubsection.3.3.5}%
-\contentsline {section}{\numberline {04}Faza analizy i planowania}{10}{section.4}%
-\contentsline {subsection}{\numberline {04.1}Koncepcja}{10}{subsection.4.1}%
-\contentsline {subsection}{\numberline {04.2}Konkurencyjne rozwiazania}{10}{subsection.4.2}%
-\contentsline {subsection}{\numberline {04.3}Profil użytkownika docelowego}{10}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {04.3.1}Model biznesowy}{10}{subsubsection.4.3.1}%
-\contentsline {subsection}{\numberline {04.4}Przykłady użycia}{11}{subsection.4.4}%
-\contentsline {subsubsection}{\numberline {04.4.1}Automatyka domowa}{11}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {04.4.2}Rolnictwo precyzyjne}{12}{subsubsection.4.4.2}%
-\contentsline {subsubsection}{\numberline {04.4.3}Inteligentne budynki}{13}{subsubsection.4.4.3}%
-\contentsline {section}{\numberline {05}Faza projektowania}{14}{section.5}%
-\contentsline {subsection}{\numberline {05.1}Wymagania jakościowe}{14}{subsection.5.1}%
-\contentsline {subsubsection}{\numberline {05.1.1}Estetyka}{14}{subsubsection.5.1.1}%
-\contentsline {subsubsection}{\numberline {05.1.2}Przejrzystość}{14}{subsubsection.5.1.2}%
-\contentsline {subsubsection}{\numberline {05.1.3}Użyteczność}{14}{subsubsection.5.1.3}%
-\contentsline {subsection}{\numberline {05.2}Wymagania niefunkcjonalne}{15}{subsection.5.2}%
-\contentsline {subsection}{\numberline {05.3}Wymagania funkcjonalne}{19}{subsection.5.3}%
-\contentsline {subsection}{\numberline {05.4}Wykorzystane technologie}{37}{subsection.5.4}%
-\contentsline {subsection}{\numberline {05.5}Metodyka pracy}{38}{subsection.5.5}%
-\contentsline {section}{\numberline {06}Faza implementacji}{39}{section.6}%
-\contentsline {subsection}{\numberline {06.1}Architektura aplikacji}{39}{subsection.6.1}%
-\contentsline {subsection}{\numberline {06.2}Zarządzanie stanem aplikacji}{39}{subsection.6.2}%
-\contentsline {subsection}{\numberline {06.3}Foreground service}{39}{subsection.6.3}%
-\contentsline {subsection}{\numberline {06.4}Daemons}{40}{subsection.6.4}%
-\contentsline {subsubsection}{\numberline {06.4.1}Daemon}{40}{subsubsection.6.4.1}%
-\contentsline {subsubsection}{\numberline {06.4.2}Daemonized}{41}{subsubsection.6.4.2}%
-\contentsline {subsubsection}{\numberline {06.4.3}Mqttd}{42}{subsubsection.6.4.3}%
-\contentsline {subsubsection}{\numberline {06.4.4}MqttConfig}{47}{subsubsection.6.4.4}%
-\contentsline {subsubsection}{\numberline {06.4.5}MqttDaemonizedConfig}{48}{subsubsection.6.4.5}%
-\contentsline {subsection}{\numberline {06.5}Klasy}{49}{subsection.6.5}%
-\contentsline {subsubsection}{\numberline {06.5.1}Dashboard}{49}{subsubsection.6.5.1}%
-\contentsline {subsubsection}{\numberline {06.5.2}Tile}{50}{subsubsection.6.5.2}%
-\contentsline {subsubsection}{\numberline {06.5.3}Settings}{51}{subsubsection.6.5.3}%
-\contentsline {subsubsection}{\numberline {06.5.4}Log}{51}{subsubsection.6.5.4}%
-\contentsline {subsubsection}{\numberline {06.5.5}App}{52}{subsubsection.6.5.5}%
-\contentsline {subsubsection}{\numberline {06.5.6}AppState}{53}{subsubsection.6.5.6}%
-\contentsline {subsubsection}{\numberline {06.5.7}Theme}{54}{subsubsection.6.5.7}%
-\contentsline {subsection}{\numberline {06.6}Obiekty pomocnicze}{57}{subsection.6.6}%
-\contentsline {subsubsection}{\numberline {06.6.1}Debug}{57}{subsubsection.6.6.1}%
-\contentsline {subsubsection}{\numberline {06.6.2}DialogBuilder}{57}{subsubsection.6.6.2}%
-\contentsline {subsubsection}{\numberline {06.6.3}Pro}{58}{subsubsection.6.6.3}%
-\contentsline {subsubsection}{\numberline {06.6.4}Icons}{58}{subsubsection.6.6.4}%
-\contentsline {subsubsection}{\numberline {06.6.5}Storage}{59}{subsubsection.6.6.5}%
-\contentsline {subsubsection}{\numberline {06.6.6}Setup}{61}{subsubsection.6.6.6}%
-\contentsline {subsection}{\numberline {06.7}Managers}{63}{subsection.6.7}%
-\contentsline {subsubsection}{\numberline {06.7.1}BillingManager}{63}{subsubsection.6.7.1}%
-\contentsline {subsubsection}{\numberline {06.7.2}FragmentManager}{65}{subsubsection.6.7.2}%
-\contentsline {subsubsection}{\numberline {06.7.3}StatusManager}{66}{subsubsection.6.7.3}%
-\contentsline {subsubsection}{\numberline {06.7.4}DaemonsManager}{68}{subsubsection.6.7.4}%
-\contentsline {subsubsection}{\numberline {06.7.5}ToolbarManager}{68}{subsubsection.6.7.5}%
-\contentsline {subsection}{\numberline {06.8}Interfejs użytkownika}{69}{subsection.6.8}%
-\contentsline {subsubsection}{\numberline {06.8.1}XML}{69}{subsubsection.6.8.1}%
-\contentsline {subsubsection}{\numberline {06.8.2}Fragmenty}{70}{subsubsection.6.8.2}%
-\contentsline {subsubsection}{\numberline {06.8.3}RecyclerView}{70}{subsubsection.6.8.3}%
-\contentsline {subsubsection}{\numberline {06.8.4}RecyclerViewAdapter}{71}{subsubsection.6.8.4}%
-\contentsline {subsubsection}{\numberline {06.8.5}RecyclerViewItem}{72}{subsubsection.6.8.5}%
-\contentsline {subsubsection}{\numberline {06.8.6}ItemTouchCallback}{73}{subsubsection.6.8.6}%
-\contentsline {subsubsection}{\numberline {06.8.7}Wykrywanie gestów}{73}{subsubsection.6.8.7}%
-\contentsline {section}{\numberline {07}Faza testów końcowych i publikacji}{74}{section.7}%
-\contentsline {subsection}{\numberline {07.1}Testy końcowe}{74}{subsection.7.1}%
-\contentsline {subsubsection}{\numberline {07.1.1}Testy manualne}{74}{subsubsection.7.1.1}%
-\contentsline {subsubsection}{\numberline {07.1.2}Testy z różnymi konfiguracjami serwera MQTT}{74}{subsubsection.7.1.2}%
-\contentsline {subsection}{\numberline {07.2}Publikacja na platformie Google Play}{75}{subsection.7.2}%
-\contentsline {section}{\numberline {08}Faza utrzymania}{76}{section.8}%
-\contentsline {subsection}{\numberline {08.1}Napotkane trudności}{76}{subsection.8.1}%
-\contentsline {subsubsection}{\numberline {08.1.1}Praca w tle}{76}{subsubsection.8.1.1}%
-\contentsline {subsubsection}{\numberline {08.1.2}Foreground Service}{76}{subsubsection.8.1.2}%
-\contentsline {subsubsection}{\numberline {08.1.3}Klient MQTT}{76}{subsubsection.8.1.3}%
-\contentsline {subsubsection}{\numberline {08.1.4}Rzadkie błędy}{77}{subsubsection.8.1.4}%
-\contentsline {subsubsection}{\numberline {08.1.5}Serializacja}{77}{subsubsection.8.1.5}%
-\contentsline {subsubsection}{\numberline {08.1.6}Weryfikacja konta Google Play Console}{77}{subsubsection.8.1.6}%
-\contentsline {subsection}{\numberline {08.2}Plany ulepszenia}{78}{subsection.8.2}%
-\contentsline {subsubsection}{\numberline {08.2.1}Jetpack Compose}{78}{subsubsection.8.2.1}%
-\contentsline {subsubsection}{\numberline {08.2.2}Protokoły}{78}{subsubsection.8.2.2}%
-\contentsline {subsubsection}{\numberline {08.2.3}Testy automatyczne}{78}{subsubsection.8.2.3}%
-\contentsline {subsubsection}{\numberline {08.2.4}Dokumentacja}{78}{subsubsection.8.2.4}%
-\contentsline {subsubsection}{\numberline {08.2.5}Wersja na system iOS}{78}{subsubsection.8.2.5}%
-\contentsline {section}{\numberline {09}Prezentacja}{79}{section.9}%
-\contentsline {section}{\numberline {10}Podsumowanie}{84}{section.10}%
-\contentsline {section}{\numberline {11}Załaczniki}{87}{section.11}%
+\contentsline {subsection}{\numberline {03.4}Propozycja rozwiązania}{10}{subsection.3.4}%
+\contentsline {section}{\numberline {04}Faza analizy i planowania}{11}{section.4}%
+\contentsline {subsection}{\numberline {04.1}Koncepcja}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {04.2}Konkurencyjne rozwiazania}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {04.3}Profil użytkownika docelowego}{11}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {04.3.1}Model biznesowy}{11}{subsubsection.4.3.1}%
+\contentsline {subsection}{\numberline {04.4}Przykłady użycia}{12}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {04.4.1}Automatyka domowa}{12}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {04.4.2}Rolnictwo precyzyjne}{13}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {04.4.3}Inteligentne budynki}{14}{subsubsection.4.4.3}%
+\contentsline {section}{\numberline {05}Faza projektowania}{15}{section.5}%
+\contentsline {subsection}{\numberline {05.1}Wymagania jakościowe}{15}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {05.1.1}Estetyka}{15}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {05.1.2}Przejrzystość}{15}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {05.1.3}Użyteczność}{15}{subsubsection.5.1.3}%
+\contentsline {subsection}{\numberline {05.2}Wymagania niefunkcjonalne}{16}{subsection.5.2}%
+\contentsline {subsection}{\numberline {05.3}Wymagania funkcjonalne}{20}{subsection.5.3}%
+\contentsline {subsection}{\numberline {05.4}Wykorzystane technologie}{38}{subsection.5.4}%
+\contentsline {subsection}{\numberline {05.5}Metodyka pracy}{39}{subsection.5.5}%
+\contentsline {section}{\numberline {06}Faza implementacji}{40}{section.6}%
+\contentsline {subsection}{\numberline {06.1}Architektura aplikacji}{40}{subsection.6.1}%
+\contentsline {subsection}{\numberline {06.2}Zarządzanie stanem aplikacji}{40}{subsection.6.2}%
+\contentsline {subsection}{\numberline {06.3}Foreground service}{40}{subsection.6.3}%
+\contentsline {subsection}{\numberline {06.4}Daemons}{41}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {06.4.1}Daemon}{41}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {06.4.2}Daemonized}{42}{subsubsection.6.4.2}%
+\contentsline {subsubsection}{\numberline {06.4.3}Mqttd}{43}{subsubsection.6.4.3}%
+\contentsline {subsubsection}{\numberline {06.4.4}MqttConfig}{48}{subsubsection.6.4.4}%
+\contentsline {subsubsection}{\numberline {06.4.5}MqttDaemonizedConfig}{49}{subsubsection.6.4.5}%
+\contentsline {subsection}{\numberline {06.5}Klasy}{50}{subsection.6.5}%
+\contentsline {subsubsection}{\numberline {06.5.1}Dashboard}{50}{subsubsection.6.5.1}%
+\contentsline {subsubsection}{\numberline {06.5.2}Tile}{51}{subsubsection.6.5.2}%
+\contentsline {subsubsection}{\numberline {06.5.3}Settings}{52}{subsubsection.6.5.3}%
+\contentsline {subsubsection}{\numberline {06.5.4}Log}{52}{subsubsection.6.5.4}%
+\contentsline {subsubsection}{\numberline {06.5.5}App}{53}{subsubsection.6.5.5}%
+\contentsline {subsubsection}{\numberline {06.5.6}AppState}{54}{subsubsection.6.5.6}%
+\contentsline {subsubsection}{\numberline {06.5.7}Theme}{55}{subsubsection.6.5.7}%
+\contentsline {subsection}{\numberline {06.6}Obiekty pomocnicze}{58}{subsection.6.6}%
+\contentsline {subsubsection}{\numberline {06.6.1}Debug}{58}{subsubsection.6.6.1}%
+\contentsline {subsubsection}{\numberline {06.6.2}DialogBuilder}{58}{subsubsection.6.6.2}%
+\contentsline {subsubsection}{\numberline {06.6.3}Pro}{59}{subsubsection.6.6.3}%
+\contentsline {subsubsection}{\numberline {06.6.4}Icons}{59}{subsubsection.6.6.4}%
+\contentsline {subsubsection}{\numberline {06.6.5}Storage}{60}{subsubsection.6.6.5}%
+\contentsline {subsubsection}{\numberline {06.6.6}Setup}{62}{subsubsection.6.6.6}%
+\contentsline {subsection}{\numberline {06.7}Managers}{64}{subsection.6.7}%
+\contentsline {subsubsection}{\numberline {06.7.1}BillingManager}{64}{subsubsection.6.7.1}%
+\contentsline {subsubsection}{\numberline {06.7.2}FragmentManager}{66}{subsubsection.6.7.2}%
+\contentsline {subsubsection}{\numberline {06.7.3}StatusManager}{67}{subsubsection.6.7.3}%
+\contentsline {subsubsection}{\numberline {06.7.4}DaemonsManager}{69}{subsubsection.6.7.4}%
+\contentsline {subsubsection}{\numberline {06.7.5}ToolbarManager}{69}{subsubsection.6.7.5}%
+\contentsline {subsection}{\numberline {06.8}Interfejs użytkownika}{70}{subsection.6.8}%
+\contentsline {subsubsection}{\numberline {06.8.1}XML}{70}{subsubsection.6.8.1}%
+\contentsline {subsubsection}{\numberline {06.8.2}Fragmenty}{71}{subsubsection.6.8.2}%
+\contentsline {subsubsection}{\numberline {06.8.3}RecyclerView}{71}{subsubsection.6.8.3}%
+\contentsline {subsubsection}{\numberline {06.8.4}RecyclerViewAdapter}{72}{subsubsection.6.8.4}%
+\contentsline {subsubsection}{\numberline {06.8.5}RecyclerViewItem}{73}{subsubsection.6.8.5}%
+\contentsline {subsubsection}{\numberline {06.8.6}ItemTouchCallback}{74}{subsubsection.6.8.6}%
+\contentsline {subsubsection}{\numberline {06.8.7}Wykrywanie gestów}{74}{subsubsection.6.8.7}%
+\contentsline {section}{\numberline {07}Faza testów końcowych i publikacji}{75}{section.7}%
+\contentsline {subsection}{\numberline {07.1}Testy końcowe}{75}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {07.1.1}Testy manualne}{75}{subsubsection.7.1.1}%
+\contentsline {subsubsection}{\numberline {07.1.2}Testy z różnymi konfiguracjami serwera MQTT}{75}{subsubsection.7.1.2}%
+\contentsline {subsection}{\numberline {07.2}Publikacja na platformie Google Play}{76}{subsection.7.2}%
+\contentsline {section}{\numberline {08}Faza utrzymania}{77}{section.8}%
+\contentsline {subsection}{\numberline {08.1}Napotkane trudności}{77}{subsection.8.1}%
+\contentsline {subsubsection}{\numberline {08.1.1}Praca w tle}{77}{subsubsection.8.1.1}%
+\contentsline {subsubsection}{\numberline {08.1.2}Foreground Service}{77}{subsubsection.8.1.2}%
+\contentsline {subsubsection}{\numberline {08.1.3}Klient MQTT}{77}{subsubsection.8.1.3}%
+\contentsline {subsubsection}{\numberline {08.1.4}Rzadkie błędy}{78}{subsubsection.8.1.4}%
+\contentsline {subsubsection}{\numberline {08.1.5}Serializacja}{78}{subsubsection.8.1.5}%
+\contentsline {subsubsection}{\numberline {08.1.6}Weryfikacja konta Google Play Console}{78}{subsubsection.8.1.6}%
+\contentsline {subsection}{\numberline {08.2}Plany ulepszenia}{79}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {08.2.1}Jetpack Compose}{79}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {08.2.2}Protokoły}{79}{subsubsection.8.2.2}%
+\contentsline {subsubsection}{\numberline {08.2.3}Testy automatyczne}{79}{subsubsection.8.2.3}%
+\contentsline {subsubsection}{\numberline {08.2.4}Dokumentacja}{79}{subsubsection.8.2.4}%
+\contentsline {subsubsection}{\numberline {08.2.5}Wersja na system iOS}{79}{subsubsection.8.2.5}%
+\contentsline {section}{\numberline {09}Prezentacja}{80}{section.9}%
+\contentsline {section}{\numberline {10}Podsumowanie}{85}{section.10}%
+\contentsline {section}{\numberline {11}Załaczniki}{88}{section.11}%

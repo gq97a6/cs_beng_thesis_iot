@@ -32,14 +32,17 @@ Stworzony w 1999 roku prosty i lekki protokół komunikacyjny MQTT (Message Queu
 \subsubsection{Broker}
 Architektura oparta o MQTT wymaga serwera na którym pracuje broker wiadomości implementujący protokół MQTT. Broker stanowi centralny punkt do którego łączą się wszyscy klienci. Przykładem brokera MQTT jest Eclipse Mosquitto. (dokumentacja - \cite{mosquittodocs})
 
+\hypertarget{03.3.2}{}
 \subsubsection{Topic}
 Abstrakcyjne identyfikatory pomagające przesyłać wiadomości do konkretnych odbiorców. Nie istnieją fizycznie a publikacja i subskrypcja do nich nie wymaga uprzedniego ich utworzenia. Dany \tcbox{topic} można porównać do tablicy ogłoszeń którą każdy zainteresowany może zasubskrybować aby otrzymać powiadomienie za każdym razem gdy ktoś publikuje na niej nową wiadomość.\\
 
 Aby otrzymać to powiadomienie klient musi, nie tylko wcześniej zasubskrybować dany \tcbox{topic}, ale również być na czas publikacji połączonym z brokerem. Jedynym wyjątkiem od tej zasady jest przypadek\\gdy \tcbox{topic} posiada \tcbox{retained message}.
 
+\hypertarget{03.3.3}{}
 \subsubsection{Retained message}
 Jest to specjalny rodzaj wiadomości wysyłanej na dany \tcbox{topic} różniący się ustawioną flagą \tcbox{retained}. Broker zachowuje taką wiadomość i przesyła ją do klienta na moment subskrypcji tego \tcbox{topic}. Każdy \tcbox{topic} może mieć tylko jedną \tcbox{retained message}. Aby ją usunąć wymagana jest publikacja nowej wiadomości z flagą \tcbox{retained} oraz pustym \tcbox{payload}.
 
+\hypertarget{03.3.4}{}
 \subsubsection{Message payload}
 Jest to ciąg znaków który wysyłany jest z każdą wysłaną wiadomością. Dla przykładowego \tcbox{topic} o nazwie temperatura może być to aktualna temperatura w pokoju wyrażona w stopniach Celsjusza.
 
@@ -59,3 +62,12 @@ Poniższe grafiki prezentują przykład użycia protokołu MQTT w praktyce. W pr
 
 4. W odpowiedzi na publikację nowej wiadomości broker powiadamia każde urządzenie subskrybujące \tcbox{topic} temp. Po otrzymaniu aktualnej wartości sterownik może podjąć decyzję czy włączyć lub wyłączyć ogrzewanie w pokoju. Sam stan ogrzewania może być oddzielnym \tcbox{topic}, tak aby panel sterowania mógł wyświetlić informację czy jest ono włączone bądź nie: gdy sterownik włącza ogrzewanie publikuje 1 na \tcbox{topic} \tcbox{ogrz}, a gdy je wyłącza publikuje 0.\\\\
 \includegraphics[scale=1.005]{mqtt4}\\\\
+
+\newpage
+
+\subsection{Propozycja rozwiązania}
+Proponowanym rozwiązaniem dla przedstawionych problemów jest stworzenie aplikacji mobilnej, która będzie pełnić funkcję uniwersalnego dashboardu do zarządzania urządzeniami IoT opartymi na protokole MQTT. Aplikacja ma na celu zapewnienie użytkownikom pełnej kontroli nad ich inteligentnymi urządzeniami, zwiększenie bezpieczeństwa i prywatności, a także poprawę wygody użytkowania dzięki centralizacji zarządzania.\\
+
+Aplikacja będzie wykorzystywać protokół MQTT, który jest lekkim i wydajnym standardem komunikacji IoT. Umożliwia on lokalną wymianę danych między urządzeniami bez konieczności korzystania z serwerów producentów, co zwiększa niezależność użytkowników i minimalizuje ryzyko awarii wynikających z problemów zewnętrznej infrastruktury. Dzięki wsparciu dla MQTT użytkownicy będą mogli zarządzać swoimi urządzeniami w pełni lokalnie, co zapewni maksymalną ochronę prywatności, ponieważ dane nie będą opuszczać sieci domowej. Aplikacja umożliwi dodawanie, monitorowanie i sterowanie urządzeniami IoT podłączonymi do lokalnego brokera MQTT oraz tworzenie spersonalizowanych dashboardów dostosowanych do indywidualnych potrzeb.\\
+
+Bezpieczeństwo użytkowników będzie priorytetem. Komunikacja między aplikacją a brokerem MQTT będzie szyfrowana, a użytkownicy będą mieli możliwość konfiguracji uwierzytelniania i autoryzacji dostępu do urządzeń, co dodatkowo zwiększy ochronę ich danych. Dzięki lokalnemu przetwarzaniu informacji, ryzyko naruszeń prywatności zostanie zminimalizowane.

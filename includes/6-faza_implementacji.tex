@@ -218,8 +218,7 @@ fun buildClient(config: MqttConfig) {
 
 Poniżej znajduje się metoda odpowiedzialna za konfigurację:
 \begin{itemize}[leftmargin=*]
-    \item szyfrowania połaczenia
-    \item użycia certyfikatów i kluczy klienta
+    \item szyfrowania połaczenia oraz użycia certyfikatów i kluczy klienta
     \item związaną z wykorzystaniem niestandardowego urzędu certyfikacji (CA)
     \item związaną z opcją pominięcia weryfikacji certyfikatu serwera
 \end{itemize}
@@ -1325,7 +1324,7 @@ Abstrakcyjna klasa po której dziedziczy każda klasa która jednocześnie repre
 W skład tej klasy wchodzą następujące metody i pola:
 \begin{lstlisting}[language=Kotlin]
 //Unikatowy identyfikator elementu
-var id:Long
+var id: Long
 
 //Identyfikator zasobu XML będącego interfejsem graficznym elementu
 abstract val layout: Int
