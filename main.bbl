@@ -344,6 +344,19 @@
       \verb https://www.gnu.org/gnu/manifesto.en.html%5C#benefit
       \endverb
     \endentry
+    \entry{rolnictwoprecyzyjne}{source}{}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{The Precision Agriculture Based on Wireless Sensor Network with MQTT Protocol}
+      \field{year}{01.01.1970}
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/1755-1315/207/1/012059
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/1755-1315/207/1/012059
+      \endverb
+    \endentry
     \entry{waterfall}{source}{}{}
       \field{sortinit}{W}
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}

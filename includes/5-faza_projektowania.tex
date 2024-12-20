@@ -1,6 +1,6 @@
 \newcommand{\wymaganie}[8]{
     \begin{center}
-        \scriptsize
+        \footnotesize
         \begin{tabularx}{1\textwidth} {
                 | >{\hsize=0.15\hsize}X
                 | >{\hsize=0.85\hsize}X |}
@@ -284,7 +284,7 @@
 }
 {4em}{
     • Aplikacja jest dostępna w co najmniej trzech językach\\
-    • Aplikacja umożliwia łatwe dodawanie kolejnych języków
+    • Projekt umożliwia łatwe dodawanie kolejnych języków
 }
 
 \wymaganie{NF2166}{COULD}{Kompatybilność z systemem iOS}{}
@@ -424,8 +424,10 @@
 {2em}{
     Aplikacja daje możliwość włączenia trybu ciemnego
 }
-{2em}{
-    Tryb ciemny jest domyślnie włączony
+{5em}{
+    • Istnieje możliwość zmiany trybu\\
+    • Zachowany jest odpowiedni kontrast niezależnie od trybu\\
+    • Tryb ciemny jest domyślnie włączony
 }
 
 \wymaganie{F9898}{MUST}{Konfiguracja animacji kafelek}{F1612}
@@ -656,7 +658,7 @@
 
 \wymaganie{F1124}{MUST}{Personalizacja kafelek}{}
 {2em}{
-    Kafelki posiadają możliwość personalizacji przez ustawienie ikony, koloru oraz tagu
+    Kafelki mają możliwość personalizacji przez ustawienie ikony, koloru i tagu
 }
 {2em}{-}
 
@@ -912,7 +914,8 @@
 
 \wymaganie{F9894}{MUST}{Kafelka terminal - interfejs pełnoekranowy}{}
 {2em}{
-    Kafelka terminal posiada interfejs pełnoekranowy}
+    Kafelka terminal posiada interfejs pełnoekranowy
+}
 {5em}{
     • Zawiera pole tekstowe zawierające ustawiony payload wiadomości\\
     • Wyświetla przycisk potwierdzenia oraz anulowania\\

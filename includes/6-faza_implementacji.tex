@@ -7,12 +7,16 @@ Architektura aplikacji została zaprojektowana w oparciu o model z jedną głów
 \subsection{Zarządzanie stanem aplikacji}
 Aplikacja implementuje klasę \tcbox{Application} z przeznaczeniem na przechowywanie stanu aplikacji oraz zarządzaniem procesem inicjalizacji po uruchomieniu. Jest to specjalna klasa której instancję system tworzy przed jakąkolwiek inną klasą w aplikacji. Klasa ta ma cykl życia niezależny od cyklu życia aktywności, trwający przez cały czas pracy aplikacji. Dzięki temu stan aplikacji jest niewrażliwy na wszelkie zmiany w konfiguracji które powodują ponowne uruchomienie aktywności.
 
+\newpage
+
 \subsection{Foreground service}
 \tcbox{Service} to komponent aplikacji, który potrafi wykonywać długotrwałe operacje w tle nawet po tym gdy użytkownik przejdzie do innej aplikacji. \tcbox{Foreground service} jest to specjalny rodzaj usługi działającej na pierwszym planie wykonującej operacje zauważalne dla użytkownika. Usługa tego typu ma obowiązek wyświetlać stałe powiadomienie aby informować użytkownika o procesie działającym w tle. W nowszych wersjach Androida powiadomienie to może być odrzucone przez użytkownika. Przykładem takiej usługi jest odtwarzacz multimedialny z interfejsem w formie powiadomienia wyświetlanego gdy jakaś aplikacja odtwarza w tle muzykę.\\
 
 Połączenie odpowiedniej konfiguracji z użyciem \tcbox{Foreground service} zmniejsza szanse na zabicie aplikacji przez system. Tym sposobem aplikacja może działać w tle po tym gdy użytkownik ją zamknie. Jest to kluczowa funkcjonalność z racji tego że MQTT jest protokołem komunikacyjnym w czasie rzeczywistym.\\
 
 Niestety praca w tle aplikacji jest obłożona szeregiem obostrzeń w imię wydłużenia czasu pracy na baterii. Dla przykładu jeżeli aplikacja obsługuje Android w wersji 14 wzwyż, deweloper jest zobowiązany do zadeklarowania typu \tcbox{Foreground service}. (dokumentacja - \cite{fgstyperequired}) Pula tych typów jest ograniczona, a każdych z nich ma swoje ściśle unormowane zastosowanie. Istnieje również typ zarezerwowany dla specjalnych przypadków których pozostałe typy nie pokrywają. Wybranie tego typu wiąże się z obowiązkiem podania szczegółowego wytłumaczenia, jak i również przygotowania nagrania tego w jaki sposób nasza aplikacja wykorzystuje usługę oznaczoną tym typem. Mimo spełnienia tych wymogów w dalszym ciągu możemy spotkać się z odmową przy próbie publikacji aplikacji na platformie Google Play.
+
+\newpage
 
 \subsection{Daemons}
 Aplikacja w początkowych założeniach miała obsługiwać więcej niż jeden protokół komunikacyjny. Rozwiązania wprowadzone na podstawie tego wymagania stanowią fundamentalną część implementacji. W związku z powyższym, mimo tego że wymaganie to zostało jednak na ten moment porzucone, dalej ma ono wpływ na obecną architekturę aplikacji.
@@ -218,8 +222,7 @@ fun buildClient(config: MqttConfig) {
 
 Poniżej znajduje się metoda odpowiedzialna za konfigurację:
 \begin{itemize}[leftmargin=*]
-    \item szyfrowania połaczenia
-    \item użycia certyfikatów i kluczy klienta
+    \item szyfrowania połaczenia oraz użycia certyfikatów i kluczy klienta
     \item związaną z wykorzystaniem niestandardowego urzędu certyfikacji (CA)
     \item związaną z opcją pominięcia weryfikacji certyfikatu serwera
 \end{itemize}
@@ -945,7 +948,8 @@ object Setup {
 Za wyjątkiem \tcbox{DaemonsManager} (object) są to klasy dedykowane do zarządzania określonymi zasobami oraz procesami. Ich użycie ma na celu centralizację logiki oraz zmniejszenie redundancji w kodzie.
 
 \subsubsection{BillingManager}
-Klasa służąca do procesowania zakupów oraz płatności wewnątrz aplikacji z wykorzystaniem Google Play. Do zarządzania połączeniem używa \tcbox{StatusManager}. Każda z kluczowych metod jest nieblokująca za sprawą wykorzystania \tcbox{suspendCoroutine}.\\
+Klasa służąca do procesowania zakupów oraz płatności wewnątrz aplikacji z wykorzystaniem Google Play. Do zarządzania połączeniem używa \tcbox{StatusManager}. Każda z kluczowych metod jest nieblokująca za sprawą\\
+wykorzystania \tcbox{suspendCoroutine}.\\
 
 Klasa \tcbox{BillingManager} zawiera następujące metody i pola:
 
@@ -1319,13 +1323,15 @@ open inner class Modes {
 }
 \end{lstlisting}
 
+\newpage
+
 \subsubsection{RecyclerViewItem}
 Abstrakcyjna klasa po której dziedziczy każda klasa która jednocześnie reprezentuje elementy danej listy w aplikacji. Jedną z takich klas jest klasa \tcbox{Tile}.\\
 
 W skład tej klasy wchodzą następujące metody i pola:
 \begin{lstlisting}[language=Kotlin]
 //Unikatowy identyfikator elementu
-var id:Long
+var id: Long
 
 //Identyfikator zasobu XML będącego interfejsem graficznym elementu
 abstract val layout: Int
