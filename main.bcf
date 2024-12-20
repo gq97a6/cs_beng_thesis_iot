@@ -2383,22 +2383,23 @@
     <bcf:citekey order="9" intorder="1">mosquittodocs</bcf:citekey>
     <bcf:citekey order="10" intorder="1">mqttincreasedadoption</bcf:citekey>
     <bcf:citekey order="11" intorder="1">mqttadoptionishigh</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">googleplay</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">materialdesign2</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">materialdesign3</bcf:citekey>
-    <bcf:citekey order="54" intorder="1">kotlindocs</bcf:citekey>
-    <bcf:citekey order="55" intorder="1">jetpackdocs</bcf:citekey>
-    <bcf:citekey order="56" intorder="1">gradledocs</bcf:citekey>
-    <bcf:citekey order="57" intorder="1">gitdocs</bcf:citekey>
-    <bcf:citekey order="58" intorder="1">sentrydocs</bcf:citekey>
-    <bcf:citekey order="59" intorder="1">getstartedfirebase</bcf:citekey>
-    <bcf:citekey order="60" intorder="1">hivemqdocs</bcf:citekey>
-    <bcf:citekey order="61" intorder="1">androidstudio</bcf:citekey>
-    <bcf:citekey order="62" intorder="1">fasterxmldocs</bcf:citekey>
-    <bcf:citekey order="63" intorder="1">mosquittodocs</bcf:citekey>
-    <bcf:citekey order="64" intorder="1">waterfall</bcf:citekey>
-    <bcf:citekey order="65" intorder="1">agilemanifesto</bcf:citekey>
-    <bcf:citekey order="66" intorder="1">fgstyperequired</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">rolnictwoprecyzyjne</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">googleplay</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">materialdesign2</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">materialdesign3</bcf:citekey>
+    <bcf:citekey order="55" intorder="1">kotlindocs</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">jetpackdocs</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">gradledocs</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">gitdocs</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">sentrydocs</bcf:citekey>
+    <bcf:citekey order="60" intorder="1">getstartedfirebase</bcf:citekey>
+    <bcf:citekey order="61" intorder="1">hivemqdocs</bcf:citekey>
+    <bcf:citekey order="62" intorder="1">androidstudio</bcf:citekey>
+    <bcf:citekey order="63" intorder="1">fasterxmldocs</bcf:citekey>
+    <bcf:citekey order="64" intorder="1">mosquittodocs</bcf:citekey>
+    <bcf:citekey order="65" intorder="1">waterfall</bcf:citekey>
+    <bcf:citekey order="66" intorder="1">agilemanifesto</bcf:citekey>
+    <bcf:citekey order="67" intorder="1">fgstyperequired</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
