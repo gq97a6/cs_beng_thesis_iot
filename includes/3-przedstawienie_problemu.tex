@@ -54,19 +54,49 @@ Jest to ciąg znaków który wysyłany jest z każdą wysłaną wiadomością. D
 \subsubsection{Przykład wykorzystania}
 Poniższe grafiki prezentują przykład użycia protokołu MQTT w praktyce. W przykładzie bierze udział troje urządzeń: termometr mierzący temperaturę w pokoju, sterownik ogrzewania mający za zadanie na podstawie zmierzonej temperatury włączać bądź wyłączać ogrzewanie oraz panel sterowania który dla uproszczenia został celowo wykluczony ze schematów.\\
 
-1. Wpierw każde z urządzeń nawiązuje połączenie do brokera które pozostaje stale utrzymane na czas pracy urządzenia. W przypadku zerwania połączenia, urządzenie stara się je ponownie nawiązać ponieważ w innym razie jest wykluczone z komunikacji.\\\\
-\includegraphics[scale=1.005]{mqtt1}\\\\
+\vspace{2em}
 
-2. Po połączeniu każde urządzenie które tego potrzebuje subskrybuje interesujące je \tcbox{topic}. W tym przykładzie sterownik ogrzewania subskrybuje \tcbox{topic} temp. W tym momencie, jeżeli \tcbox{topic} temp posiadałby retained message, sterownik otrzymałby tą wiadomość dokładnie tak samo jakby była ona świeżo nadana. W innym przypadku sterownik nie znałby obecnej temperatury do momentu nadania jej przez termometr w kolejnym kroku.\\\\
-\includegraphics[scale=1.005]{mqtt2}\\\\
+1. Jak przedstawiono na rysunku \ref{fig:mqtt1} wpierw każde z urządzeń nawiązuje połączenie do brokera które pozostaje stale utrzymane na czas pracy urządzenia. W przypadku zerwania połączenia, urządzenie stara się je ponownie nawiązać ponieważ w innym razie jest wykluczone z komunikacji.\\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1.005]{mqtt1}
+    \caption{Nawiązanie połączenia}
+    \label{fig:mqtt1}
+\end{figure}
+
+\vspace{2em}
+
+2. Zgodnie z rysunkiem \ref{fig:mqtt2} po połączeniu każde urządzenie które tego potrzebuje subskrybuje interesujące je \tcbox{topic}. W tym przykładzie sterownik ogrzewania subskrybuje \tcbox{topic} temp. W tym momencie, jeżeli \tcbox{topic} temp posiadałby retained message, sterownik otrzymałby tą wiadomość dokładnie tak samo jakby była ona świeżo nadana. W innym przypadku sterownik nie znałby obecnej temperatury do momentu nadania jej przez termometr w kolejnym kroku.\\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1.005]{mqtt2}
+    \caption{Subskrypcja}
+    \label{fig:mqtt2}
+\end{figure}
 
 \newpage
 
-3. Termometr wysyła nową wiadomość na \tcbox{topic} temp z payload wynoszącym wartość zmierzonej temperatury. Ten krok powtarza się z określoną częstotliwością. W ten sposób \tcbox{topic} temp reprezentuje aktualną temperaturę w pokoju.\\\\
-\includegraphics[scale=1.005]{mqtt3}\\\\
+3. Na rysunku \ref{fig:mqtt3} przedstawiono jak termometr wysyła nową wiadomość na \tcbox{topic} temp z payload wynoszącym wartość zmierzonej temperatury. Ten krok powtarza się z określoną częstotliwością. W ten sposób \tcbox{topic} temp reprezentuje aktualną temperaturę w pokoju.\\
 
-4. W odpowiedzi na publikację nowej wiadomości broker powiadamia każde urządzenie subskrybujące \tcbox{topic} temp. Po otrzymaniu aktualnej wartości sterownik może podjąć decyzję czy włączyć lub wyłączyć ogrzewanie w pokoju. Sam stan ogrzewania może być oddzielnym \tcbox{topic}, tak aby panel sterowania mógł wyświetlić informację czy jest ono włączone bądź nie: gdy sterownik włącza ogrzewanie publikuje 1 na \tcbox{topic} \tcbox{ogrz}, a gdy je wyłącza publikuje 0.\\\\
-\includegraphics[scale=1.005]{mqtt4}\\\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1.005]{mqtt3}
+    \caption{Publikacja nowej wiadomości}
+    \label{fig:mqtt3}
+\end{figure}
+
+\vspace{2em}
+
+4. Rysunek \ref{fig:mqtt4} prezentuje jak w odpowiedzi na publikację nowej wiadomości broker powiadamia każde urządzenie subskrybujące \tcbox{topic} temp. Po otrzymaniu aktualnej wartości sterownik może podjąć decyzję czy włączyć lub wyłączyć ogrzewanie w pokoju. Sam stan ogrzewania może być oddzielnym \tcbox{topic}, tak aby panel sterowania mógł wyświetlić informację czy jest ono włączone bądź nie: gdy sterownik włącza ogrzewanie publikuje 1 na \tcbox{topic} \tcbox{ogrz}, a gdy je wyłącza publikuje 0.\\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1.005]{mqtt4}
+    \caption{Rozgłoszenie nowej wiadomości do subskrybentów}
+    \label{fig:mqtt4}
+\end{figure}
 
 \newpage
 
@@ -75,4 +105,4 @@ W obliczu dynamicznego rozwoju technologii IoT oraz rosnącej liczby inteligentn
 
 Jednym z głównych problemów jest brak transparentności w działaniu zamkniętych systemów. Użytkownicy nie mają wglądu w to, jakie dane są przesyłane do serwerów producentów oraz w jaki sposób są one przetwarzane. To rodzi obawy o prywatność oraz bezpieczeństwo danych osobowych. Ponadto, awarie serwerów producentów mogą prowadzić do utraty funkcjonalności urządzeń, co jest szczególnie problematyczne w przypadku urządzeń kluczowych dla codziennego funkcjonowania domu.\\
 
-W odpowiedzi na te wyzwania, proponowane rozwiązanie zakłada stworzenie aplikacji mobilnej, która będzie pełnić funkcję uniwersalnego dashboardu do zarządzania urządzeniami IoT opartymi na protokole MQTT. Aplikacja ta ma na celu zapewnienie użytkownikom pełnej kontroli nad ich inteligentnymi urządzeniami, a także zwiększenie bezpieczeństwa i prywatności.
+W odpowiedzi na te wyzwania, proponowane rozwiązanie zakłada stworzenie otwartoźródłowej aplikacji mobilnej, która będzie pełnić funkcję uniwersalnego dashboardu do zarządzania urządzeniami IoT opartymi na protokole MQTT. Aplikacja ta ma na celu zapewnienie użytkownikom pełnej kontroli nad ich inteligentnymi urządzeniami, a także zwiększenie bezpieczeństwa i prywatności.
