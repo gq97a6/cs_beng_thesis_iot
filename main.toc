@@ -68,23 +68,23 @@
 \contentsline {section}{\numberline {07}Faza testów końcowych i publikacji}{76}{section.0.7}%
 \contentsline {subsection}{\numberline {07.1}Testy końcowe}{76}{subsection.0.7.1}%
 \contentsline {subsubsection}{\numberline {07.1.1}Testy manualne}{76}{subsubsection.0.7.1.1}%
-\contentsline {subsubsection}{\numberline {07.1.2}Testy z różnymi konfiguracjami serwera MQTT}{76}{subsubsection.0.7.1.2}%
-\contentsline {subsection}{\numberline {07.2}Publikacja na platformie Google Play}{77}{subsection.0.7.2}%
-\contentsline {section}{\numberline {08}Faza utrzymania}{78}{section.0.8}%
-\contentsline {subsection}{\numberline {08.1}Napotkane trudności}{78}{subsection.0.8.1}%
-\contentsline {subsubsection}{\numberline {08.1.1}Praca w tle}{78}{subsubsection.0.8.1.1}%
-\contentsline {subsubsection}{\numberline {08.1.2}Foreground Service}{78}{subsubsection.0.8.1.2}%
-\contentsline {subsubsection}{\numberline {08.1.3}Klient MQTT}{78}{subsubsection.0.8.1.3}%
-\contentsline {subsubsection}{\numberline {08.1.4}Rzadkie błędy}{79}{subsubsection.0.8.1.4}%
-\contentsline {subsubsection}{\numberline {08.1.5}Serializacja}{79}{subsubsection.0.8.1.5}%
-\contentsline {subsubsection}{\numberline {08.1.6}Weryfikacja konta Google Play Console}{79}{subsubsection.0.8.1.6}%
-\contentsline {subsection}{\numberline {08.2}Plany ulepszenia}{80}{subsection.0.8.2}%
-\contentsline {subsubsection}{\numberline {08.2.1}Jetpack Compose}{80}{subsubsection.0.8.2.1}%
-\contentsline {subsubsection}{\numberline {08.2.2}Protokoły}{80}{subsubsection.0.8.2.2}%
-\contentsline {subsubsection}{\numberline {08.2.3}Testy automatyczne}{80}{subsubsection.0.8.2.3}%
-\contentsline {subsubsection}{\numberline {08.2.4}Dokumentacja}{80}{subsubsection.0.8.2.4}%
-\contentsline {subsubsection}{\numberline {08.2.5}Wersja na system iOS}{80}{subsubsection.0.8.2.5}%
-\contentsline {section}{\numberline {09}Prezentacja}{81}{section.0.9}%
-\contentsline {section}{\numberline {10}Podsumowanie}{86}{section.0.10}%
-\contentsline {section}{\numberline {11}Bibliografia}{87}{section.0.11}%
-\contentsline {section}{\numberline {12}Załaczniki}{89}{section.0.12}%
+\contentsline {subsubsection}{\numberline {07.1.2}Testy z różnymi konfiguracjami serwera MQTT}{77}{subsubsection.0.7.1.2}%
+\contentsline {subsection}{\numberline {07.2}Publikacja na platformie Google Play}{78}{subsection.0.7.2}%
+\contentsline {section}{\numberline {08}Faza utrzymania}{79}{section.0.8}%
+\contentsline {subsection}{\numberline {08.1}Napotkane trudności}{79}{subsection.0.8.1}%
+\contentsline {subsubsection}{\numberline {08.1.1}Praca w tle}{79}{subsubsection.0.8.1.1}%
+\contentsline {subsubsection}{\numberline {08.1.2}Foreground Service}{79}{subsubsection.0.8.1.2}%
+\contentsline {subsubsection}{\numberline {08.1.3}Klient MQTT}{79}{subsubsection.0.8.1.3}%
+\contentsline {subsubsection}{\numberline {08.1.4}Rzadkie błędy}{80}{subsubsection.0.8.1.4}%
+\contentsline {subsubsection}{\numberline {08.1.5}Serializacja}{80}{subsubsection.0.8.1.5}%
+\contentsline {subsubsection}{\numberline {08.1.6}Weryfikacja konta Google Play Console}{80}{subsubsection.0.8.1.6}%
+\contentsline {subsection}{\numberline {08.2}Plany ulepszenia}{81}{subsection.0.8.2}%
+\contentsline {subsubsection}{\numberline {08.2.1}Jetpack Compose}{81}{subsubsection.0.8.2.1}%
+\contentsline {subsubsection}{\numberline {08.2.2}Protokoły}{81}{subsubsection.0.8.2.2}%
+\contentsline {subsubsection}{\numberline {08.2.3}Testy automatyczne}{81}{subsubsection.0.8.2.3}%
+\contentsline {subsubsection}{\numberline {08.2.4}Dokumentacja}{81}{subsubsection.0.8.2.4}%
+\contentsline {subsubsection}{\numberline {08.2.5}Wersja na system iOS}{81}{subsubsection.0.8.2.5}%
+\contentsline {section}{\numberline {09}Prezentacja}{82}{section.0.9}%
+\contentsline {section}{\numberline {10}Podsumowanie}{87}{section.0.10}%
+\contentsline {section}{\numberline {11}Bibliografia}{88}{section.0.11}%
+\contentsline {section}{\numberline {12}Załaczniki}{90}{section.0.12}%

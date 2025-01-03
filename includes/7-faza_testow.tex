@@ -4,11 +4,47 @@
 \subsubsection{Testy manualne}
 Testy manualne polegały na długoterminowym korzystaniu z aplikacji w różnych scenariuszach użytkowania. Skupiono się na następujących aspektach:\\
 
+\hspace{3em}
+
 \textbf{Interfejs użytkownika:} Ocena intuicyjności i responsywności interfejsu, w tym łatwości nawigacji oraz dostępności kluczowych funkcji.\\
+
+Scenariusze obejmowały:
+
+\begin{itemize}[leftmargin=*]
+    \item Sprawdzanie czy użytkownik może łatwo znaleźć potrzebne informacje.
+    \item Testowanie reakcji aplikacji na różne rozdzielczości i orientacje ekranu.
+\end{itemize}
+
+\hspace{3em}
 
 \textbf{Stabilność:} Obserwacja zachowania aplikacji w dłuższych sesjach użytkowania, w tym sprawdzanie, czy aplikacja nie ulega awariom ani nie zawiesza się.\\
 
-\textbf{Wydajność:} Monitorowanie czasu ładowania danych oraz reakcji na interakcje użytkownika, co miało na celu ocenę płynności działania aplikacji.
+Scenariusze obejmowały:
+
+\begin{itemize}[leftmargin=*]
+    \item Śledzenie stanu aplikacji długo pracującej w tle.
+    \item Dodawanie wielu jednocześnie pracujących dashboardów.
+    \item Testowanie aplikacji w warunkach słabego połączenia internetowego.
+    \item Obserwowanie jak aplikacja radzi sobie z utratą połączenia z internetem.
+    \item Sprawdzanie czy aplikacja utrzymuje połączenie z brokerem.
+    \item Testowanie czy aplikacja utrzymuje stałe połączenie z brokerem.
+    \item Sprawdzanie czy aplikacja wznawia połączenie z brokerem po jego utracie.
+\end{itemize}
+
+\hspace{3em}
+
+\textbf{Wydajność:} Monitorowanie czasu ładowania danych oraz reakcji na interakcje użytkownika, co miało na celu ocenę płynności działania aplikacji.\\
+
+Scenariusze obejmowały:
+
+\begin{itemize}[leftmargin=*]
+    \item Pomiar czasu ładowania aplikacji.
+    \item Testowanie szybkości reakcji aplikacji na różne interakcje użytkownika, takie jak przewijanie, klikanie przycisków, czy wprowadzanie danych.
+    \item Analiza zużycia zasobów systemowych podczas normalnego użytkowania.
+    \item Sprawdzanie płynności list przy dużej ilości wyświetlanych elementów.
+\end{itemize}
+
+\newpage
 
 \subsubsection{Testy z różnymi konfiguracjami serwera MQTT}
 W celu oceny kompatybilności aplikacji z różnymi konfiguracjami serwera MQTT, przeprowadzono testy z użyciem różnych protokołów oraz ustawień:\\

@@ -21,6 +21,8 @@
 \usepackage{csquotes}
 \usepackage{calc}
 \usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
 \usepackage[most]{tcolorbox}
 \usepackage[yyyymmdd]{datetime}
 \usepackage[dvipsnames]{xcolor}
@@ -38,13 +40,16 @@
 \addbibresource{bibliography.bib}
 \DeclareFieldFormat{title}{#1}
 \DeclareFieldFormat{url}{#1}
-\DeclareFieldFormat{labelnumber}{\small#1}
+\DeclareFieldFormat{labelnumber}{#1}
 \DeclareBibliographyDriver{source}{%Required comment for some reason
   \small
   \printfield{title}\\
   %\texttransparent{0.6}{dostęp: \printfield{year}}\\
   \texttransparent{0.6}{\printfield{url}}
 }
+
+%Setup figure captions
+\captionsetup[figure]{labelfont={bf}, name={Rys.}, labelsep=period}
 
 %Disable new page for chapters
 \gdef\clearforchapter{}
