@@ -13,7 +13,7 @@
 \contentsline {subsection}{\numberline {04.2}Konkurencyjne rozwiazania}{11}{subsection.0.4.2}%
 \contentsline {subsection}{\numberline {04.3}Profil użytkownika docelowego}{11}{subsection.0.4.3}%
 \contentsline {subsubsection}{\numberline {04.3.1}Model biznesowy}{11}{subsubsection.0.4.3.1}%
-\contentsline {subsection}{\numberline {04.4}Przykłady użycia}{12}{subsection.0.4.4}%
+\contentsline {subsection}{\numberline {04.4}Przykłady zastosowania}{12}{subsection.0.4.4}%
 \contentsline {subsubsection}{\numberline {04.4.1}Automatyka domowa}{12}{subsubsection.0.4.4.1}%
 \contentsline {subsubsection}{\numberline {04.4.2}Rolnictwo precyzyjne}{13}{subsubsection.0.4.4.2}%
 \contentsline {subsubsection}{\numberline {04.4.3}Inteligentne budynki}{14}{subsubsection.0.4.4.3}%

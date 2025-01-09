@@ -1,5 +1,5 @@
-PWD d:\_SYNCED\inzynierka
-INPUT d:\_SYNCED\inzynierka\main.tex
+PWD c:\_SYNCED\inzynierka
+INPUT c:\_SYNCED\inzynierka\main.tex
 OUTPUT main.log
 OUTPUT main.log
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\latexconfig\lualatexquotejobname.lua
@@ -19,7 +19,7 @@ OUTPUT C:\Users\Me\AppData\Local\MiKTeX\m_t_x_t_e_s_t.tmp
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-parsers.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-configuration.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-status.lua
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\fontloader-2023-12-28.lua
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\fontloader-2023-08-19.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-fallback.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-multiscript.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-scripts.lua
@@ -36,13 +36,11 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\unicode-data\Special
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\lua-uni-algos\lua-uni-case.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\lua-uni-algos\lua-uni-parse.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\unicode-data\CaseFolding.txt
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-realpath.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-colors.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-resolvers.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-features.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\lua-uni-algos\lua-uni-normalize.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\unicode-data\UnicodeData.txt
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-arabic.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-harf-define.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-harf-var-cff2.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\luatex\luaotfload\luaotfload-harf-var-t2-writer.lua
@@ -123,8 +121,6 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\tocloft\tocloft.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\tocloft\tocloft.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\listings.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\listings.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstpatch.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstpatch.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstmisc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstmisc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\listings\listings.cfg
@@ -163,6 +159,8 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\kvsetkeys\kvsetkeys.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\kvsetkeys\kvsetkeys.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\kvdefinekeys\kvdefinekeys.sty
@@ -173,11 +171,11 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.lua
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hycolor\hycolor.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hycolor\hycolor.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\letltxmacro\letltxmacro.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\letltxmacro\letltxmacro.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\refcount\refcount.sty
@@ -186,8 +184,6 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\getti
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\kvoptions\kvoptions.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\kvoptions\kvoptions.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
-INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\pd1enc.def
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\pd1enc.def
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\intcalc\intcalc.sty
@@ -204,6 +200,8 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\base\atbegshi-ltx.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\base\atbegshi-ltx.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hluatex.def
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hluatex.def
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\base\atveryend-ltx.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\base\atveryend-ltx.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\rerunfilecheck\rerunfilecheck.sty
@@ -539,6 +537,8 @@ INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.m
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\grfext\grfext.sty
+INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\grfext\grfext.sty
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\Me\AppData\Local\Programs\MiKTeX\tex\latex\ninecolors\ninecolors.sty
