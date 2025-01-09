@@ -1,7 +1,7 @@
 \section{Faza analizy i planowania}
 
 \subsection{Koncepcja}
-Aplikacja mobilna która działała jako uniwersalny interfejs sterowania różnymi urządzeniami IoT. Projekt zakłada użycie MQTT jako protokołu komunikacyjnego z uwagi na szerokie zastosowanie w domenie IoT ale również przewiduje możliwość przyszłego rozszerzenia o inne takie pozwalające na komunikację bezpośrednio z urządzeniem lub siecią urządzeń. (artykuły HiveMQ - \cite{mqttincreasedadoption}\cite{mqttadoptionishigh}) Użytkownik korzystając z szerokiej gamy predefinowanych kafelek może stworzyć interfejs pozwalający sterować dowolnym urządzeniem o ile implementuje ono jeden z obsługiwanych protokołów. Przedstawiana aplikacja może stać się centrum sterowania inteligentnego domu gdzie nadzoruje pracę całej automatyki lub też zostać wykorzystana jako interfejs użytkownika w przypadku projektów samodzielnych urządzeń lub prototypów gdzie tworzenie dedykowanego jest zbędnym wydatkiem. Z racji na nacisk na uniwersalne protokoły cała komunikacja może pozostać pod kontrolą użytkownika wykorzystując całkowicie jego infrastrukturę.
+Aplikacja mobilna która działałaby jako uniwersalny interfejs sterowania różnymi urządzeniami IoT. Projekt zakłada użycie MQTT jako protokołu komunikacyjnego z uwagi na szerokie zastosowanie w domenie IoT ale również przewiduje możliwość przyszłego rozszerzenia o inne takie pozwalające na komunikację bezpośrednio z urządzeniem lub siecią urządzeń. (artykuły HiveMQ - \cite{mqttincreasedadoption}\cite{mqttadoptionishigh}) Użytkownik korzystając z szerokiej gamy predefinowanych kafelek może stworzyć interfejs pozwalający sterować dowolnym urządzeniem o ile implementuje ono jeden z obsługiwanych protokołów. Przedstawiana aplikacja może stać się centrum sterowania inteligentnego domu gdzie nadzoruje pracę całej automatyki lub też zostać wykorzystana jako interfejs użytkownika w przypadku projektów samodzielnych urządzeń lub prototypów gdzie tworzenie dedykowanego jest zbędnym wydatkiem. Z racji na nacisk na uniwersalne protokoły cała komunikacja może pozostać pod kontrolą użytkownika wykorzystując całkowicie jego infrastrukturę.
 
 \subsection{Konkurencyjne rozwiazania}
 
@@ -24,15 +24,15 @@ Projekt nie kładzie silnego nacisku na komercjalizację. W związku z powyższy
 
 \newpage
 
-\subsection{Przykłady użycia}
+\subsection{Przykłady zastosowania}
 W tej sekcji znajdują się trzy przykładowe scenariusze wykorzystania prezentowanej aplikacji. W opisach celowo pominięto serwer MQTT.
 
 \subsubsection{Automatyka domowa}
-Przykład użycia aplikacji do sterowania automatyką domową:\\
+Przykład zastosowania aplikacji do sterowania automatyką domową:\\
 
 \textbf{Sterownik oświetlenia RGB} - jego rolą jest kontrolowanie oświetlenia. Nie wysyła żadnych nowych informacji więc jedynie subskrybuje cztery \tcbox{topic} związane z ustawionym kolorem, stanem, trybem oraz jasnością oświetlenia.\\
 
-\textbf{Sterownik z przekaźnikiem} - jego odpowiedzialny za sterowanie zasilaniem podłączonego urządzenia, w tym przypadku wentylatora. Subskrybuje jeden topic. W zależności od payload włącza lub wyłącza zasilanie. W alternatywnej implementacji mógłby jedynie przełączać stan urządzenia nie zważając na payload.\\
+\textbf{Sterownik z przekaźnikiem} - jest odpowiedzialny za sterowanie zasilaniem podłączonego urządzenia, w tym przypadku wentylatora. Subskrybuje jeden topic. W zależności od payload włącza lub wyłącza zasilanie. W alternatywnej implementacji mógłby jedynie przełączać stan urządzenia nie zważając na payload.\\
 
 \textbf{Sterownik ogrzewania podłogowego} - ma za zadanie kontrolować ogrzewaniem w pokoju. Z tego powodu subskrybuje dwa \tcbox{topic} zawierające zadaną oraz aktualną temperaturę.\\
 
@@ -43,7 +43,7 @@ Przykład użycia aplikacji do sterowania automatyką domową:\\
 \newpage
 
 \subsubsection{Rolnictwo precyzyjne}
-Przykład użycia aplikacji do rolnictwa precyzyjnego \cite{rolnictwoprecyzyjne}:\\
+Przykład zastosowania aplikacji do rolnictwa precyzyjnego \cite{rolnictwoprecyzyjne}:\\
 
 \textbf{Czujniki wilgotności gleby} - mierzą poziom wilgotności w glebie na różnych głębokościach.\\
 
@@ -62,7 +62,7 @@ Przykład użycia aplikacji do rolnictwa precyzyjnego \cite{rolnictwoprecyzyjne}
 \newpage
 
 \subsubsection{Inteligentne budynki}
-Przykład użycia aplikacji w kontekście inteligentnych budynków:\\
+Przykład zastosowania aplikacji w kontekście inteligentnych budynków:\\
 
 \textbf{Czujniki obecności} - wykrywają obecność osób w pomieszczeniach, co pozwala na optymalizację oświetlenia i klimatyzacji.\\
 
