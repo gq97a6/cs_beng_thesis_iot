@@ -144,6 +144,28 @@
 \lst@RestoreCatcodes
 \makeatother
 
+\newcommand{\screenShotTwo}[3]{
+  \begin{minipage}{0.48\textwidth}
+      \begin{figure}[H]
+          \centering
+          \includegraphics[width=1\textwidth]{./images/ss/#1.jpg}
+          \caption{#3}
+          \label{#2}
+      \end{figure}
+  \end{minipage}
+}
+
+\newcommand{\screenShotThree}[3]{
+  \begin{minipage}{0.31\textwidth}
+      \begin{figure}[H]
+          \centering
+          \includegraphics[width=1\textwidth]{./images/ss/#1.jpg}
+          \caption{#3}
+          \label{#2}
+      \end{figure}
+  \end{minipage}
+}
+
 \begin{document} % ------------------------------------------------------------------
 
 %Set default font size
