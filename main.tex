@@ -23,6 +23,7 @@
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{float}
+\usepackage{ragged2e}
 \usepackage[most]{tcolorbox}
 \usepackage[yyyymmdd]{datetime}
 \usepackage[dvipsnames]{xcolor}
@@ -109,9 +110,12 @@
 \cftsetindents{section}{1em}{2.3em}
 \cftsetindents{subsection}{3.5em}{3.5em}
 \cftsetindents{subsubsection}{7em}{4.7em}
-\setlength{\cftbeforesecskip}{0.2em}
-\setlength{\cftbeforesubsecskip}{0.2em}
-\setlength{\cftbeforesubsubsecskip}{0.2em}
+\setlength{\cftbeforesecskip}{0.18em}
+\setlength{\cftbeforesubsecskip}{0.18em}
+\setlength{\cftbeforesubsubsecskip}{0.18em}
+
+%Set list of figures style
+\renewcommand{\cftfigaftersnum}{.}
 
 %Setup hyperlinks
 \hypersetup{ linktoc=all, hidelinks }
@@ -171,16 +175,31 @@
 %Set default font size
 \normalsize
 
+\setcounter{page}{-101}
+
+\null
+\vfill
+\raggedright
+\begin{flushright}
+  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+\end{flushright}
+\newpage
+
 \include{includes/0.0-tytulowa.tex}
 \newpage
 
 \include{includes/0.1-karta_projektu}
 \newpage
 
-\setcounter{page}{-1}
 \tocloftpagestyle{empty}
+\renewcommand{\contentsname}{\vspace{-2.5em}Spis treści}
+\renewcommand\listfigurename{\vspace{-2.5em}Spis rysunków}
 \tableofcontents
 \newpage
+\listoffigures
+\newpage
+
+\setcounter{page}{1}
 
 \include{includes/1-wstep}
 \newpage
