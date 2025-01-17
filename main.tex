@@ -23,7 +23,6 @@
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{float}
-\usepackage{ragged2e}
 \usepackage[most]{tcolorbox}
 \usepackage[yyyymmdd]{datetime}
 \usepackage[dvipsnames]{xcolor}
@@ -110,12 +109,13 @@
 \cftsetindents{section}{1em}{2.3em}
 \cftsetindents{subsection}{3.5em}{3.5em}
 \cftsetindents{subsubsection}{7em}{4.7em}
-\setlength{\cftbeforesecskip}{0.18em}
-\setlength{\cftbeforesubsecskip}{0.18em}
-\setlength{\cftbeforesubsubsecskip}{0.18em}
+\setlength{\cftbeforesecskip}{0.12em}
+\setlength{\cftbeforesubsecskip}{0.12em}
+\setlength{\cftbeforesubsubsecskip}{0.12em}
 
 %Set list of figures style
 \renewcommand{\cftfigaftersnum}{.}
+\setlength{\cftbeforefigskip}{0.12em}
 
 %Setup hyperlinks
 \hypersetup{ linktoc=all, hidelinks }
@@ -179,9 +179,7 @@
 
 \null
 \vfill
-\raggedright
 \begin{flushright}
-  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
 \end{flushright}
 \newpage
 
